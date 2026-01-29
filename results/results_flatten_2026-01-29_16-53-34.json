@@ -1,0 +1,365 @@
+{
+  "experiment_metadata": {
+    "date": "2026-01-29",
+    "time": "16:53:34",
+    "model": "openai/gpt-oss-20b",
+    "obfuscation": "Flatten",
+    "runs_per_program": 1,
+    "auto_verify": true,
+    "environment": "x86_64 Linux GCC",
+    "consistency_definition": {
+      "high": "Algorithm is correct and verified (ground truth match)",
+      "medium": "Algorithm identified with high confidence, but not fully verified",
+      "low": "Low confidence, wrong, non-algorithmic, or invalid"
+    }
+  },
+  "results": [
+    {
+      "program": "anagram.c",
+      "obfuscated_file": "obfuscated/flatten/anagram_flatten.c",
+      "ground_truth": {
+        "algorithm": "anagram",
+        "source": {
+          "repo": "tum-i4/obfuscation-benchmarks",
+          "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+          "path": "basic-algorithms"
+        }
+      },
+      "runs": [
+        {
+          "run": 1,
+          "llm_raw_output": "{\n  \"algorithm\": \"Anagram verification \u2013 generate a random string and test whether it is an anagram of a target string.\",\n  \"confidence\": 0.68,\n  \"dispatcher_variable\": \"_j10\",\n  \"key_operations\": [\n    \"Generate a random string (rand_string) of random length and characters.\",\n    \"Count or otherwise compare character frequencies of the generated string against a target string (check_anagram).\",\n    \"Output the result (e.g., print \\\"Anagram\\\" or \\\"Not anagram\\\").\"\n  ],\n  \"reconstructed_logic\": \"The flattened program\u2019s main routine first calls rand_string to produce a random string. It then passes that string and a fixed target string to check_anagram, which iterates over the characters of both strings, updates a frequency table (or uses a library sort), and finally compares the two tables to determine if the strings contain the same multiset of characters. The result is printed or otherwise returned. The control\u2011flow flattening is implemented via a dispatcher variable (identified as _j10) that drives a switch\u2011style loop over the flattened basic blocks.\",\n  \"why_not_other_algorithms\": \"The semantic analysis shows no modular arithmetic (mod/div by 10), no digit\u2011cube operations, no nested loops, no swap or adjacent comparison \u2013 all of which would be typical for numeric or sorting algorithms. The presence of the functions rand_string and check_anagram, combined with the lack of numeric signals, strongly points to a string\u2011based anagram check rather than any other algorithm.\"\n}",
+          "llm_parsed_output": {
+            "algorithm": "Anagram verification \u2013 generate a random string and test whether it is an anagram of a target string.",
+            "confidence": 0.68,
+            "dispatcher_variable": "_j10",
+            "key_operations": [
+              "Generate a random string (rand_string) of random length and characters.",
+              "Count or otherwise compare character frequencies of the generated string against a target string (check_anagram).",
+              "Output the result (e.g., print \"Anagram\" or \"Not anagram\")."
+            ],
+            "reconstructed_logic": "The flattened program\u2019s main routine first calls rand_string to produce a random string. It then passes that string and a fixed target string to check_anagram, which iterates over the characters of both strings, updates a frequency table (or uses a library sort), and finally compares the two tables to determine if the strings contain the same multiset of characters. The result is printed or otherwise returned. The control\u2011flow flattening is implemented via a dispatcher variable (identified as _j10) that drives a switch\u2011style loop over the flattened basic blocks.",
+            "why_not_other_algorithms": "The semantic analysis shows no modular arithmetic (mod/div by 10), no digit\u2011cube operations, no nested loops, no swap or adjacent comparison \u2013 all of which would be typical for numeric or sorting algorithms. The presence of the functions rand_string and check_anagram, combined with the lack of numeric signals, strongly points to a string\u2011based anagram check rather than any other algorithm."
+          },
+          "classification": "correct",
+          "confidence": 0.68,
+          "verified": true,
+          "comment": "Correct with sufficient confidence"
+        }
+      ],
+      "summary": {
+        "correct": "Yes",
+        "incorrect": "No",
+        "unknown": "No",
+        "algorithmic": "Yes",
+        "verified": "Yes",
+        "consistency": "high",
+        "overall_classification": "correct"
+      }
+    },
+    {
+      "program": "armstrong.c",
+      "obfuscated_file": "obfuscated/flatten/armstrong_flatten.c",
+      "ground_truth": {
+        "algorithm": "armstrong",
+        "source": {
+          "repo": "tum-i4/obfuscation-benchmarks",
+          "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+          "path": "basic-algorithms"
+        }
+      },
+      "runs": [
+        {
+          "run": 1,
+          "llm_raw_output": "{\n  \"algorithm\": \"Print a list of builtin/atomic function names\",\n  \"confidence\": 0.6,\n  \"dispatcher_variable\": \"switcher\",\n  \"key_operations\": [\n    \"Iterate over a static array of string literals\",\n    \"Print each string to stdout\"\n  ],\n  \"reconstructed_logic\": \"The program contains a large static array of string literals that enumerate various atomic and builtin function names. The flattened main uses a dispatcher variable (likely named \\\"switcher\\\") to sequentially execute a loop that iterates over this array, printing each string. No arithmetic, nested loops, swaps, or comparisons beyond simple bounds checks are present, indicating a straightforward list\u2011printing routine.\",\n  \"why_not_other_algorithms\": \"The semantic analysis shows no use of modulo/division by 10, no digit\u2011cube extraction, no nested loops, no swap operations, and no adjacent comparisons\u2014all of which would be expected in numeric or algorithmic tasks such as digit summation, GCD, or sorting. The code\u2019s sole dynamic behavior is iterating over a list of strings and outputting them, which matches the observed string literals and the absence of complex control flow.\"\n}",
+          "llm_parsed_output": {
+            "algorithm": "Print a list of builtin/atomic function names",
+            "confidence": 0.6,
+            "dispatcher_variable": "switcher",
+            "key_operations": [
+              "Iterate over a static array of string literals",
+              "Print each string to stdout"
+            ],
+            "reconstructed_logic": "The program contains a large static array of string literals that enumerate various atomic and builtin function names. The flattened main uses a dispatcher variable (likely named \"switcher\") to sequentially execute a loop that iterates over this array, printing each string. No arithmetic, nested loops, swaps, or comparisons beyond simple bounds checks are present, indicating a straightforward list\u2011printing routine.",
+            "why_not_other_algorithms": "The semantic analysis shows no use of modulo/division by 10, no digit\u2011cube extraction, no nested loops, no swap operations, and no adjacent comparisons\u2014all of which would be expected in numeric or algorithmic tasks such as digit summation, GCD, or sorting. The code\u2019s sole dynamic behavior is iterating over a list of strings and outputting them, which matches the observed string literals and the absence of complex control flow."
+          },
+          "classification": "incorrect",
+          "confidence": 0.6,
+          "verified": false,
+          "comment": "Incorrect identification: print a list of builtin/atomic function names"
+        }
+      ],
+      "summary": {
+        "correct": "No",
+        "incorrect": "Yes",
+        "unknown": "No",
+        "algorithmic": "No",
+        "verified": "No",
+        "consistency": "low",
+        "overall_classification": "incorrect"
+      }
+    },
+    {
+      "program": "binarysearchrec.c",
+      "obfuscated_file": "obfuscated/flatten/binarysearchrec_flatten.c",
+      "ground_truth": {
+        "algorithm": "binarysearch",
+        "source": {
+          "repo": "tum-i4/obfuscation-benchmarks",
+          "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+          "path": "basic-algorithms"
+        }
+      },
+      "runs": [
+        {
+          "run": 1,
+          "llm_raw_output": "```json\n{\n  \"algorithm\": \"Unknown / trivial I/O (e.g., printing a constant string)\",\n  \"confidence\": 0.15,\n  \"dispatcher_variable\": \"Not identifiable in the provided snippet\",\n  \"key_operations\": [],\n  \"reconstructed_logic\": \"The flattened code fragment does not contain any executable statements or control\u2011flow constructs; it only lists atomic operation names and metadata. Therefore, no meaningful high\u2011level logic can be reconstructed from the given data.\",\n  \"why_not_other_algorithms\": \"The semantic signal set indicates absence of arithmetic modulo/division by 10, digit cube extraction, accumulation, nested loops, swapping, and adjacent comparisons\u2014all of which are typical of numeric algorithms such as factorial, Fibonacci, or digit\u2011based computations. The lack of any executable code or data structures in the snippet precludes identification of any non\u2011trivial algorithm.\"\n}\n```",
+          "llm_parsed_output": {
+            "algorithm": "Unknown / trivial I/O (e.g., printing a constant string)",
+            "confidence": 0.15,
+            "dispatcher_variable": "Not identifiable in the provided snippet",
+            "key_operations": [],
+            "reconstructed_logic": "The flattened code fragment does not contain any executable statements or control\u2011flow constructs; it only lists atomic operation names and metadata. Therefore, no meaningful high\u2011level logic can be reconstructed from the given data.",
+            "why_not_other_algorithms": "The semantic signal set indicates absence of arithmetic modulo/division by 10, digit cube extraction, accumulation, nested loops, swapping, and adjacent comparisons\u2014all of which are typical of numeric algorithms such as factorial, Fibonacci, or digit\u2011based computations. The lack of any executable code or data structures in the snippet precludes identification of any non\u2011trivial algorithm."
+          },
+          "classification": "unknown",
+          "confidence": 0.15,
+          "verified": false,
+          "comment": "Insufficient confidence"
+        }
+      ],
+      "summary": {
+        "correct": "No",
+        "incorrect": "No",
+        "unknown": "Yes",
+        "algorithmic": "No",
+        "verified": "No",
+        "consistency": "low",
+        "overall_classification": "unknown"
+      }
+    },
+    {
+      "program": "bubblesort.c",
+      "obfuscated_file": "obfuscated/flatten/bubblesort_flatten.c",
+      "ground_truth": {
+        "algorithm": "bubblesort",
+        "source": {
+          "repo": "tum-i4/obfuscation-benchmarks",
+          "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+          "path": "basic-algorithms"
+        }
+      },
+      "runs": [
+        {
+          "run": 1,
+          "llm_raw_output": "```json\n{\n  \"algorithm\": \"Euclidean GCD of two integers\",\n  \"confidence\": 0.6,\n  \"dispatcher_variable\": \"state\",\n  \"key_operations\": [\n    \"parse two integers from command\u2011line arguments\",\n    \"initialize a = first integer, b = second integer\",\n    \"while (b != 0) {\",\n    \"    r = a % b;\",\n    \"    a = b;\",\n    \"    b = r;\",\n    \"}\",\n    \"print a as the greatest common divisor\"\n  ],\n  \"reconstructed_logic\": \"The flattened program reads two integer arguments, then repeatedly replaces the larger number with the remainder of dividing the larger by the smaller until the remainder becomes zero. The remaining non\u2011zero value is the GCD, which is output. The dispatcher variable (named \\\"state\\\" in the flattened code) controls the jump table that implements the loop and the final print.\",\n  \"why_not_other_algorithms\": \"The semantic analysis shows no accumulation, no digit extraction, no nested loops, and no swapping, which rules out algorithms like factorial, Fibonacci, or digit\u2011based checks. The presence of a single loop with modulo operations and the use of two integer operands strongly matches the Euclidean algorithm for GCD.\"\n}\n```",
+          "llm_parsed_output": {
+            "algorithm": "Euclidean GCD of two integers",
+            "confidence": 0.6,
+            "dispatcher_variable": "state",
+            "key_operations": [
+              "parse two integers from command\u2011line arguments",
+              "initialize a = first integer, b = second integer",
+              "while (b != 0) {",
+              "    r = a % b;",
+              "    a = b;",
+              "    b = r;",
+              "}",
+              "print a as the greatest common divisor"
+            ],
+            "reconstructed_logic": "The flattened program reads two integer arguments, then repeatedly replaces the larger number with the remainder of dividing the larger by the smaller until the remainder becomes zero. The remaining non\u2011zero value is the GCD, which is output. The dispatcher variable (named \"state\" in the flattened code) controls the jump table that implements the loop and the final print.",
+            "why_not_other_algorithms": "The semantic analysis shows no accumulation, no digit extraction, no nested loops, and no swapping, which rules out algorithms like factorial, Fibonacci, or digit\u2011based checks. The presence of a single loop with modulo operations and the use of two integer operands strongly matches the Euclidean algorithm for GCD."
+          },
+          "classification": "incorrect",
+          "confidence": 0.6,
+          "verified": false,
+          "comment": "Incorrect identification: gcd"
+        }
+      ],
+      "summary": {
+        "correct": "No",
+        "incorrect": "Yes",
+        "unknown": "No",
+        "algorithmic": "No",
+        "verified": "No",
+        "consistency": "low",
+        "overall_classification": "incorrect"
+      }
+    },
+    {
+      "program": "decimaltooctal.c",
+      "obfuscated_file": "obfuscated/flatten/decimaltooctal_flatten.c",
+      "ground_truth": {
+        "algorithm": "decimaltooctal",
+        "source": {
+          "repo": "tum-i4/obfuscation-benchmarks",
+          "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+          "path": "basic-algorithms"
+        }
+      },
+      "runs": [
+        {
+          "run": 1,
+          "llm_raw_output": "{\n  \"algorithm\": \"Print a constant string (e.g., \\\"Hello, world!\\\")\",\n  \"confidence\": 0.42,\n  \"dispatcher_variable\": \"_x$\",\n  \"key_operations\": [\n    \"Output a fixed string to stdout\",\n    \"Return an exit status\"\n  ],\n  \"reconstructed_logic\": \"The program\u2019s main routine simply writes a predetermined message to the standard output and terminates. No arithmetic, loops, or complex data manipulation is performed; the dispatcher variable is used only to sequence the flattened basic blocks that ultimately execute the single print operation.\",\n  \"why_not_other_algorithms\": \"The static semantic analysis shows no use of modulus or division by 10, no digit\u2011cube extraction, no accumulator variable, no nested loops, no swap operations, and no adjacent comparisons. These are typical signatures of numeric algorithms such as factorial, Fibonacci, GCD, or digit\u2011sum computations. The absence of such patterns, combined with the lack of any loop or recursive structure in the decompiled view, strongly suggests that the program\u2019s purpose is trivial \u2013 to output a constant string \u2013 rather than perform any non\u2011trivial computation.\"\n}",
+          "llm_parsed_output": {
+            "algorithm": "Print a constant string (e.g., \"Hello, world!\")",
+            "confidence": 0.42,
+            "dispatcher_variable": "_x$",
+            "key_operations": [
+              "Output a fixed string to stdout",
+              "Return an exit status"
+            ],
+            "reconstructed_logic": "The program\u2019s main routine simply writes a predetermined message to the standard output and terminates. No arithmetic, loops, or complex data manipulation is performed; the dispatcher variable is used only to sequence the flattened basic blocks that ultimately execute the single print operation.",
+            "why_not_other_algorithms": "The static semantic analysis shows no use of modulus or division by 10, no digit\u2011cube extraction, no accumulator variable, no nested loops, no swap operations, and no adjacent comparisons. These are typical signatures of numeric algorithms such as factorial, Fibonacci, GCD, or digit\u2011sum computations. The absence of such patterns, combined with the lack of any loop or recursive structure in the decompiled view, strongly suggests that the program\u2019s purpose is trivial \u2013 to output a constant string \u2013 rather than perform any non\u2011trivial computation."
+          },
+          "classification": "unknown",
+          "confidence": 0.42,
+          "verified": false,
+          "comment": "Insufficient confidence"
+        }
+      ],
+      "summary": {
+        "correct": "No",
+        "incorrect": "No",
+        "unknown": "Yes",
+        "algorithmic": "No",
+        "verified": "No",
+        "consistency": "low",
+        "overall_classification": "unknown"
+      }
+    },
+    {
+      "program": "factorialrec.c",
+      "obfuscated_file": "obfuscated/flatten/factorialrec_flatten.c",
+      "ground_truth": {
+        "algorithm": "factorial",
+        "source": {
+          "repo": "tum-i4/obfuscation-benchmarks",
+          "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+          "path": "basic-algorithms"
+        }
+      },
+      "runs": [
+        {
+          "run": 1,
+          "llm_raw_output": "{\n  \"algorithm\": \"Compute the factorial of an integer supplied on the command line\",\n  \"confidence\": 0.92,\n  \"dispatcher_variable\": \"_TIG_IZ_DFDL_state\",\n  \"key_operations\": [\n    \"Parse command\u2011line argument (argv[1]) into an integer n\",\n    \"Call the function fact(n)\",\n    \"fact(n) computes the product 1\u00b72\u00b7\u2026\u00b7n (iteratively or recursively)\",\n    \"Print the resulting factorial value\"\n  ],\n  \"reconstructed_logic\": \"The flattened main function first initializes the Tigress environment variables (_TIG_IZ_DFDL_argv, _TIG_IZ_DFDL_argc, _TIG_IZ_DFDL_envp). It then checks that at least one argument is supplied. The first argument is converted from a string to an integer (using a routine such as strtol). The integer n is passed to the function fact. The fact function contains a simple loop (or a tail\u2011recursive call) that multiplies an accumulator by the loop counter from 1 up to n, producing the factorial. The result is then printed to stdout. The dispatcher variable _TIG_IZ_DFDL_state is used by the Tigress control\u2011flow flattening to jump between the various basic blocks that implement this logic, but the high\u2011level algorithm remains the same as described above.\",\n  \"why_not_other_algorithms\": \"The program does not perform any modulus or division by 10, does not manipulate digits or cubes, and contains no nested loops or swap operations. These characteristics rule out algorithms such as digit\u2011sum, digit\u2011cube checks, or sorting. The presence of a dedicated function named fact and the typical pattern of a single integer argument strongly point to factorial computation rather than any other common algorithm.\"\n}",
+          "llm_parsed_output": {
+            "algorithm": "Compute the factorial of an integer supplied on the command line",
+            "confidence": 0.92,
+            "dispatcher_variable": "_TIG_IZ_DFDL_state",
+            "key_operations": [
+              "Parse command\u2011line argument (argv[1]) into an integer n",
+              "Call the function fact(n)",
+              "fact(n) computes the product 1\u00b72\u00b7\u2026\u00b7n (iteratively or recursively)",
+              "Print the resulting factorial value"
+            ],
+            "reconstructed_logic": "The flattened main function first initializes the Tigress environment variables (_TIG_IZ_DFDL_argv, _TIG_IZ_DFDL_argc, _TIG_IZ_DFDL_envp). It then checks that at least one argument is supplied. The first argument is converted from a string to an integer (using a routine such as strtol). The integer n is passed to the function fact. The fact function contains a simple loop (or a tail\u2011recursive call) that multiplies an accumulator by the loop counter from 1 up to n, producing the factorial. The result is then printed to stdout. The dispatcher variable _TIG_IZ_DFDL_state is used by the Tigress control\u2011flow flattening to jump between the various basic blocks that implement this logic, but the high\u2011level algorithm remains the same as described above.",
+            "why_not_other_algorithms": "The program does not perform any modulus or division by 10, does not manipulate digits or cubes, and contains no nested loops or swap operations. These characteristics rule out algorithms such as digit\u2011sum, digit\u2011cube checks, or sorting. The presence of a dedicated function named fact and the typical pattern of a single integer argument strongly point to factorial computation rather than any other common algorithm."
+          },
+          "classification": "correct",
+          "confidence": 0.92,
+          "verified": true,
+          "comment": "Correct with sufficient confidence"
+        }
+      ],
+      "summary": {
+        "correct": "Yes",
+        "incorrect": "No",
+        "unknown": "No",
+        "algorithmic": "Yes",
+        "verified": "Yes",
+        "consistency": "high",
+        "overall_classification": "correct"
+      }
+    },
+    {
+      "program": "fib.c",
+      "obfuscated_file": "obfuscated/flatten/fib_flatten.c",
+      "ground_truth": {
+        "algorithm": "fibonacci",
+        "source": {
+          "repo": "tum-i4/obfuscation-benchmarks",
+          "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+          "path": "basic-algorithms"
+        }
+      },
+      "runs": [
+        {
+          "run": 1,
+          "llm_raw_output": "```json\n{\n  \"algorithm\": \"Iterative Fibonacci sequence calculation\",\n  \"confidence\": 0.7,\n  \"dispatcher_variable\": \"_j1\",\n  \"key_operations\": [\n    \"Initialize two accumulator variables (a = 0, b = 1)\",\n    \"Loop over the range 2..n, updating a and b by addition\",\n    \"Use the dispatcher variable to select the next flattened state (e.g., initialization, loop body, termination)\",\n    \"Return or print the nth Fibonacci number\"\n  ],\n  \"reconstructed_logic\": \"The program likely reads an integer n (possibly from the command line). It then sets a = 0 and b = 1. A dispatcher variable (_j1) is used to flatten the control flow: one state handles the base\u2011case check (n < 2), another state handles the loop body where c = a + b, a = b, b = c, and another state handles the loop counter decrement. When the counter reaches zero, the dispatcher jumps to the termination state, which outputs b as the nth Fibonacci number.\",\n  \"why_not_other_algorithms\": \"The static semantic analysis shows no modulo/division by 10, no digit\u2011cube extraction, no nested loops, no swap operations, and no adjacent comparisons\u2014all of which would be expected in algorithms such as digit\u2011sum, prime testing, or sorting. The presence of a dedicated function named \\\"fib\\\" and the absence of other distinctive patterns strongly point to a Fibonacci computation. No other algorithm fits the observed signal set.\"\n}\n```",
+          "llm_parsed_output": {
+            "algorithm": "Iterative Fibonacci sequence calculation",
+            "confidence": 0.7,
+            "dispatcher_variable": "_j1",
+            "key_operations": [
+              "Initialize two accumulator variables (a = 0, b = 1)",
+              "Loop over the range 2..n, updating a and b by addition",
+              "Use the dispatcher variable to select the next flattened state (e.g., initialization, loop body, termination)",
+              "Return or print the nth Fibonacci number"
+            ],
+            "reconstructed_logic": "The program likely reads an integer n (possibly from the command line). It then sets a = 0 and b = 1. A dispatcher variable (_j1) is used to flatten the control flow: one state handles the base\u2011case check (n < 2), another state handles the loop body where c = a + b, a = b, b = c, and another state handles the loop counter decrement. When the counter reaches zero, the dispatcher jumps to the termination state, which outputs b as the nth Fibonacci number.",
+            "why_not_other_algorithms": "The static semantic analysis shows no modulo/division by 10, no digit\u2011cube extraction, no nested loops, no swap operations, and no adjacent comparisons\u2014all of which would be expected in algorithms such as digit\u2011sum, prime testing, or sorting. The presence of a dedicated function named \"fib\" and the absence of other distinctive patterns strongly point to a Fibonacci computation. No other algorithm fits the observed signal set."
+          },
+          "classification": "correct",
+          "confidence": 0.7,
+          "verified": true,
+          "comment": "Correct with sufficient confidence"
+        }
+      ],
+      "summary": {
+        "correct": "Yes",
+        "incorrect": "No",
+        "unknown": "No",
+        "algorithmic": "Yes",
+        "verified": "Yes",
+        "consistency": "high",
+        "overall_classification": "correct"
+      }
+    },
+    {
+      "program": "gcd.c",
+      "obfuscated_file": "obfuscated/flatten/gcd_flatten.c",
+      "ground_truth": {
+        "algorithm": "gcd",
+        "source": {
+          "repo": "tum-i4/obfuscation-benchmarks",
+          "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+          "path": "basic-algorithms"
+        }
+      },
+      "runs": [
+        {
+          "run": 1,
+          "llm_raw_output": "{\n  \"algorithm\": \"BSD\u2010style linear feedback shift register random number generator (random())\",\n  \"confidence\": 0.62,\n  \"dispatcher_variable\": \"_j2\",\n  \"key_operations\": [\n    \"Initialize a 31\u2011element state array in a random_data structure\",\n    \"Update each state element by adding two other state elements modulo 2^32\",\n    \"Extract a 32\u2011bit random value by combining two state entries\",\n    \"Loop over the state array once per random number generation\",\n    \"Use the dispatcher variable _j2 to jump between the initialization, update, extraction, and output phases\"\n  ],\n  \"reconstructed_logic\": \"The flattened program begins by setting up the environment and command\u2011line arguments (via the _TIG_IZ_KRQG_* globals). It then creates a random_data structure and initializes its state array. The dispatcher variable _j2 drives a switch\u2011style control flow that alternates between: (1) initializing the state array, (2) performing the linear recurrence update (state[i] = state[i] + state[(i+some) mod 31]), (3) extracting a random 32\u2011bit value from the updated state, and (4) outputting that value (e.g., via printf). The loop that iterates over the 31 state elements is flattened into a series of dispatcher cases, so no nested loops appear in the static analysis. The program then repeats the update\u2011extract cycle as needed before terminating.\",\n  \"why_not_other_algorithms\": \"The code shows no digit extraction, no accumulation of a sum, no swapping of values, no adjacent comparisons, and no nested loops\u2014all of which would be present in sorting, searching, or arithmetic\u2011series algorithms. The presence of a random_data struct, state array, and the characteristic addition\u2011based recurrence strongly point to a random number generator rather than any other common algorithm.\"\n}",
+          "llm_parsed_output": {
+            "algorithm": "BSD\u2010style linear feedback shift register random number generator (random())",
+            "confidence": 0.62,
+            "dispatcher_variable": "_j2",
+            "key_operations": [
+              "Initialize a 31\u2011element state array in a random_data structure",
+              "Update each state element by adding two other state elements modulo 2^32",
+              "Extract a 32\u2011bit random value by combining two state entries",
+              "Loop over the state array once per random number generation",
+              "Use the dispatcher variable _j2 to jump between the initialization, update, extraction, and output phases"
+            ],
+            "reconstructed_logic": "The flattened program begins by setting up the environment and command\u2011line arguments (via the _TIG_IZ_KRQG_* globals). It then creates a random_data structure and initializes its state array. The dispatcher variable _j2 drives a switch\u2011style control flow that alternates between: (1) initializing the state array, (2) performing the linear recurrence update (state[i] = state[i] + state[(i+some) mod 31]), (3) extracting a random 32\u2011bit value from the updated state, and (4) outputting that value (e.g., via printf). The loop that iterates over the 31 state elements is flattened into a series of dispatcher cases, so no nested loops appear in the static analysis. The program then repeats the update\u2011extract cycle as needed before terminating.",
+            "why_not_other_algorithms": "The code shows no digit extraction, no accumulation of a sum, no swapping of values, no adjacent comparisons, and no nested loops\u2014all of which would be present in sorting, searching, or arithmetic\u2011series algorithms. The presence of a random_data struct, state array, and the characteristic addition\u2011based recurrence strongly point to a random number generator rather than any other common algorithm."
+          },
+          "classification": "incorrect",
+          "confidence": 0.62,
+          "verified": false,
+          "comment": "Incorrect identification: random"
+        }
+      ],
+      "summary": {
+        "correct": "No",
+        "incorrect": "Yes",
+        "unknown": "No",
+        "algorithmic": "Yes",
+        "verified": "No",
+        "consistency": "medium",
+        "overall_classification": "incorrect"
+      }
+    }
+  ]
+}
