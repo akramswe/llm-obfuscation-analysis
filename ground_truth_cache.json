@@ -1,0 +1,322 @@
+{
+  "anagram.c": {
+    "algorithm": "anagram",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "armstrong.c": {
+    "algorithm": "armstrong",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "binaryadd.c": {
+    "algorithm": "binaryadd",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "binarymult.c": {
+    "algorithm": "binarymult",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "binarysearch.c": {
+    "algorithm": "binarysearch",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "binarysearchrec.c": {
+    "algorithm": "binarysearch",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "bubblesort.c": {
+    "algorithm": "bubblesort",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "comparestrings.c": {
+    "algorithm": "comparestrings",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "concatstrings.c": {
+    "algorithm": "concatstrings",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "decimaltobinary.c": {
+    "algorithm": "decimaltobinary",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "decimaltohex.c": {
+    "algorithm": "decimaltohex",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "decimaltooctal.c": {
+    "algorithm": "decimaltooctal",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "factorial.c": {
+    "algorithm": "factorial",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "factorialrec.c": {
+    "algorithm": "factorial",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "fib.c": {
+    "algorithm": "fibonacci",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "floyd.c": {
+    "algorithm": "floyd",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "frequency.c": {
+    "algorithm": "frequency",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "gcd.c": {
+    "algorithm": "gcd",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "gcdrec.c": {
+    "algorithm": "gcd",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "insertionsort.c": {
+    "algorithm": "insertionsort",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "iofile.c": {
+    "algorithm": "iofile",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "lcm.c": {
+    "algorithm": "lcm",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "linearsearch.c": {
+    "algorithm": "linearsearch",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "mergesort.c": {
+    "algorithm": "mergesort",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "minmaxarray.c": {
+    "algorithm": "minmaxarray",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "multtable.c": {
+    "algorithm": "multtable",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "numtowords.c": {
+    "algorithm": "numtowords",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "palindrome.c": {
+    "algorithm": "palindrome",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "perfect.c": {
+    "algorithm": "perfect",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "prime.c": {
+    "algorithm": "prime",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "printinitials.c": {
+    "algorithm": "printinitials",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "pyramid.c": {
+    "algorithm": "pyramid",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "quicksort.c": {
+    "algorithm": "quicksort",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "random.c": {
+    "algorithm": "random",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "reverse.c": {
+    "algorithm": "reverse",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "romannumerals.c": {
+    "algorithm": "romannumerals",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "selectionsort.c": {
+    "algorithm": "selectionsort",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "stringtoASCII.c": {
+    "algorithm": "stringtoascii",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "sumrec.c": {
+    "algorithm": "sumrec",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  },
+  "vowels.c": {
+    "algorithm": "vowels",
+    "source": {
+      "repo": "tum-i4/obfuscation-benchmarks",
+      "commit": "d11452ffb3ec7418a462f65d4034f9f1474136c8",
+      "path": "basic-algorithms"
+    }
+  }
+}
