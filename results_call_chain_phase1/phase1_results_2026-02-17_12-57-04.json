@@ -1,0 +1,38 @@
+[
+  {
+    "depth": 100,
+    "success": true,
+    "message": "Full chain reconstructed (ended with END)",
+    "response_length_chars": 1981
+  },
+  {
+    "depth": 300,
+    "success": true,
+    "message": "Full chain reconstructed (ended with END)",
+    "response_length_chars": 6381
+  },
+  {
+    "depth": 500,
+    "success": true,
+    "message": "Full chain reconstructed (ended with END)",
+    "response_length_chars": 10798
+  },
+  {
+    "depth": 700,
+    "success": false,
+    "message": "Chain ended early at func553 (missing END)",
+    "response_length_chars": 11929
+  },
+  {
+    "depth": 900,
+    "success": false,
+    "message": "No response (API error)",
+    "response_length_chars": 0
+  },
+  {
+    "depth": 1000,
+    "success": false,
+    "message": "Chain ended early at func624 (missing END)",
+    "response_length_chars": 13522
+  }
+]
