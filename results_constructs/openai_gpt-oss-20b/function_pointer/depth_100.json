@@ -1,0 +1,7 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "construct": "function_pointer",
+  "depth": 100,
+  "success": true,
+  "response_length": 1981
+}
