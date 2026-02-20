@@ -1,0 +1,7 @@
+{
+  "model": "openai/gpt-oss-20b",
+  "construct": "direct",
+  "depth": 500,
+  "success": true,
+  "response_length": 10798
+}
