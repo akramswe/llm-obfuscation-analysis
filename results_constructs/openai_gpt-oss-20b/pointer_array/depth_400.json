@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-03-06T00:06:13.771061",
+  "model": "openai/gpt-oss-20b",
+  "construct": "pointer_array",
+  "depth": 400,
+  "success": false,
+  "estimated_prompt_tokens": 7230,
+  "response_length": 0,
+  "error": "Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01kff13pe0f0g8hdy0kmhnas3v` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 197477, Requested 9835. Please try again in 52m38.784s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+  "response_text": null
+}

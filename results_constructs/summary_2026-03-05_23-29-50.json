@@ -1,0 +1,12 @@
+[
+  {
+    "model": "openai/gpt-oss-20b",
+    "construct": "direct",
+    "max_success_depth": 300
+  },
+  {
+    "model": "openai/gpt-oss-20b",
+    "construct": "function_pointer",
+    "max_success_depth": 100
+  }
+]

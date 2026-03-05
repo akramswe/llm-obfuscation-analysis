@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-03-05T23:43:47.547707",
+  "model": "openai/gpt-oss-20b",
+  "construct": "pointer_array",
+  "depth": 700,
+  "success": false,
+  "response_length": 0,
+  "error": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-20b` in organization `org_01kff13pe0f0g8hdy0kmhnas3v` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 17035, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+  "response_text": null
+}
