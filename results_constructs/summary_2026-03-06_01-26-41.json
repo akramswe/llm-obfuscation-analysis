@@ -1,0 +1,127 @@
+[
+  {
+    "model": "openai/gpt-oss-20b",
+    "construct": "direct",
+    "max_success_depth": 300
+  },
+  {
+    "model": "openai/gpt-oss-20b",
+    "construct": "function_pointer",
+    "max_success_depth": 200
+  },
+  {
+    "model": "openai/gpt-oss-20b",
+    "construct": "pointer_array",
+    "max_success_depth": 200
+  },
+  {
+    "model": "openai/gpt-oss-20b",
+    "construct": "struct_pointer",
+    "max_success_depth": 200
+  },
+  {
+    "model": "openai/gpt-oss-20b",
+    "construct": "switch_dispatch",
+    "max_success_depth": 300
+  },
+  {
+    "model": "openai/gpt-oss-120b",
+    "construct": "direct",
+    "max_success_depth": 500
+  },
+  {
+    "model": "openai/gpt-oss-120b",
+    "construct": "function_pointer",
+    "max_success_depth": 300
+  },
+  {
+    "model": "openai/gpt-oss-120b",
+    "construct": "pointer_array",
+    "max_success_depth": 300
+  },
+  {
+    "model": "openai/gpt-oss-120b",
+    "construct": "struct_pointer",
+    "max_success_depth": 200
+  },
+  {
+    "model": "openai/gpt-oss-120b",
+    "construct": "switch_dispatch",
+    "max_success_depth": 300
+  },
+  {
+    "model": "llama-3.3-70b-versatile",
+    "construct": "direct",
+    "max_success_depth": 500
+  },
+  {
+    "model": "llama-3.3-70b-versatile",
+    "construct": "function_pointer",
+    "max_success_depth": 300
+  },
+  {
+    "model": "llama-3.3-70b-versatile",
+    "construct": "pointer_array",
+    "max_success_depth": 300
+  },
+  {
+    "model": "llama-3.3-70b-versatile",
+    "construct": "struct_pointer",
+    "max_success_depth": 300
+  },
+  {
+    "model": "llama-3.3-70b-versatile",
+    "construct": "switch_dispatch",
+    "max_success_depth": 300
+  },
+  {
+    "model": "llama-3.1-8b-instant",
+    "construct": "direct",
+    "max_success_depth": 300
+  },
+  {
+    "model": "llama-3.1-8b-instant",
+    "construct": "function_pointer",
+    "max_success_depth": 200
+  },
+  {
+    "model": "llama-3.1-8b-instant",
+    "construct": "pointer_array",
+    "max_success_depth": 200
+  },
+  {
+    "model": "llama-3.1-8b-instant",
+    "construct": "struct_pointer",
+    "max_success_depth": 200
+  },
+  {
+    "model": "llama-3.1-8b-instant",
+    "construct": "switch_dispatch",
+    "max_success_depth": 200
+  },
+  {
+    "model": "qwen/qwen3-32b",
+    "construct": "direct",
+    "max_success_depth": 0
+  },
+  {
+    "model": "qwen/qwen3-32b",
+    "construct": "function_pointer",
+    "max_success_depth": 0
+  },
+  {
+    "model": "qwen/qwen3-32b",
+    "construct": "pointer_array",
+    "max_success_depth": 0
+  },
+  {
+    "model": "qwen/qwen3-32b",
+    "construct": "struct_pointer",
+    "max_success_depth": 0
+  },
+  {
+    "model": "qwen/qwen3-32b",
+    "construct": "switch_dispatch",
+    "max_success_depth": 0
+  }
+]

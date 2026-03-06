@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-03-06T00:27:40.880312",
+  "model": "mixtral-8x7b",
+  "construct": "direct",
+  "depth": 100,
+  "success": false,
+  "estimated_prompt_tokens": 770,
+  "response_length": 0,
+  "error": "Error code: 404 - {'error': {'message': 'The model `mixtral-8x7b` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+  "response_text": null
+}

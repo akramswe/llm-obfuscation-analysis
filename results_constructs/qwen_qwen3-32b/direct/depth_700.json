@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-03-06T01:23:26.869093",
+  "model": "qwen/qwen3-32b",
+  "construct": "direct",
+  "depth": 700,
+  "success": false,
+  "estimated_prompt_tokens": 4820,
+  "response_length": 0,
+  "error": "Error code: 413 - {'error': {'message': 'Request too large for model `qwen/qwen3-32b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Requested 7638, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+  "response_text": null
+}

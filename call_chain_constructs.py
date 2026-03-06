@@ -5,12 +5,12 @@ from datetime import datetime
 from groq import Groq, RateLimitError, APIStatusError
 
 # ===================== CONFIG =====================
-
 MODELS = [
     "openai/gpt-oss-20b",
-    "llama3-70b-8192",
-    "mixtral-8x7b",
-    "gemma-7b-it"
+    "openai/gpt-oss-120b",
+    "llama-3.3-70b-versatile",
+    "llama-3.1-8b-instant",
+    "qwen/qwen3-32b"
 ]
 
 CONSTRUCT_TYPES = [
@@ -23,12 +23,20 @@ CONSTRUCT_TYPES = [
 
 # CALL_CHAIN_SIZES = [100, 300, 500, 700, 900, 1100]
 # Different constructs generate different code sizes → use different depth schedules (recommended)
+# CALL_CHAIN_SIZES_BY_CONSTRUCT = {
+#     "direct": [100, 300, 500, 700, 900, 1000],
+#     "function_pointer": [100, 200, 300, 400, 500],
+#     "pointer_array": [100, 200, 300, 400, 500],
+#     "struct_pointer": [100, 200, 300, 400, 500],
+#     "switch_dispatch": [100, 200, 300, 400, 500],
+# }
+
 CALL_CHAIN_SIZES_BY_CONSTRUCT = {
-    "direct": [100, 300, 500, 700, 900, 1000],
-    "function_pointer": [100, 200, 300, 400, 500],
-    "pointer_array": [100, 200, 300, 400, 500],
-    "struct_pointer": [100, 200, 300, 400, 500],
-    "switch_dispatch": [100, 200, 300, 400, 500],
+    "direct": [100, 300, 500, 700],
+    "function_pointer": [100, 200, 300],
+    "pointer_array": [100, 200, 300],
+    "struct_pointer": [100, 200, 300],
+    "switch_dispatch": [100, 200, 300],
 }
 
 TEMPERATURE = 0.0
@@ -36,7 +44,7 @@ DELAY_BETWEEN_REQUESTS = 15
 BASE_RESULTS_DIR = "results_constructs"
 
 # ✅ Use env var ONLY (do not hardcode keys)
-GROQ_API_KEY = "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"
+GROQ_API_KEY = "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"
 # GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 if not GROQ_API_KEY:
     raise RuntimeError("Please set GROQ_API_KEY as environment variable.")
@@ -272,15 +280,26 @@ def run_experiment():
 
                 # Skip prompts that are likely to exceed the 8000 TPM limit
                 est = approx_tokens(prompt)
+
                 if est > TPM_SOFT_LIMIT:
                     print(f"Skipping depth {depth} (~{est} tokens > limit)")
                     text, err = None, "skipped_prompt_too_large"
+                    success = False
                 else:
                     text, err = call_with_retries(client, model, prompt, retries=5)
+
                     if err:
                         print("API error:", err)
 
-                success = verify_response(text, depth)
+                        if "tokens per day" in err:
+                            print("Daily token limit reached. Stopping further tests.")
+                            text = None
+                            err = "skipped_tpd_limit"
+                            success = False
+                        else:
+                            success = verify_response(text, depth)
+                    else:
+                        success = verify_response(text, depth)
 
                 result_data = {
                     "timestamp": datetime.now().isoformat(),
@@ -297,6 +316,10 @@ def run_experiment():
                 out_file = os.path.join(construct_dir, f"depth_{depth}.json")
                 with open(out_file, "w") as f:
                     json.dump(result_data, f, indent=2)
+
+                # Stop the loop if daily token limit reached
+                if err == "skipped_tpd_limit":
+                    break
 
                 if success:
                     max_success_depth = depth

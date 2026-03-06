@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-03-06T00:26:16.425902",
+  "model": "llama3-70b-8192",
+  "construct": "struct_pointer",
+  "depth": 500,
+  "success": false,
+  "estimated_prompt_tokens": 11035,
+  "response_length": 0,
+  "error": "skipped_prompt_too_large",
+  "response_text": null
+}
