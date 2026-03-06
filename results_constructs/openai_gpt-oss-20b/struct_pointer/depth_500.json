@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-03-06T00:13:02.703184",
+  "model": "openai/gpt-oss-20b",
+  "construct": "struct_pointer",
+  "depth": 500,
+  "success": false,
+  "estimated_prompt_tokens": 11035,
+  "response_length": 0,
+  "error": "skipped_prompt_too_large",
+  "response_text": null
+}

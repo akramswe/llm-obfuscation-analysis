@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-03-06T01:20:17.413717",
+  "model": "llama-3.1-8b-instant",
+  "construct": "struct_pointer",
+  "depth": 300,
+  "success": false,
+  "estimated_prompt_tokens": 6635,
+  "response_length": 0,
+  "error": "Error code: 413 - {'error': {'message': 'Request too large for model `llama-3.1-8b-instant` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Requested 8002, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+  "response_text": null
+}

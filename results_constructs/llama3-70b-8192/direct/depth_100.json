@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-03-06T00:21:35.707128",
+  "model": "llama3-70b-8192",
+  "construct": "direct",
+  "depth": 100,
+  "success": false,
+  "estimated_prompt_tokens": 770,
+  "response_length": 0,
+  "error": "Error code: 400 - {'error': {'message': 'The model `llama3-70b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}",
+  "response_text": null
+}
