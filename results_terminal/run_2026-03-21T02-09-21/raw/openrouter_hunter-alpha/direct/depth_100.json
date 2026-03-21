@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-03-21T02-09-21",
+  "timestamp": "2026-03-21T02:09:24.453769",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "openrouter",
+    "requested_name": "openrouter/hunter-alpha",
+    "actual_name": null,
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "direct",
+    "depth": 100,
+    "code_chars": 3149,
+    "estimated_prompt_tokens": 922
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 3688
+  },
+  "response": {
+    "text": "",
+    "normalized_text": "",
+    "response_chars": 0,
+    "response_tokens_est": 0,
+    "latency_seconds": null
+  },
+  "evaluation": {
+    "expected_depth": "func100",
+    "predicted_last_func": null,
+    "success": false,
+    "failure_type": "api_failure",
+    "failure_reason": "api_error",
+    "failure_explanation": "API failure occurred: api_error",
+    "failure_analysis": {
+      "first_wrong_line": null,
+      "last_correct_line": 0,
+      "last_correct_call": null,
+      "failure_started_at": null,
+      "failure_reason": "api_error"
+    }
+  },
+  "error": {
+    "type": "api_error",
+    "message": "Error code: 404 - {'error': {'message': 'Hunter Alpha was a stealth model revealed on March 18th as an early testing version of MiMo-V2-Pro. Find it here: https://openrouter.ai/xiaomi/mimo-v2-pro', 'code': 404}, 'user_id': 'user_3BBNlw1f5s8rxfs8uzWj6ZOb7nL'}"
+  }
+}
