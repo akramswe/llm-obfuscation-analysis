@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "run_id": "2026-03-20T16-03-42",
+    "experiment": "terminal_function_identification",
+    "provider": "openrouter",
+    "timestamp": "2026-03-20T16:19:57.186876"
+  },
+  "overall": {
+    "total_tests": 6,
+    "total_successes": 6,
+    "total_failures": 0,
+    "success_rate": 1.0
+  },
+  "models": {
+    "nvidia/nemotron-3-super-120b-a12b:free": {
+      "requested_model": "nvidia/nemotron-3-super-120b-a12b:free",
+      "actual_models_seen": [
+        "nvidia/nemotron-3-super-120b-a12b-20230311:free"
+      ],
+      "total_tests": 6,
+      "total_successes": 6,
+      "success_rate": 1.0,
+      "test_points": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "nvidia/nemotron-3-super-120b-a12b:free",
+          "actual_model": "nvidia/nemotron-3-super-120b-a12b-20230311:free",
+          "result": "success",
+          "failure_type": null,
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 100,
+            "last_correct_call": "func100 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 300,
+          "requested_model": "nvidia/nemotron-3-super-120b-a12b:free",
+          "actual_model": "nvidia/nemotron-3-super-120b-a12b-20230311:free",
+          "result": "success",
+          "failure_type": null,
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 300,
+            "last_correct_call": "func300 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 500,
+          "requested_model": "nvidia/nemotron-3-super-120b-a12b:free",
+          "actual_model": "nvidia/nemotron-3-super-120b-a12b-20230311:free",
+          "result": "success",
+          "failure_type": null,
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 500,
+            "last_correct_call": "func500 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 1000,
+          "requested_model": "nvidia/nemotron-3-super-120b-a12b:free",
+          "actual_model": "nvidia/nemotron-3-super-120b-a12b-20230311:free",
+          "result": "success",
+          "failure_type": null,
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 1000,
+            "last_correct_call": "func1000 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "function_pointer",
+          "depth": 100,
+          "requested_model": "nvidia/nemotron-3-super-120b-a12b:free",
+          "actual_model": "nvidia/nemotron-3-super-120b-a12b-20230311:free",
+          "result": "success",
+          "failure_type": null,
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 100,
+            "last_correct_call": "func100 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "function_pointer",
+          "depth": 300,
+          "requested_model": "nvidia/nemotron-3-super-120b-a12b:free",
+          "actual_model": "nvidia/nemotron-3-super-120b-a12b-20230311:free",
+          "result": "success",
+          "failure_type": null,
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 300,
+            "last_correct_call": "func300 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "tested_depths": 4,
+          "successes": 4,
+          "success_rate": 1.0,
+          "max_success_depth": 1000,
+          "first_failure_depth": null,
+          "actual_models_seen": [
+            "nvidia/nemotron-3-super-120b-a12b-20230311:free"
+          ]
+        },
+        "function_pointer": {
+          "tested_depths": 2,
+          "successes": 2,
+          "success_rate": 1.0,
+          "max_success_depth": 300,
+          "first_failure_depth": null,
+          "actual_models_seen": [
+            "nvidia/nemotron-3-super-120b-a12b-20230311:free"
+          ]
+        }
+      }
+    }
+  }
+}

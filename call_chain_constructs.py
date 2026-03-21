@@ -11,10 +11,11 @@ from openai import OpenAI, RateLimitError, APIStatusError
 
 MODELS = [
     # "openai/gpt-oss-20b" for groq
-    # "openrouter/free"
+    "openrouter/free"
     # "openrouter/hunter-alpha"
     # "xiaomi/mimo-v2-pro"
-    "nvidia/nemotron-3-super-120b-a12b:free"
+    #  "openai/gpt-5.4"
+    # "nvidia/nemotron-3-super-120b-a12b:free"
 ]
 
 # MODELS = [
@@ -26,7 +27,8 @@ MODELS = [
 # ]
 
 CONSTRUCT_TYPES = [
-    "direct"
+    "direct",
+    "function_pointer"
 ]
 
 # CONSTRUCT_TYPES = [
@@ -38,7 +40,8 @@ CONSTRUCT_TYPES = [
 # ]
 
 CALL_CHAIN_SIZES_BY_CONSTRUCT = {
-    "direct": [100, 300, 1000]
+    "direct": [100],
+    "function_pointer": [100],
 }
 
 # CALL_CHAIN_SIZES_BY_CONSTRUCT = {
@@ -57,6 +60,7 @@ PROMPT_VERSION = "v2_terminal_only"
 SCHEMA_VERSION = "1.0"
 EXPERIMENT_NAME = "terminal_function_identification"
 PROVIDER_NAME = "openrouter"
+MODEL_ROUTING_NOTE = "openrouter/free is a routing model; actual backend models may vary per request and are recorded in summary.json"
 
 # # Use environment variable only
 # GROQ_API_KEY = "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"
@@ -64,7 +68,7 @@ PROVIDER_NAME = "openrouter"
 # if not GROQ_API_KEY:
 #     raise RuntimeError("Please set GROQ_API_KEY as an environment variable.")
 
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = "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"
 
 # OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
 if not OPENROUTER_API_KEY:
@@ -202,16 +206,21 @@ def build_prompt(code: str, depth: int) -> str:
 
 Your task is to reconstruct the COMPLETE linear function call chain starting from main().
 
-Instructions:
-- Follow the function calls until the program terminates.
+Strict instructions:
+- Follow the function calls step by step until the program terminates.
 - Output EXACTLY one call per line.
-- Use the exact format: funcX calls funcY
-- The final line must be: func{depth} calls END
-- Do NOT include main in the output.
+- Use EXACT format: funcX calls funcY
+- The final line MUST be: func{depth} calls END
+- Do NOT skip any function.
+- Do NOT jump ahead.
+- Do NOT repeat lines.
+- Do NOT include main.
 - Do NOT include explanations, comments, numbering, or code blocks.
 - Output ONLY the call chain.
+- Output must contain EXACTLY {depth} lines.
+- If you are unsure, continue the sequence step-by-step logically without skipping or stopping early.
 
-Example format:
+Example:
 func1 calls func2
 func2 calls func3
 func3 calls END
@@ -309,7 +318,7 @@ def verify_response(response: Optional[str], depth: int) -> bool:
 
 # ===================== API =====================
 
-def call_with_retries(client, model: str, prompt: str, retries: int = 5) -> Tuple[Optional[str], Optional[str], Optional[float]]:
+def call_with_retries(client,model: str,prompt: str,retries: int = 5 ) -> Tuple[Optional[str], Optional[str], Optional[str], Optional[float], Optional[str]]:
     last_err = None
 
     for attempt in range(retries):
@@ -322,26 +331,28 @@ def call_with_retries(client, model: str, prompt: str, retries: int = 5) -> Tupl
             )
             latency = time.perf_counter() - start
             text = resp.choices[0].message.content.strip() if resp.choices[0].message.content else ""
-            return text, None, latency
+            actual_model = getattr(resp, "model", None)
+            return text, None, None, latency, actual_model
 
         except RateLimitError as e:
-            last_err = str(e)
-            print(f"DEBUG RateLimitError attempt {attempt + 1}/{retries}: {last_err}")
+            msg = str(e)
+            last_err = msg
+            print(f"DEBUG RateLimitError attempt {attempt + 1}/{retries}: {msg}")
 
-            err_lower = last_err.lower()
+            err_lower = msg.lower()
 
             if "tokens per day" in err_lower:
-                return None, "daily_token_limit", None
+                return None, "daily_token_limit", msg, None, None
 
             if "request too large" in err_lower or ("limit" in err_lower and "requested" in err_lower):
-                return None, "prompt_too_large", None
+                return None, "prompt_too_large", msg, None, None
 
             if attempt < retries - 1:
                 sleep_time = (2 ** attempt) * 10
                 print(f"DEBUG sleeping {sleep_time}s before retry...")
                 time.sleep(sleep_time)
             else:
-                return None, "rate_limit", None
+                return None, "rate_limit", msg, None, None
 
         except APIStatusError as e:
             msg = str(e)
@@ -350,10 +361,10 @@ def call_with_retries(client, model: str, prompt: str, retries: int = 5) -> Tupl
             msg_lower = msg.lower()
 
             if "tokens per day" in msg_lower:
-                return None, "daily_token_limit", None
+                return None, "daily_token_limit", msg, None, None
 
             if "request too large" in msg_lower or ("limit" in msg_lower and "requested" in msg_lower):
-                return None, "prompt_too_large", None
+                return None, "prompt_too_large", msg, None, None
 
             if "rate_limit_exceeded" in msg_lower or "rate limit" in msg_lower:
                 if attempt < retries - 1:
@@ -361,16 +372,16 @@ def call_with_retries(client, model: str, prompt: str, retries: int = 5) -> Tupl
                     print(f"DEBUG sleeping {sleep_time}s before retry...")
                     time.sleep(sleep_time)
                     continue
-                return None, "rate_limit", None
+                return None, "rate_limit", msg, None, None
 
-            return None, "api_error", None
+            return None, "api_error", msg, None, None
 
         except Exception as e:
             msg = str(e)
             print(f"DEBUG UnexpectedError attempt {attempt + 1}/{retries}: {msg}")
-            return None, "api_error", None
+            return None, "api_error", msg, None, None
 
-    return None, "rate_limit" if last_err else "api_error", None
+    return None, "rate_limit" if last_err else "api_error", last_err, None, None
 
 # ===================== UTIL =====================
 
@@ -459,41 +470,6 @@ def analyze_failure_point(response: Optional[str], depth: int, error: Optional[s
         "failure_started_at": None,
         "failure_reason": None
     }
-
-    lines = [ln.strip() for ln in response.strip().splitlines() if ln.strip()]
-
-    last_correct_line = 0
-    last_correct_call = None
-
-    for i in range(1, depth + 1):
-        expected = f"func{i} calls func{i+1}" if i < depth else f"func{depth} calls END"
-
-        if i > len(lines):
-            return {
-                "first_wrong_line": i,
-                "last_correct_line": last_correct_line,
-                "last_correct_call": last_correct_call,
-                "failure_started_at": f"func{i}"
-            }
-
-        if lines[i - 1] != expected:
-            return {
-                "first_wrong_line": i,
-                "last_correct_line": last_correct_line,
-                "last_correct_call": last_correct_call,
-                "failure_started_at": f"func{i}"
-            }
-
-        last_correct_line = i
-        last_correct_call = lines[i - 1]
-
-    return {
-        "first_wrong_line": None,
-        "last_correct_line": depth,
-        "last_correct_call": lines[-1] if lines else None,
-        "failure_started_at": None
-    }
-
 # ===================== EXPERIMENT =====================
 
 def run_experiment():
@@ -510,6 +486,7 @@ def run_experiment():
         "run_id": run_id,
         "experiment_name": EXPERIMENT_NAME,
         "models": MODELS,
+        "note": MODEL_ROUTING_NOTE,
         "construct_types": CONSTRUCT_TYPES,
         "depths_by_construct": CALL_CHAIN_SIZES_BY_CONSTRUCT,
         "temperature": TEMPERATURE,
@@ -523,6 +500,8 @@ def run_experiment():
 
     flat_results = []
     summary = []
+    total_tasks = sum(len(CALL_CHAIN_SIZES_BY_CONSTRUCT[c]) for c in CONSTRUCT_TYPES) * len(MODELS)
+    current_task = 0
 
     stop_all = False
 
@@ -545,24 +524,31 @@ def run_experiment():
 
             for depth in depths:
                 tested_depths += 1
-                print(f"Testing depth {depth}")
+                # print(f"Testing depth {depth}")
+                current_task += 1
+                print(f"\n📊 Progress: {current_task}/{total_tasks}")
+                print(f"[{datetime.now().strftime('%H:%M:%S')}] Testing depth {depth}")
 
                 code = generate_code(depth, construct)
                 prompt = build_prompt(code, depth)
                 est_prompt_tokens = approx_tokens(prompt)
 
                 text = None
-                err = None
+                err_type = None
+                err_msg = None
                 latency = None
+                actual_model = None
 
                 if est_prompt_tokens > TPM_SOFT_LIMIT:
                     print(
                         f"WARNING: estimated prompt tokens {est_prompt_tokens} exceed soft limit {TPM_SOFT_LIMIT}, sending anyway..."
                     )
 
+                print("🚀 Sending request to API...")
                 print(f"DEBUG: starting API call for depth {depth}")
-                text, err, latency = call_with_retries(client, model, prompt, retries=5)
+                text, err_type, err_msg, latency, actual_model = call_with_retries(client, model, prompt, retries=5)
                 print(f"DEBUG: finished API call for depth {depth}")
+                print("✅ Response received")
 
                 if text is None:
                     text = ""
@@ -570,17 +556,18 @@ def run_experiment():
                 normalized_text = normalize_response(text)
 
                 success = verify_response(normalized_text, depth)
-                failure_type = classify_failure(normalized_text, depth, err)
+                failure_reason = classify_failure(normalized_text, depth, err_type)
                 last_call = extract_last_call(normalized_text)
                 predicted_last_func = extract_predicted_func(normalized_text)
-                failure_analysis = analyze_failure_point(normalized_text, depth, err)
+                failure_analysis = analyze_failure_point(normalized_text, depth, err_type)
 
-                print(f"DEBUG: est_prompt_tokens={est_prompt_tokens}, err={err}")
+                print(f"DEBUG: est_prompt_tokens={est_prompt_tokens}, err_type={err_type}, err_msg={err_msg}")
+                print(f"DEBUG: requested_model={model}, actual_model={actual_model}")
                 print(f"DEBUG: raw_text={repr(text[:200])}")
                 print(f"DEBUG: normalized_text={repr(normalized_text[:200])}")
                 print(f"DEBUG: last_call={last_call}")
                 print(f"DEBUG: predicted_last_func={predicted_last_func}")
-                print(f"DEBUG: failure_type={None if success else failure_type}")
+                print(f"DEBUG: failure_reason={None if success else failure_reason}")
                 print(f"DEBUG: failure_analysis={failure_analysis}")
 
                 if success:
@@ -590,6 +577,34 @@ def run_experiment():
                     first_failure_depth = depth
 
                 expected_func = f"func{depth}"
+
+                if success:
+                    failure_type = None
+                    failure_explanation = "Successful execution"
+                elif err_type is not None:
+                    failure_type = "api_failure"
+                    failure_explanation = f"API failure occurred: {err_type}"
+                else:
+                    failure_type = "output_failure"
+                    if failure_analysis.get("failure_reason") == "truncated_or_stopped_early":
+                        failure_explanation = (
+                            f"Model stopped early after line {failure_analysis.get('last_correct_line')}"
+                        )
+                    elif failure_analysis.get("failure_reason") == "incorrect_line":
+                        failure_explanation = (
+                            f"Model produced an incorrect line starting at line {failure_analysis.get('first_wrong_line')}"
+                        )
+                    elif failure_reason == "malformed_output":
+                        failure_explanation = "Model produced malformed output"
+                    elif failure_reason == "empty_response":
+                        failure_explanation = "Model returned an empty response"
+                    else:
+                        failure_explanation = "Model output did not match the expected call chain"
+
+                error_info = {
+                    "type": "none" if err_type is None else err_type,
+                    "message": "API call successful" if err_type is None else err_msg
+                }
 
                 result_data = {
                     "schema_version": SCHEMA_VERSION,
@@ -602,7 +617,8 @@ def run_experiment():
                     },
                     "model": {
                         "provider": PROVIDER_NAME,
-                        "name": model,
+                        "requested_name": model,
+                        "actual_name": actual_model,
                         "temperature": TEMPERATURE
                     },
                     "sample": {
@@ -626,10 +642,12 @@ def run_experiment():
                         "expected_depth": expected_func,
                         "predicted_last_func": predicted_last_func,
                         "success": success,
-                        "failure_type": None if success else failure_type,
+                        "failure_type": failure_type,
+                        "failure_reason": None if success else failure_reason,
+                        "failure_explanation": failure_explanation,
                         "failure_analysis": failure_analysis
                     },
-                    "error": err
+                    "error": error_info
                 }
 
                 out_path = os.path.join(construct_dir, f"depth_{depth}.json")
@@ -639,12 +657,12 @@ def run_experiment():
                 if success:
                     print(f"Result: success=True | last_call={last_call}")
                 else:
-                    print(f"Result: success=False ({failure_type}) | expected=func{depth}, last_call={last_call}")
-
-                if err == "daily_token_limit":
+                    print(f"Result: success=False ({failure_reason}) | expected=func{depth}, last_call={last_call}")
+                if err_type == "daily_token_limit":
                     stop_all = True
                     break
 
+                print(f"⏳ Waiting {DELAY_BETWEEN_REQUESTS}s before next request...\n")
                 time.sleep(DELAY_BETWEEN_REQUESTS)
 
             summary.append({
@@ -663,8 +681,117 @@ def run_experiment():
         if stop_all:
             break
 
-    save_json(os.path.join(summaries_root, "flat_results.json"), flat_results)
-    save_json(os.path.join(summaries_root, "summary_by_model_construct.json"), summary)
+    def build_clean_summary(run_id: str, summary: list, flat_results: list):
+        total_tests = len(flat_results)
+        total_successes = sum(1 for r in flat_results if r["evaluation"]["success"])
+        total_failures = total_tests - total_successes
+
+        models_summary = {}
+
+        for r in flat_results:
+            requested_model = r["model"]["requested_name"]
+            actual_model = r["model"]["actual_name"]
+            construct = r["sample"]["construct"]
+            depth = r["sample"]["depth"]
+            success = r["evaluation"]["success"]
+            failure_type = r["evaluation"]["failure_type"]
+            failure_reason = r["evaluation"].get("failure_reason")
+            failure_explanation = r["evaluation"].get("failure_explanation")
+            failure_analysis = r["evaluation"]["failure_analysis"]
+            error_info = r.get("error", {})
+
+            if requested_model not in models_summary:
+                models_summary[requested_model] = {
+                    "requested_model": requested_model,
+                    "actual_models_seen": [],
+                    "total_tests": 0,
+                    "total_successes": 0,
+                    "success_rate": 0.0,
+                    "test_points": [],
+                    "constructs": {}
+                }
+
+            model_entry = models_summary[requested_model]
+            model_entry["total_tests"] += 1
+            if success:
+                model_entry["total_successes"] += 1
+
+            if actual_model and actual_model not in model_entry["actual_models_seen"]:
+                model_entry["actual_models_seen"].append(actual_model)
+
+            if construct not in model_entry["constructs"]:
+                model_entry["constructs"][construct] = {
+                    "tested_depths": 0,
+                    "successes": 0,
+                    "success_rate": 0.0,
+                    "max_success_depth": 0,
+                    "first_failure_depth": None,
+                    "actual_models_seen": []
+                }
+
+            construct_entry = model_entry["constructs"][construct]
+            construct_entry["tested_depths"] += 1
+
+            if success:
+                construct_entry["successes"] += 1
+                construct_entry["max_success_depth"] = max(construct_entry["max_success_depth"], depth)
+            elif construct_entry["first_failure_depth"] is None:
+                construct_entry["first_failure_depth"] = depth
+
+            if actual_model and actual_model not in construct_entry["actual_models_seen"]:
+                construct_entry["actual_models_seen"].append(actual_model)
+
+            model_entry["test_points"].append({
+                "construct": construct,
+                "depth": depth,
+                "requested_model": requested_model,
+                "actual_model": actual_model,
+                "result": "success" if success else "failure",
+                "failure_type": failure_type,
+                "failure_reason": failure_reason,
+                "failure_explanation": failure_explanation,
+                "api_error_type": error_info.get("type"),
+                "api_error_message": error_info.get("message"),
+                "failure_point": {
+                    "first_wrong_line": failure_analysis.get("first_wrong_line"),
+                    "last_correct_line": failure_analysis.get("last_correct_line"),
+                    "last_correct_call": failure_analysis.get("last_correct_call"),
+                    "failure_started_at": failure_analysis.get("failure_started_at"),
+                    "failure_reason": failure_analysis.get("failure_reason")
+                }
+            })
+
+        for requested_model, model_entry in models_summary.items():
+            model_entry["success_rate"] = round(
+                model_entry["total_successes"] / model_entry["total_tests"], 3
+            ) if model_entry["total_tests"] else 0.0
+
+            for construct, construct_entry in model_entry["constructs"].items():
+                construct_entry["success_rate"] = round(
+                    construct_entry["successes"] / construct_entry["tested_depths"], 3
+                ) if construct_entry["tested_depths"] else 0.0
+
+            model_entry["test_points"].sort(key=lambda x: (x["construct"], x["depth"]))
+
+        return {
+            "meta": {
+                "run_id": run_id,
+                "experiment": EXPERIMENT_NAME,
+                "provider": PROVIDER_NAME,
+                "timestamp": datetime.now().isoformat()
+            },
+            "overall": {
+                "total_tests": total_tests,
+                "total_successes": total_successes,
+                "total_failures": total_failures,
+                "success_rate": round(total_successes / total_tests, 3) if total_tests else 0.0
+            },
+            "models": models_summary
+        }
+
+    clean_summary = build_clean_summary(run_id, summary, flat_results)
+
+    save_json(os.path.join(summaries_root, "summary.json"), clean_summary)
 
     print("\nExperiment complete.")
     print(f"Results saved under: {run_root}")
