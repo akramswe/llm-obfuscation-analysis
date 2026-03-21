@@ -470,6 +470,46 @@ def analyze_failure_point(response: Optional[str], depth: int, error: Optional[s
         "failure_started_at": None,
         "failure_reason": None
     }
+
+def explain_success(response: Optional[str], depth: int) -> Optional[str]:
+    if verify_response(response, depth):
+        return "exact_match"
+    return None
+
+
+def explain_output_failure(response: Optional[str], depth: int) -> Optional[str]:
+    if response is None or not response.strip():
+        return "empty_output"
+
+    lines = [ln.strip() for ln in response.strip().splitlines() if ln.strip()]
+
+    for i in range(1, depth + 1):
+        expected = f"func{i} calls func{i+1}" if i < depth else f"func{depth} calls END"
+
+        if i > len(lines):
+            return f"stopped_early_at_line_{i}"
+
+        actual = lines[i - 1]
+
+        if actual != expected:
+            if " calls " not in actual:
+                return f"malformed_line_{i}"
+
+            left, right = actual.split(" calls ", 1)
+
+            expected_left = f"func{i}"
+            expected_right = f"func{i+1}" if i < depth else "END"
+
+            if right != expected_right:
+                return f"wrong_callee_line_{i}_expected_{expected_right}_got_{right}"
+
+            if left != expected_left:
+                return f"wrong_caller_line_{i}"
+
+            return f"incorrect_line_{i}"
+
+    return None
+
 # ===================== EXPERIMENT =====================
 
 def run_experiment():
@@ -556,6 +596,13 @@ def run_experiment():
                 normalized_text = normalize_response(text)
 
                 success = verify_response(normalized_text, depth)
+                success_reason = explain_success(normalized_text, depth) if success else None
+
+                detailed_output_reason = (
+                    explain_output_failure(normalized_text, depth)
+                    if not success and err_type is None
+                    else None
+                )
                 failure_reason = classify_failure(normalized_text, depth, err_type)
                 last_call = extract_last_call(normalized_text)
                 predicted_last_func = extract_predicted_func(normalized_text)
@@ -602,8 +649,8 @@ def run_experiment():
                         failure_explanation = "Model output did not match the expected call chain"
 
                 error_info = {
-                    "type": "none" if err_type is None else err_type,
-                    "message": "API call successful" if err_type is None else err_msg
+                    "api_reason": "none" if err_type is None else err_type,
+                    "api_message": "API call successful" if err_type is None else err_msg
                 }
 
                 result_data = {
@@ -642,9 +689,14 @@ def run_experiment():
                         "expected_depth": expected_func,
                         "predicted_last_func": predicted_last_func,
                         "success": success,
+                        # "success_reason": success_reason,
+                        "result": "success" if success else "failure",
+                        "success_reason": success_reason,
                         "failure_type": failure_type,
                         "failure_reason": None if success else failure_reason,
-                        "failure_explanation": failure_explanation,
+                        # "failure_explanation": failure_explanation,
+                        "failure_explanation": None if success else failure_explanation,
+                        "detailed_output_reason": detailed_output_reason,
                         "failure_analysis": failure_analysis
                     },
                     "error": error_info
@@ -747,11 +799,12 @@ def run_experiment():
                 "requested_model": requested_model,
                 "actual_model": actual_model,
                 "result": "success" if success else "failure",
+                "success_reason": r["evaluation"].get("success_reason"),
                 "failure_type": failure_type,
                 "failure_reason": failure_reason,
-                "failure_explanation": failure_explanation,
-                "api_error_type": error_info.get("type"),
-                "api_error_message": error_info.get("message"),
+                "failure_explanation": None if success else failure_explanation,
+                "api_reason": error_info.get("api_reason"),
+                "api_message": error_info.get("api_message"),
                 "failure_point": {
                     "first_wrong_line": failure_analysis.get("first_wrong_line"),
                     "last_correct_line": failure_analysis.get("last_correct_line"),
