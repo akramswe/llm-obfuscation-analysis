@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-03-22T21-04-41",
+  "timestamp": "2026-03-22T21:31:04.778932",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "openrouter",
+    "requested_name": "openrouter/free",
+    "actual_name": "stepfun/step-3.5-flash:free",
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "direct",
+    "depth": 1100,
+    "code_chars": 36351,
+    "estimated_prompt_tokens": 9275
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 37102
+  },
+  "response": {
+    "text": "",
+    "normalized_text": "",
+    "response_chars": 0,
+    "response_tokens_est": 0,
+    "latency_seconds": 555.0582733419999
+  },
+  "evaluation": {
+    "expected_depth": "func1100",
+    "predicted_last_func": null,
+    "success": false,
+    "result": "failure",
+    "success_reason": null,
+    "failure_type": "output_failure",
+    "failure_reason": "empty_response",
+    "failure_explanation": "Model returned an empty response",
+    "detailed_output_reason": "empty_output",
+    "failure_analysis": {
+      "first_wrong_line": 1,
+      "last_correct_line": 0,
+      "last_correct_call": null,
+      "failure_started_at": "func1",
+      "failure_reason": "empty_response"
+    }
+  },
+  "error": {
+    "api_reason": "none",
+    "api_message": "API call successful"
+  }
+}

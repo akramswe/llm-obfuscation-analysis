@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "run_id": "2026-04-01T23-55-25",
+    "experiment": "terminal_function_identification",
+    "provider": "openrouter",
+    "timestamp": "2026-04-01T23:57:11.567485"
+  },
+  "overall": {
+    "total_tests": 2,
+    "total_successes": 0,
+    "total_failures": 2,
+    "success_rate": 0.0
+  },
+  "models": {
+    "openrouter/free": {
+      "requested_model": "openrouter/free",
+      "actual_models_seen": [
+        "google/gemma-3-4b-it:free",
+        "arcee-ai/trinity-mini-20251201:free"
+      ],
+      "total_tests": 2,
+      "total_successes": 0,
+      "success_rate": 0.0,
+      "test_points": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "openrouter/free",
+          "actual_model": "google/gemma-3-4b-it:free",
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "output_failure",
+          "failure_reason": "exact_match_failure",
+          "failure_explanation": "Model produced an incorrect line starting at line 100",
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": 100,
+            "last_correct_line": 99,
+            "last_correct_call": "func76 calls func51",
+            "failure_started_at": null,
+            "failure_reason": "incorrect_line"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 1000,
+          "requested_model": "openrouter/free",
+          "actual_model": "arcee-ai/trinity-mini-20251201:free",
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "output_failure",
+          "failure_reason": "underestimate",
+          "failure_explanation": "Model produced an incorrect line starting at line 1000",
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": 1000,
+            "last_correct_line": 999,
+            "last_correct_call": "func622 calls func599",
+            "failure_started_at": null,
+            "failure_reason": "incorrect_line"
+          }
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "tested_depths": 2,
+          "successes": 0,
+          "success_rate": 0.0,
+          "max_success_depth": 0,
+          "first_failure_depth": 100,
+          "actual_models_seen": [
+            "google/gemma-3-4b-it:free",
+            "arcee-ai/trinity-mini-20251201:free"
+          ]
+        }
+      }
+    }
+  }
+}
