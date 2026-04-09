@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "run_id": "2026-04-02T00-18-01",
+    "experiment": "terminal_function_identification",
+    "provider": "openrouter",
+    "timestamp": "2026-04-02T00:20:58.132757"
+  },
+  "overall": {
+    "total_tests": 2,
+    "total_successes": 1,
+    "total_failures": 1,
+    "success_rate": 0.5
+  },
+  "models": {
+    "openrouter/free": {
+      "requested_model": "openrouter/free",
+      "actual_models_seen": [
+        "arcee-ai/trinity-large-preview:free",
+        "nvidia/nemotron-3-nano-30b-a3b:free"
+      ],
+      "total_tests": 2,
+      "total_successes": 1,
+      "success_rate": 0.5,
+      "test_points": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "openrouter/free",
+          "actual_model": "arcee-ai/trinity-large-preview:free",
+          "result": "success",
+          "success_reason": "exact_match",
+          "failure_type": null,
+          "failure_reason": null,
+          "failure_explanation": null,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 100,
+            "last_correct_call": "func19 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 1000,
+          "requested_model": "openrouter/free",
+          "actual_model": "nvidia/nemotron-3-nano-30b-a3b:free",
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "output_failure",
+          "failure_reason": "underestimate",
+          "failure_explanation": "Model produced an incorrect line starting at line 2",
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": 2,
+            "last_correct_line": 1,
+            "last_correct_call": "func655 calls func402",
+            "failure_started_at": "func402",
+            "failure_reason": "incorrect_line"
+          }
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "tested_depths": 2,
+          "successes": 1,
+          "success_rate": 0.5,
+          "max_success_depth": 100,
+          "first_failure_depth": 1000,
+          "actual_models_seen": [
+            "arcee-ai/trinity-large-preview:free",
+            "nvidia/nemotron-3-nano-30b-a3b:free"
+          ]
+        }
+      }
+    }
+  }
+}

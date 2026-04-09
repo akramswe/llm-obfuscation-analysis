@@ -2,6 +2,7 @@ import os
 import json
 import time
 import re
+import random
 from datetime import datetime
 from typing import Optional, Tuple
 # from groq import Groq, RateLimitError, APIStatusError
@@ -15,7 +16,9 @@ MODELS = [
     # "openrouter/hunter-alpha"
     # "xiaomi/mimo-v2-pro"
     #  "openai/gpt-5.4"
-    # "nvidia/nemotron-3-super-120b-a12b:free"
+    # "nvidia/nemotron-3-super-120b-a12b:free",
+    # "meta-llama/llama-3.1-8b-instruct",
+    # "qwen/qwen2.5-7b-instruct"
 ]
 
 # MODELS = [
@@ -27,8 +30,8 @@ MODELS = [
 # ]
 
 CONSTRUCT_TYPES = [
-    "direct",
-    "function_pointer"
+    "direct"
+    # "function_pointer"
 ]
 
 # CONSTRUCT_TYPES = [
@@ -40,8 +43,8 @@ CONSTRUCT_TYPES = [
 # ]
 
 CALL_CHAIN_SIZES_BY_CONSTRUCT = {
-    "direct": [100],
-    "function_pointer": [100],
+    "direct": [100, 1000]
+    # "function_pointer": [100],
 }
 
 # CALL_CHAIN_SIZES_BY_CONSTRUCT = {
@@ -68,7 +71,7 @@ MODEL_ROUTING_NOTE = "openrouter/free is a routing model; actual backend models 
 # if not GROQ_API_KEY:
 #     raise RuntimeError("Please set GROQ_API_KEY as an environment variable.")
 
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = "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"
 
 # OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
 if not OPENROUTER_API_KEY:
@@ -85,13 +88,24 @@ client = OpenAI(
 
 # ===================== CODE GENERATORS =====================
 
-def generate_direct_call_chain(n: int) -> str:
+def generate_direct_call_chain(n: int):
+    rng = random.Random(n)
+    order = list(range(1, n + 1))
+    rng.shuffle(order)
+
     code = "#include <stdio.h>\n\n"
-    for i in range(1, n):
-        code += f"void func{i}(void){{ func{i+1}(); }}\n"
-    code += f"void func{n}(void){{ printf(\"End\\n\"); }}\n"
-    code += "int main(void){ func1(); return 0; }\n"
-    return code
+
+    for i in range(n - 1):
+        code += f"void func{order[i]}(void){{ func{order[i+1]}(); }}\n"
+    code += f"void func{order[-1]}(void){{ printf(\"End\\n\"); }}\n"
+    code += f"int main(void){{ func{order[0]}(); return 0; }}\n"
+
+    expected_lines = [
+        f"func{order[i]} calls func{order[i+1]}" for i in range(n - 1)
+    ]
+    expected_lines.append(f"func{order[-1]} calls END")
+
+    return code, expected_lines
 
 def generate_function_pointer_chain(n: int) -> str:
     code = "#include <stdio.h>\n\n"
@@ -187,7 +201,7 @@ def generate_switch_dispatch_chain(n: int) -> str:
     code += "}\n"
     return code
 
-def generate_code(n: int, construct: str) -> str:
+def generate_code(n: int, construct: str):
     generators = {
         "direct": generate_direct_call_chain,
         "function_pointer": generate_function_pointer_chain,
@@ -210,7 +224,8 @@ Strict instructions:
 - Follow the function calls step by step until the program terminates.
 - Output EXACTLY one call per line.
 - Use EXACT format: funcX calls funcY
-- The final line MUST be: func{depth} calls END
+- Even if the code calls printf("End\n"), you MUST output: funcX calls END
+- NEVER output printf or any library function name
 - Do NOT skip any function.
 - Do NOT jump ahead.
 - Do NOT repeat lines.
@@ -221,16 +236,16 @@ Strict instructions:
 - If you are unsure, continue the sequence step-by-step logically without skipping or stopping early.
 
 Example:
-func1 calls func2
-func2 calls func3
-func3 calls END
+func10 calls func3
+func3 calls func88
+func88 calls END
 
 C CODE:
 <<<CODE
 {code}
 CODE
 """
-
+# - The final line MUST be: func{depth} calls END
 # ===================== ESTIMATION =====================
 
 def approx_tokens(text: str) -> int:
@@ -242,20 +257,26 @@ def normalize_response(response: Optional[str]) -> str:
 
     text = response
 
-    # Fix missing space: "func1calls func2" -> "func1 calls func2"
+    # --- Fix missing spaces ---
     text = re.sub(r'(func\d+)calls', r'\1 calls', text)
-    # Fix missing space after "calls": "func1 callsfunc2" -> "func1 calls func2"
     text = re.sub(r'calls(func\d+|END)', r'calls \1', text)
-    # Fix merged lines:
-    # "func10 calls func11func11 calls func12"
-    # -> "func10 calls func11\nfunc11 calls func12"
+
+    # Fix models that output printf("End\n") instead of END
     text = re.sub(
-        r'(func\d+\s+calls\s+(?:func\d+|END))(func\d+\s+calls\s+)',
-        r'\1\n\2',
+        r'func(\d+)\s+calls\s+printf\("End\\n"\)',
+        r'func\1 calls END',
         text
     )
 
-    # Normalize spaces inside each line
+    # --- Fix merged lines like:
+    # func402 calls func624func624 calls func888
+    text = re.sub(
+        r'(func\d+\s+calls\s+func\d+)(?=func\d+\s+calls)',
+        r'\1\n',
+        text
+    )
+
+    # --- Normalize lines ---
     lines = []
     for line in text.splitlines():
         line = re.sub(r'\s+', ' ', line).strip()
@@ -266,7 +287,7 @@ def normalize_response(response: Optional[str]) -> str:
 
 # ===================== EVALUATION =====================
 
-def classify_failure(response: Optional[str], depth: int, error: Optional[str]) -> Optional[str]:
+def classify_failure(response: Optional[str], expected_lines: list[str], error: Optional[str]) -> Optional[str]:
     if error is not None:
         error_lower = error.lower()
 
@@ -278,7 +299,7 @@ def classify_failure(response: Optional[str], depth: int, error: Optional[str]) 
             return "rate_limit"
         return "api_error"
 
-    if verify_response(response, depth):
+    if verify_response(response, expected_lines):
         return None
 
     if response is None or not response.strip():
@@ -293,28 +314,20 @@ def classify_failure(response: Optional[str], depth: int, error: Optional[str]) 
     if " calls " not in last_line:
         return "malformed_output"
 
-    if last_line != f"func{depth} calls END":
+    if len(lines) != len(expected_lines):
         return "underestimate"
+
+    if last_line != expected_lines[-1]:
+        return "wrong_terminal_line"
 
     return "exact_match_failure"
 
-def verify_response(response: Optional[str], depth: int) -> bool:
+def verify_response(response: Optional[str], expected_lines: list[str]) -> bool:
     if not response:
         return False
 
     lines = [ln.strip() for ln in response.strip().splitlines() if ln.strip()]
-
-    if len(lines) != depth:
-        return False
-
-    for i in range(1, depth):
-        if lines[i - 1] != f"func{i} calls func{i+1}":
-            return False
-
-    if lines[-1] != f"func{depth} calls END":
-        return False
-
-    return True
+    return lines == expected_lines
 
 # ===================== API =====================
 
@@ -415,7 +428,7 @@ def extract_last_call(response: Optional[str]) -> Optional[str]:
         return None
     return lines[-1]
 
-def analyze_failure_point(response: Optional[str], depth: int, error: Optional[str] = None):
+def analyze_failure_point(response: Optional[str], expected_lines: list[str], error: Optional[str] = None):
     if error is not None:
         return {
             "first_wrong_line": None,
@@ -430,7 +443,7 @@ def analyze_failure_point(response: Optional[str], depth: int, error: Optional[s
             "first_wrong_line": 1,
             "last_correct_line": 0,
             "last_correct_call": None,
-            "failure_started_at": "func1",
+            "failure_started_at": expected_lines[0].split(" calls ")[0] if expected_lines else None,
             "failure_reason": "empty_response"
         }
 
@@ -439,15 +452,13 @@ def analyze_failure_point(response: Optional[str], depth: int, error: Optional[s
     last_correct_line = 0
     last_correct_call = None
 
-    for i in range(1, depth + 1):
-        expected = f"func{i} calls func{i+1}" if i < depth else f"func{depth} calls END"
-
+    for i, expected in enumerate(expected_lines, start=1):
         if i > len(lines):
             return {
                 "first_wrong_line": i,
                 "last_correct_line": last_correct_line,
                 "last_correct_call": last_correct_call,
-                "failure_started_at": f"func{i}",
+                "failure_started_at": expected.split(" calls ")[0],
                 "failure_reason": "truncated_or_stopped_early"
             }
 
@@ -456,7 +467,7 @@ def analyze_failure_point(response: Optional[str], depth: int, error: Optional[s
                 "first_wrong_line": i,
                 "last_correct_line": last_correct_line,
                 "last_correct_call": last_correct_call,
-                "failure_started_at": f"func{i}",
+                "failure_started_at": expected.split(" calls ")[0],
                 "failure_reason": "incorrect_line"
             }
 
@@ -465,27 +476,25 @@ def analyze_failure_point(response: Optional[str], depth: int, error: Optional[s
 
     return {
         "first_wrong_line": None,
-        "last_correct_line": depth,
+        "last_correct_line": len(expected_lines),
         "last_correct_call": lines[-1] if lines else None,
         "failure_started_at": None,
         "failure_reason": None
     }
 
-def explain_success(response: Optional[str], depth: int) -> Optional[str]:
-    if verify_response(response, depth):
+def explain_success(response: Optional[str], expected_lines: list[str]) -> Optional[str]:
+    if verify_response(response, expected_lines):
         return "exact_match"
     return None
 
 
-def explain_output_failure(response: Optional[str], depth: int) -> Optional[str]:
+def explain_output_failure(response: Optional[str], expected_lines: list[str]) -> Optional[str]:
     if response is None or not response.strip():
         return "empty_output"
 
     lines = [ln.strip() for ln in response.strip().splitlines() if ln.strip()]
 
-    for i in range(1, depth + 1):
-        expected = f"func{i} calls func{i+1}" if i < depth else f"func{depth} calls END"
-
+    for i, expected in enumerate(expected_lines, start=1):
         if i > len(lines):
             return f"stopped_early_at_line_{i}"
 
@@ -496,9 +505,7 @@ def explain_output_failure(response: Optional[str], depth: int) -> Optional[str]
                 return f"malformed_line_{i}"
 
             left, right = actual.split(" calls ", 1)
-
-            expected_left = f"func{i}"
-            expected_right = f"func{i+1}" if i < depth else "END"
+            expected_left, expected_right = expected.split(" calls ", 1)
 
             if right != expected_right:
                 return f"wrong_callee_line_{i}_expected_{expected_right}_got_{right}"
@@ -507,6 +514,9 @@ def explain_output_failure(response: Optional[str], depth: int) -> Optional[str]
                 return f"wrong_caller_line_{i}"
 
             return f"incorrect_line_{i}"
+
+    if len(lines) > len(expected_lines):
+        return "too_many_lines"
 
     return None
 
@@ -569,7 +579,7 @@ def run_experiment():
                 print(f"\n📊 Progress: {current_task}/{total_tasks}")
                 print(f"[{datetime.now().strftime('%H:%M:%S')}] Testing depth {depth}")
 
-                code = generate_code(depth, construct)
+                code, expected_lines = generate_code(depth, construct)
                 prompt = build_prompt(code, depth)
                 est_prompt_tokens = approx_tokens(prompt)
 
@@ -595,18 +605,18 @@ def run_experiment():
 
                 normalized_text = normalize_response(text)
 
-                success = verify_response(normalized_text, depth)
-                success_reason = explain_success(normalized_text, depth) if success else None
+                success = verify_response(normalized_text, expected_lines)
+                success_reason = explain_success(normalized_text, expected_lines) if success else None
 
                 detailed_output_reason = (
-                    explain_output_failure(normalized_text, depth)
+                    explain_output_failure(normalized_text, expected_lines)
                     if not success and err_type is None
                     else None
                 )
-                failure_reason = classify_failure(normalized_text, depth, err_type)
+                failure_reason = classify_failure(normalized_text, expected_lines, err_type)
                 last_call = extract_last_call(normalized_text)
                 predicted_last_func = extract_predicted_func(normalized_text)
-                failure_analysis = analyze_failure_point(normalized_text, depth, err_type)
+                failure_analysis = analyze_failure_point(normalized_text, expected_lines, err_type)
 
                 print(f"DEBUG: est_prompt_tokens={est_prompt_tokens}, err_type={err_type}, err_msg={err_msg}")
                 print(f"DEBUG: requested_model={model}, actual_model={actual_model}")
@@ -623,7 +633,7 @@ def run_experiment():
                 elif first_failure_depth is None:
                     first_failure_depth = depth
 
-                expected_func = f"func{depth}"
+                expected_func = expected_lines[-1].split(" calls ")[0]
 
                 if success:
                     failure_type = None
@@ -709,7 +719,7 @@ def run_experiment():
                 if success:
                     print(f"Result: success=True | last_call={last_call}")
                 else:
-                    print(f"Result: success=False ({failure_reason}) | expected=func{depth}, last_call={last_call}")
+                    print(f"Result: success=False ({failure_reason}) | expected=randomized_chain, last_call={last_call}")
                 if err_type == "daily_token_limit":
                     stop_all = True
                     break

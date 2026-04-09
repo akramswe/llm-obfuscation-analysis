@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-03-22T21-04-41",
+  "timestamp": "2026-03-22T21:32:56.052485",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "openrouter",
+    "requested_name": "openrouter/free",
+    "actual_name": "arcee-ai/trinity-mini-20251201:free",
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "function_pointer",
+    "depth": 200,
+    "code_chars": 17988,
+    "estimated_prompt_tokens": 4684
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 18737
+  },
+  "response": {
+    "text": "func1 calls func2\nfunc2 calls func3\nfunc3 calls func4\nfunc4 calls func5\nfunc5 calls func6\nfunc6 calls func7\nfunc7 calls func8\nfunc8 calls func9\nfunc9 calls func10\nfunc10 calls func11\nfunc11 calls func12\nfunc12 calls func13\nfunc13 calls func14\nfunc14 calls func15\nfunc15 calls func16\nfunc16 calls func17\nfunc17 calls func18\nfunc18 calls func19\nfunc19 calls func20\nfunc20 calls func21\nfunc21 calls func22\nfunc22 calls func23\nfunc23 calls func24\nfunc24 calls func25\nfunc25 calls func26\nfunc26 calls func27\nfunc27 calls func28\nfunc28 calls func29\nfunc29 calls func30\nfunc30 calls func31\nfunc31 calls func32\nfunc32 calls func33\nfunc33 calls func34\nfunc34 calls func35\nfunc35 calls func36\nfunc36 calls func37\nfunc37 calls func38\nfunc38 calls func39\nfunc39 calls func40\nfunc40 calls func41\nfunc41 calls func42\nfunc42 calls func43\nfunc43 calls func44\nfunc44 calls func45\nfunc45 calls func46\nfunc46 calls func47\nfunc47 calls func48\nfunc48 calls func49\nfunc49 calls func50\nfunc50 calls func51\nfunc51 calls func52\nfunc52 calls func53\nfunc53 calls func54\nfunc54 calls func55\nfunc55 calls func56\nfunc56 calls func57\nfunc57 calls func58\nfunc58 calls func59\nfunc59 calls func60\nfunc60 calls func61\nfunc61 calls func62\nfunc62 calls func63\nfunc63 calls func64\nfunc64 calls func65\nfunc65 calls func66\nfunc66 calls func67\nfunc67 calls func68\nfunc68 calls func69\nfunc69 calls func70\nfunc70 calls func71\nfunc71 calls func72\nfunc72 calls func73\nfunc73 calls func74\nfunc74 calls func75\nfunc75 calls func76\nfunc76 calls func77\nfunc77 calls func78\nfunc78 calls func79\nfunc79 calls func80\nfunc80 calls func81\nfunc81 calls func82\nfunc82 calls func83\nfunc83 calls func84\nfunc84 calls func85\nfunc85 calls func86\nfunc86 calls func87\nfunc87 calls func88\nfunc88 calls func89\nfunc89 calls func90\nfunc90 calls func91\nfunc91 calls func92\nfunc92 calls func93\nfunc93 calls func94\nfunc94 calls func95\nfunc95 calls func96\nfunc96 calls func97\nfunc97 calls func98\nfunc98 calls func99\nfunc99 calls func100\nfunc100 calls func101\nfunc101 calls func102\nfunc102 calls func103\nfunc103 calls func104\nfunc104 calls func105\nfunc105 calls func106\nfunc106 calls func107\nfunc107 calls func108\nfunc108 calls func109\nfunc109 calls func110\nfunc110 calls func111\nfunc111 calls func112\nfunc112 calls func113\nfunc113 calls func114\nfunc114 calls func115\nfunc115 calls func116\nfunc116 calls func117\nfunc117 calls func118\nfunc118 calls func119\nfunc119 calls func120\nfunc120 calls func121\nfunc121 calls func122\nfunc122 calls func123\nfunc123 calls func124\nfunc124 calls func125\nfunc125 calls func126\nfunc126 calls func127\nfunc127 calls func128\nfunc128 calls func129\nfunc129 calls func130\nfunc130 calls func131\nfunc131 calls func132\nfunc132 calls func133\nfunc133 calls func134\nfunc134 calls func135\nfunc135 calls func136\nfunc136 calls func137\nfunc137 calls func138\nfunc138 calls func139\nfunc139 calls func140\nfunc140 calls func141\nfunc141 calls func142\nfunc142 calls func143\nfunc143 calls func144\nfunc144 calls func145\nfunc145 calls func146\nfunc146 calls func147\nfunc147 calls func148\nfunc148 calls func149\nfunc149 calls func150\nfunc150 calls func151\nfunc151 calls func152\nfunc152 calls func153\nfunc153 calls func154\nfunc154 calls func155\nfunc155 calls func156\nfunc156 calls func157\nfunc157 calls func158\nfunc158 calls func159\nfunc159 calls func160\nfunc160 calls func161\nfunc161 calls func162\nfunc162 calls func163\nfunc163 calls func164\nfunc164 calls func165\nfunc165 calls func166\nfunc166 calls func167\nfunc167 calls func168\nfunc168 calls func169\nfunc169 calls func170\nfunc170 calls func171\nfunc171 calls func172\nfunc172 calls func173\nfunc173 calls func174\nfunc174 calls func175\nfunc175 calls func176\nfunc176 calls func177\nfunc177 calls func178\nfunc178 calls func179\nfunc179 calls func180\nfunc180 calls func181\nfunc181 calls func182\nfunc182 calls func183\nfunc183 calls func184\nfunc184 calls func185\nfunc185 calls func186\nfunc186 calls func187\nfunc187 calls func188\nfunc188 calls func189\nfunc189 calls func190\nfunc190 calls func191\nfunc191 calls func192\nfunc192 calls func193\nfunc193 calls func194\nfunc194 calls func195\nfunc195 calls func196\nfunc196 calls func197\nfunc197 calls func198\nfunc198 calls func199\nfunc199 calls func200\nfunc200 calls END",
+    "normalized_text": "func1 calls func2\nfunc2 calls func3\nfunc3 calls func4\nfunc4 calls func5\nfunc5 calls func6\nfunc6 calls func7\nfunc7 calls func8\nfunc8 calls func9\nfunc9 calls func10\nfunc10 calls func11\nfunc11 calls func12\nfunc12 calls func13\nfunc13 calls func14\nfunc14 calls func15\nfunc15 calls func16\nfunc16 calls func17\nfunc17 calls func18\nfunc18 calls func19\nfunc19 calls func20\nfunc20 calls func21\nfunc21 calls func22\nfunc22 calls func23\nfunc23 calls func24\nfunc24 calls func25\nfunc25 calls func26\nfunc26 calls func27\nfunc27 calls func28\nfunc28 calls func29\nfunc29 calls func30\nfunc30 calls func31\nfunc31 calls func32\nfunc32 calls func33\nfunc33 calls func34\nfunc34 calls func35\nfunc35 calls func36\nfunc36 calls func37\nfunc37 calls func38\nfunc38 calls func39\nfunc39 calls func40\nfunc40 calls func41\nfunc41 calls func42\nfunc42 calls func43\nfunc43 calls func44\nfunc44 calls func45\nfunc45 calls func46\nfunc46 calls func47\nfunc47 calls func48\nfunc48 calls func49\nfunc49 calls func50\nfunc50 calls func51\nfunc51 calls func52\nfunc52 calls func53\nfunc53 calls func54\nfunc54 calls func55\nfunc55 calls func56\nfunc56 calls func57\nfunc57 calls func58\nfunc58 calls func59\nfunc59 calls func60\nfunc60 calls func61\nfunc61 calls func62\nfunc62 calls func63\nfunc63 calls func64\nfunc64 calls func65\nfunc65 calls func66\nfunc66 calls func67\nfunc67 calls func68\nfunc68 calls func69\nfunc69 calls func70\nfunc70 calls func71\nfunc71 calls func72\nfunc72 calls func73\nfunc73 calls func74\nfunc74 calls func75\nfunc75 calls func76\nfunc76 calls func77\nfunc77 calls func78\nfunc78 calls func79\nfunc79 calls func80\nfunc80 calls func81\nfunc81 calls func82\nfunc82 calls func83\nfunc83 calls func84\nfunc84 calls func85\nfunc85 calls func86\nfunc86 calls func87\nfunc87 calls func88\nfunc88 calls func89\nfunc89 calls func90\nfunc90 calls func91\nfunc91 calls func92\nfunc92 calls func93\nfunc93 calls func94\nfunc94 calls func95\nfunc95 calls func96\nfunc96 calls func97\nfunc97 calls func98\nfunc98 calls func99\nfunc99 calls func100\nfunc100 calls func101\nfunc101 calls func102\nfunc102 calls func103\nfunc103 calls func104\nfunc104 calls func105\nfunc105 calls func106\nfunc106 calls func107\nfunc107 calls func108\nfunc108 calls func109\nfunc109 calls func110\nfunc110 calls func111\nfunc111 calls func112\nfunc112 calls func113\nfunc113 calls func114\nfunc114 calls func115\nfunc115 calls func116\nfunc116 calls func117\nfunc117 calls func118\nfunc118 calls func119\nfunc119 calls func120\nfunc120 calls func121\nfunc121 calls func122\nfunc122 calls func123\nfunc123 calls func124\nfunc124 calls func125\nfunc125 calls func126\nfunc126 calls func127\nfunc127 calls func128\nfunc128 calls func129\nfunc129 calls func130\nfunc130 calls func131\nfunc131 calls func132\nfunc132 calls func133\nfunc133 calls func134\nfunc134 calls func135\nfunc135 calls func136\nfunc136 calls func137\nfunc137 calls func138\nfunc138 calls func139\nfunc139 calls func140\nfunc140 calls func141\nfunc141 calls func142\nfunc142 calls func143\nfunc143 calls func144\nfunc144 calls func145\nfunc145 calls func146\nfunc146 calls func147\nfunc147 calls func148\nfunc148 calls func149\nfunc149 calls func150\nfunc150 calls func151\nfunc151 calls func152\nfunc152 calls func153\nfunc153 calls func154\nfunc154 calls func155\nfunc155 calls func156\nfunc156 calls func157\nfunc157 calls func158\nfunc158 calls func159\nfunc159 calls func160\nfunc160 calls func161\nfunc161 calls func162\nfunc162 calls func163\nfunc163 calls func164\nfunc164 calls func165\nfunc165 calls func166\nfunc166 calls func167\nfunc167 calls func168\nfunc168 calls func169\nfunc169 calls func170\nfunc170 calls func171\nfunc171 calls func172\nfunc172 calls func173\nfunc173 calls func174\nfunc174 calls func175\nfunc175 calls func176\nfunc176 calls func177\nfunc177 calls func178\nfunc178 calls func179\nfunc179 calls func180\nfunc180 calls func181\nfunc181 calls func182\nfunc182 calls func183\nfunc183 calls func184\nfunc184 calls func185\nfunc185 calls func186\nfunc186 calls func187\nfunc187 calls func188\nfunc188 calls func189\nfunc189 calls func190\nfunc190 calls func191\nfunc191 calls func192\nfunc192 calls func193\nfunc193 calls func194\nfunc194 calls func195\nfunc195 calls func196\nfunc196 calls func197\nfunc197 calls func198\nfunc198 calls func199\nfunc199 calls func200\nfunc200 calls END",
+    "response_chars": 4181,
+    "response_tokens_est": 1045,
+    "latency_seconds": 28.18135945400013
+  },
+  "evaluation": {
+    "expected_depth": "func200",
+    "predicted_last_func": "func200",
+    "success": true,
+    "result": "success",
+    "success_reason": "exact_match",
+    "failure_type": null,
+    "failure_reason": null,
+    "failure_explanation": null,
+    "detailed_output_reason": null,
+    "failure_analysis": {
+      "first_wrong_line": null,
+      "last_correct_line": 200,
+      "last_correct_call": "func200 calls END",
+      "failure_started_at": null,
+      "failure_reason": null
+    }
+  },
+  "error": {
+    "api_reason": "none",
+    "api_message": "API call successful"
+  }
+}

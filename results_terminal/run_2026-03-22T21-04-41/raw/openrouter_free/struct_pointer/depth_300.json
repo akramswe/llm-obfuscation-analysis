@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-03-22T21-04-41",
+  "timestamp": "2026-03-22T22:35:47.862472",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "openrouter",
+    "requested_name": "openrouter/free",
+    "actual_name": "nvidia/nemotron-nano-12b-v2-vl:free",
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "struct_pointer",
+    "depth": 300,
+    "code_chars": 27208,
+    "estimated_prompt_tokens": 6989
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 27957
+  },
+  "response": {
+    "text": "",
+    "normalized_text": "",
+    "response_chars": 0,
+    "response_tokens_est": 0,
+    "latency_seconds": 1091.365465338
+  },
+  "evaluation": {
+    "expected_depth": "func300",
+    "predicted_last_func": null,
+    "success": false,
+    "result": "failure",
+    "success_reason": null,
+    "failure_type": "output_failure",
+    "failure_reason": "empty_response",
+    "failure_explanation": "Model returned an empty response",
+    "detailed_output_reason": "empty_output",
+    "failure_analysis": {
+      "first_wrong_line": 1,
+      "last_correct_line": 0,
+      "last_correct_call": null,
+      "failure_started_at": "func1",
+      "failure_reason": "empty_response"
+    }
+  },
+  "error": {
+    "api_reason": "none",
+    "api_message": "API call successful"
+  }
+}

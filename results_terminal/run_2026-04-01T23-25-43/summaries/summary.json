@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "run_id": "2026-04-01T23-25-43",
+    "experiment": "terminal_function_identification",
+    "provider": "openrouter",
+    "timestamp": "2026-04-01T23:30:17.647764"
+  },
+  "overall": {
+    "total_tests": 2,
+    "total_successes": 0,
+    "total_failures": 2,
+    "success_rate": 0.0
+  },
+  "models": {
+    "openrouter/free": {
+      "requested_model": "openrouter/free",
+      "actual_models_seen": [
+        "google/gemma-3-4b-it:free",
+        "nvidia/nemotron-3-nano-30b-a3b:free"
+      ],
+      "total_tests": 2,
+      "total_successes": 0,
+      "success_rate": 0.0,
+      "test_points": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "openrouter/free",
+          "actual_model": "google/gemma-3-4b-it:free",
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "output_failure",
+          "failure_reason": "malformed_output",
+          "failure_explanation": "Model produced an incorrect line starting at line 1",
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": 1,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": "func1",
+            "failure_reason": "incorrect_line"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 1000,
+          "requested_model": "openrouter/free",
+          "actual_model": "nvidia/nemotron-3-nano-30b-a3b:free",
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "output_failure",
+          "failure_reason": "underestimate",
+          "failure_explanation": "Model produced an incorrect line starting at line 1",
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": 1,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": "func1",
+            "failure_reason": "incorrect_line"
+          }
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "tested_depths": 2,
+          "successes": 0,
+          "success_rate": 0.0,
+          "max_success_depth": 0,
+          "first_failure_depth": 100,
+          "actual_models_seen": [
+            "google/gemma-3-4b-it:free",
+            "nvidia/nemotron-3-nano-30b-a3b:free"
+          ]
+        }
+      }
+    }
+  }
+}

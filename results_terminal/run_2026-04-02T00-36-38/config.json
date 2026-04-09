@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-04-02T00-36-38",
+  "experiment_name": "terminal_function_identification",
+  "models": [
+    "openrouter/free"
+  ],
+  "note": "openrouter/free is a routing model; actual backend models may vary per request and are recorded in summary.json",
+  "construct_types": [
+    "direct"
+  ],
+  "depths_by_construct": {
+    "direct": [
+      100,
+      1000
+    ]
+  },
+  "temperature": 0.0,
+  "delay_between_requests": 30,
+  "tpm_soft_limit": 12000,
+  "prompt_version": "v2_terminal_only"
+}
