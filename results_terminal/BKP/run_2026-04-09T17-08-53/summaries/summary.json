@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "run_id": "2026-04-09T17-08-53",
+    "experiment": "terminal_function_identification",
+    "provider": "openrouter",
+    "timestamp": "2026-04-09T18:23:35.900494"
+  },
+  "overall": {
+    "total_tests": 10,
+    "total_successes": 3,
+    "total_failures": 7,
+    "success_rate": 0.3
+  },
+  "models": {
+    "openrouter/free": {
+      "requested_model": "openrouter/free",
+      "actual_models_seen": [
+        "arcee-ai/trinity-mini-20251201:free",
+        "google/gemma-3-12b-it:free",
+        "liquid/lfm-2.5-1.2b-instruct-20260120:free",
+        "google/gemma-3-4b-it:free",
+        "liquid/lfm-2.5-1.2b-thinking-20260120:free",
+        "arcee-ai/trinity-large-preview:free"
+      ],
+      "total_tests": 10,
+      "total_successes": 3,
+      "success_rate": 0.3,
+      "test_points": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "openrouter/free",
+          "actual_model": "arcee-ai/trinity-mini-20251201:free",
+          "result": "success",
+          "success_reason": "exact_match",
+          "failure_type": null,
+          "failure_reason": null,
+          "failure_explanation": null,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 100,
+            "last_correct_call": "func19 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 200,
+          "requested_model": "openrouter/free",
+          "actual_model": "google/gemma-3-12b-it:free",
+          "result": "success",
+          "success_reason": "exact_match",
+          "failure_type": null,
+          "failure_reason": null,
+          "failure_explanation": null,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 200,
+            "last_correct_call": "func12 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 300,
+          "requested_model": "openrouter/free",
+          "actual_model": "liquid/lfm-2.5-1.2b-instruct-20260120:free",
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "output_failure",
+          "failure_reason": "malformed_output",
+          "failure_explanation": "Model produced an incorrect line starting at line 67",
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": 67,
+            "last_correct_line": 66,
+            "last_correct_call": "func136 calls func201",
+            "failure_started_at": "func201",
+            "failure_reason": "incorrect_line"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 400,
+          "requested_model": "openrouter/free",
+          "actual_model": "google/gemma-3-4b-it:free",
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "output_failure",
+          "failure_reason": "underestimate",
+          "failure_explanation": "Model produced an incorrect line starting at line 122",
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": 122,
+            "last_correct_line": 121,
+            "last_correct_call": "func68 calls func195",
+            "failure_started_at": "func195",
+            "failure_reason": "incorrect_line"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 500,
+          "requested_model": "openrouter/free",
+          "actual_model": "liquid/lfm-2.5-1.2b-thinking-20260120:free",
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "output_failure",
+          "failure_reason": "underestimate",
+          "failure_explanation": "Model produced an incorrect line starting at line 1",
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": 1,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": "func391",
+            "failure_reason": "incorrect_line"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 600,
+          "requested_model": "openrouter/free",
+          "actual_model": null,
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "api_failure",
+          "failure_reason": "api_error",
+          "failure_explanation": "API failure occurred: api_error",
+          "api_reason": "api_error",
+          "api_message": "Empty response",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "api_error"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 700,
+          "requested_model": "openrouter/free",
+          "actual_model": "arcee-ai/trinity-large-preview:free",
+          "result": "success",
+          "success_reason": "exact_match",
+          "failure_type": null,
+          "failure_reason": null,
+          "failure_explanation": null,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 700,
+            "last_correct_call": "func171 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 800,
+          "requested_model": "openrouter/free",
+          "actual_model": "liquid/lfm-2.5-1.2b-instruct-20260120:free",
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "output_failure",
+          "failure_reason": "malformed_output",
+          "failure_explanation": "Model produced an incorrect line starting at line 1",
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": 1,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": "func239",
+            "failure_reason": "incorrect_line"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 900,
+          "requested_model": "openrouter/free",
+          "actual_model": "arcee-ai/trinity-mini-20251201:free",
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "output_failure",
+          "failure_reason": "malformed_output",
+          "failure_explanation": "Model produced an incorrect line starting at line 900",
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": 900,
+            "last_correct_line": 899,
+            "last_correct_call": "func234 calls func640",
+            "failure_started_at": "func640",
+            "failure_reason": "incorrect_line"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 1000,
+          "requested_model": "openrouter/free",
+          "actual_model": "liquid/lfm-2.5-1.2b-thinking-20260120:free",
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "output_failure",
+          "failure_reason": "malformed_output",
+          "failure_explanation": "Model produced an incorrect line starting at line 1",
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": 1,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": "func655",
+            "failure_reason": "incorrect_line"
+          }
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "tested_depths": 10,
+          "successes": 3,
+          "success_rate": 0.3,
+          "max_success_depth": 700,
+          "first_failure_depth": 300,
+          "actual_models_seen": [
+            "arcee-ai/trinity-mini-20251201:free",
+            "google/gemma-3-12b-it:free",
+            "liquid/lfm-2.5-1.2b-instruct-20260120:free",
+            "google/gemma-3-4b-it:free",
+            "liquid/lfm-2.5-1.2b-thinking-20260120:free",
+            "arcee-ai/trinity-large-preview:free"
+          ]
+        }
+      }
+    }
+  }
+}

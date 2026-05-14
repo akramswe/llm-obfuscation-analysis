@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-05-14T12-13-43",
+  "timestamp": "2026-05-14T14:15:26.220608",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "openrouter",
+    "requested_name": "nvidia/nemotron-3-super-120b-a12b:free",
+    "actual_name": null,
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "pointer_array",
+    "chain_mode": "shuffled",
+    "depth": 600,
+    "code_chars": 45194,
+    "estimated_prompt_tokens": 11527
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 46109,
+    "max_tokens_requested": 13200
+  },
+  "response": {
+    "text": "",
+    "normalized_text": "",
+    "line_count": 0,
+    "ended_with_end": false,
+    "response_chars": 0,
+    "response_tokens_est": 0,
+    "finish_reason": null,
+    "latency_seconds": null
+  },
+  "evaluation": {
+    "expected_depth": 600,
+    "expected_last_func": "func562",
+    "predicted_last_func": null,
+    "success": false,
+    "result": "failure",
+    "success_reason": null,
+    "failure_type": "api_failure",
+    "failure_reason": "rate_limit",
+    "failure_reason_readable": "Rate-limited by provider",
+    "failure_explanation": "API failure occurred: rate_limit",
+    "detailed_output_reason": null,
+    "failure_analysis": {
+      "first_wrong_line": null,
+      "last_correct_line": 0,
+      "last_correct_call": null,
+      "failure_started_at": null,
+      "failure_reason": "rate_limit"
+    },
+    "first_wrong_line": null,
+    "last_correct_line": 0
+  },
+  "error": {
+    "api_reason": "rate_limit",
+    "api_message": "Error code: 429 - {'error': {'message': 'Rate limit exceeded: free-models-per-min. ', 'code': 429, 'metadata': {'headers': {'X-RateLimit-Limit': '16', 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': '1778760960000'}, 'provider_name': None}}, 'user_id': 'user_3B8wBvbAsmvkwYj6gdjt4QGg5rb'}"
+  }
+}

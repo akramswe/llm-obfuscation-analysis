@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-05-04T14-42-10",
+  "experiment_name": "terminal_function_identification",
+  "models": [
+    "nvidia/nemotron-3-super-120b-a12b"
+  ],
+  "note": "NVIDIA NIM endpoint is non-routing; actual model usually matches the requested model.",
+  "construct_types": [
+    "direct"
+  ],
+  "depths_by_construct": {
+    "direct": [
+      100,
+      1000
+    ]
+  },
+  "temperature": 0.0,
+  "delay_between_requests": 30,
+  "tpm_soft_limit": 12000,
+  "prompt_version": "v2_terminal_only"
+}

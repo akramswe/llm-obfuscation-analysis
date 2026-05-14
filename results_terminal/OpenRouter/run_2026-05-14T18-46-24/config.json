@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-05-14T18-46-24",
+  "experiment_name": "terminal_function_identification",
+  "models": [
+    "openrouter/free"
+  ],
+  "note": "OpenRouter may route to provider backends; actual model string can differ.",
+  "construct_types": [
+    "direct",
+    "function_pointer",
+    "pointer_array",
+    "struct_pointer",
+    "switch_dispatch"
+  ],
+  "depths_by_construct": {
+    "direct": [
+      5
+    ]
+  },
+  "temperature": 0.0,
+  "delay_between_requests": 30,
+  "tpm_soft_limit": 12000,
+  "prompt_version": "v2_terminal_only"
+}

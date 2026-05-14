@@ -1,0 +1,931 @@
+{
+  "meta": {
+    "run_id": "2026-05-14T17-47-54",
+    "experiment": "terminal_function_identification",
+    "provider": "groq",
+    "timestamp": "2026-05-14T18:11:29.895796"
+  },
+  "schema_hint": {
+    "overall": "Run-level metrics across all tested models and constructs.",
+    "models": "Per-model breakdown with concise sample-level outcomes.",
+    "samples": "Each sample is one (model, construct, depth) evaluation."
+  },
+  "overall": {
+    "total_tests": 39,
+    "total_successes": 11,
+    "total_failures": 28,
+    "success_rate": 0.282,
+    "construct_summary": {
+      "direct": {
+        "num_tests": 12,
+        "num_successes": 5,
+        "success_rate": 0.417
+      },
+      "function_pointer": {
+        "num_tests": 9,
+        "num_successes": 2,
+        "success_rate": 0.222
+      },
+      "pointer_array": {
+        "num_tests": 6,
+        "num_successes": 1,
+        "success_rate": 0.167
+      },
+      "struct_pointer": {
+        "num_tests": 6,
+        "num_successes": 1,
+        "success_rate": 0.167
+      },
+      "switch_dispatch": {
+        "num_tests": 6,
+        "num_successes": 2,
+        "success_rate": 0.333
+      }
+    }
+  },
+  "models": {
+    "openai/gpt-oss-120b": {
+      "requested_model": "openai/gpt-oss-120b",
+      "actual_models_seen": [
+        "openai/gpt-oss-120b"
+      ],
+      "num_tests": 30,
+      "num_successes": 7,
+      "success_rate": 0.233,
+      "samples": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": "openai/gpt-oss-120b",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 100,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "direct",
+          "depth": 200,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": "openai/gpt-oss-120b",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 200,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "direct",
+          "depth": 400,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 12701, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 600,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 18901, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 800,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 11581, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 1000,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 31305, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "function_pointer",
+          "depth": 100,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": "openai/gpt-oss-120b",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 100,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "function_pointer",
+          "depth": 200,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 9969, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "function_pointer",
+          "depth": 400,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 14155, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "function_pointer",
+          "depth": 600,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 30289, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "function_pointer",
+          "depth": 800,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 26769, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "function_pointer",
+          "depth": 1000,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 32377, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "pointer_array",
+          "depth": 100,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": "openai/gpt-oss-120b",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 100,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "pointer_array",
+          "depth": 200,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 8441, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "pointer_array",
+          "depth": 400,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 13441, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "pointer_array",
+          "depth": 600,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 17988, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "pointer_array",
+          "depth": 800,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 23441, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "pointer_array",
+          "depth": 1000,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 28449, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "struct_pointer",
+          "depth": 100,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": "openai/gpt-oss-120b",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 100,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "struct_pointer",
+          "depth": 200,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 8841, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "struct_pointer",
+          "depth": 400,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 19922, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "struct_pointer",
+          "depth": 600,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 19641, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "struct_pointer",
+          "depth": 800,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 25041, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "struct_pointer",
+          "depth": 1000,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 29256, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "switch_dispatch",
+          "depth": 100,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": "openai/gpt-oss-120b",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 100,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "switch_dispatch",
+          "depth": 200,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": "openai/gpt-oss-120b",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 200,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "switch_dispatch",
+          "depth": 400,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 12417, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "switch_dispatch",
+          "depth": 600,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 17417, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "switch_dispatch",
+          "depth": 800,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 22417, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "switch_dispatch",
+          "depth": 1000,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 27424, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "num_tests": 6,
+          "num_successes": 2,
+          "success_rate": 0.333,
+          "max_success_depth_tested": 200,
+          "first_failure_depth": 400,
+          "actual_models_seen": [
+            "openai/gpt-oss-120b"
+          ]
+        },
+        "function_pointer": {
+          "num_tests": 6,
+          "num_successes": 1,
+          "success_rate": 0.167,
+          "max_success_depth_tested": 100,
+          "first_failure_depth": 200,
+          "actual_models_seen": [
+            "openai/gpt-oss-120b"
+          ]
+        },
+        "pointer_array": {
+          "num_tests": 6,
+          "num_successes": 1,
+          "success_rate": 0.167,
+          "max_success_depth_tested": 100,
+          "first_failure_depth": 200,
+          "actual_models_seen": [
+            "openai/gpt-oss-120b"
+          ]
+        },
+        "struct_pointer": {
+          "num_tests": 6,
+          "num_successes": 1,
+          "success_rate": 0.167,
+          "max_success_depth_tested": 100,
+          "first_failure_depth": 200,
+          "actual_models_seen": [
+            "openai/gpt-oss-120b"
+          ]
+        },
+        "switch_dispatch": {
+          "num_tests": 6,
+          "num_successes": 2,
+          "success_rate": 0.333,
+          "max_success_depth_tested": 200,
+          "first_failure_depth": 400,
+          "actual_models_seen": [
+            "openai/gpt-oss-120b"
+          ]
+        }
+      }
+    },
+    "llama-3.3-70b-versatile": {
+      "requested_model": "llama-3.3-70b-versatile",
+      "actual_models_seen": [
+        "llama-3.3-70b-versatile"
+      ],
+      "num_tests": 9,
+      "num_successes": 4,
+      "success_rate": 0.444,
+      "samples": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "llama-3.3-70b-versatile",
+          "actual_model": "llama-3.3-70b-versatile",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 100,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "direct",
+          "depth": 200,
+          "requested_model": "llama-3.3-70b-versatile",
+          "actual_model": "llama-3.3-70b-versatile",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 200,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "direct",
+          "depth": 400,
+          "requested_model": "llama-3.3-70b-versatile",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `llama-3.3-70b-versatile` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Requested 12667, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 600,
+          "requested_model": "llama-3.3-70b-versatile",
+          "actual_model": "llama-3.3-70b-versatile",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 600,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "direct",
+          "depth": 800,
+          "requested_model": "llama-3.3-70b-versatile",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `llama-3.3-70b-versatile` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Requested 25067, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 1000,
+          "requested_model": "llama-3.3-70b-versatile",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "prompt_too_large",
+          "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `llama-3.3-70b-versatile` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 12000, Requested 31271, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "prompt_too_large",
+          "failure_reason_readable": "Prompt exceeds provider/model limits",
+          "failure_explanation": "API failure occurred: prompt_too_large",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "prompt_too_large"
+          }
+        },
+        {
+          "construct": "function_pointer",
+          "depth": 100,
+          "requested_model": "llama-3.3-70b-versatile",
+          "actual_model": "llama-3.3-70b-versatile",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 100,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "function_pointer",
+          "depth": 200,
+          "requested_model": "llama-3.3-70b-versatile",
+          "actual_model": "llama-3.3-70b-versatile",
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 199,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_type": "output_failure",
+          "failure_reason": "underestimate",
+          "failure_reason_readable": "Model output shorter than expected depth",
+          "failure_explanation": "Model produced an incorrect line starting at line 1",
+          "failure_point": {
+            "first_wrong_line": 1,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": "func49",
+            "failure_reason": "incorrect_line"
+          }
+        },
+        {
+          "construct": "function_pointer",
+          "depth": 400,
+          "requested_model": "llama-3.3-70b-versatile",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "daily_token_limit",
+          "api_message": "Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 87726, Requested 15855. Please try again in 51m33.984s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+          "failure_type": "api_failure",
+          "failure_reason": "daily_token_limit",
+          "failure_reason_readable": "Provider daily token quota reached",
+          "failure_explanation": "API failure occurred: daily_token_limit",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "daily_token_limit"
+          }
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "num_tests": 6,
+          "num_successes": 3,
+          "success_rate": 0.5,
+          "max_success_depth_tested": 600,
+          "first_failure_depth": 400,
+          "actual_models_seen": [
+            "llama-3.3-70b-versatile"
+          ]
+        },
+        "function_pointer": {
+          "num_tests": 3,
+          "num_successes": 1,
+          "success_rate": 0.333,
+          "max_success_depth_tested": 100,
+          "first_failure_depth": 200,
+          "actual_models_seen": [
+            "llama-3.3-70b-versatile"
+          ]
+        }
+      }
+    }
+  }
+}

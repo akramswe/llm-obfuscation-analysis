@@ -1,0 +1,11 @@
+{
+  "run_id": "2026-05-14T18-43-34",
+  "provider": "nvidia",
+  "paths": {
+    "config": "results_terminal/NVIDIA/run_2026-05-14T18-43-34/config.json",
+    "summary_default": "results_terminal/NVIDIA/run_2026-05-14T18-43-34/summaries/summary.json",
+    "summary_provider": "results_terminal/NVIDIA/run_2026-05-14T18-43-34/summaries/summary_nvidia.json",
+    "raw_dir": "results_terminal/NVIDIA/run_2026-05-14T18-43-34/raw",
+    "summaries_dir": "results_terminal/NVIDIA/run_2026-05-14T18-43-34/summaries"
+  }
+}

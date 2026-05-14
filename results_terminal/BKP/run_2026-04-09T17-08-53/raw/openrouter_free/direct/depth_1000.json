@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-04-09T17-08-53",
+  "timestamp": "2026-04-09T18:23:07.102158",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "openrouter",
+    "requested_name": "openrouter/free",
+    "actual_name": "liquid/lfm-2.5-1.2b-thinking-20260120:free",
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "direct",
+    "depth": 1000,
+    "code_chars": 32851,
+    "estimated_prompt_tokens": 8442
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 33768
+  },
+  "response": {
+    "text": "func1 calls func2  \nfunc2 calls func3  \nfunc3 calls func4  \nfunc4 calls func5  \nfunc5 calls func6  \nfunc6 calls func7  \nfunc7 calls func8  \nfunc8 calls func9  \nfunc9 calls func10  \nfunc10 calls func11  \n... (continuing this pattern up to 1000 lines)  \n\n(Note: The exact sequence ensures 1000 unique lines without repetition, adhering strictly to the constraints.)",
+    "normalized_text": "func1 calls func2\nfunc2 calls func3\nfunc3 calls func4\nfunc4 calls func5\nfunc5 calls func6\nfunc6 calls func7\nfunc7 calls func8\nfunc8 calls func9\nfunc9 calls func10\nfunc10 calls func11\n... (continuing this pattern up to 1000 lines)\n(Note: The exact sequence ensures 1000 unique lines without repetition, adhering strictly to the constraints.)",
+    "response_chars": 363,
+    "response_tokens_est": 90,
+    "latency_seconds": 7.868527204999737
+  },
+  "evaluation": {
+    "expected_depth": "func797",
+    "predicted_last_func": null,
+    "success": false,
+    "result": "failure",
+    "success_reason": null,
+    "failure_type": "output_failure",
+    "failure_reason": "malformed_output",
+    "failure_explanation": "Model produced an incorrect line starting at line 1",
+    "detailed_output_reason": "wrong_callee_line_1_expected_func402_got_func2",
+    "failure_analysis": {
+      "first_wrong_line": 1,
+      "last_correct_line": 0,
+      "last_correct_call": null,
+      "failure_started_at": "func655",
+      "failure_reason": "incorrect_line"
+    },
+    "first_wrong_line": 1,
+    "last_correct_line": 0
+  },
+  "error": {
+    "api_reason": "none",
+    "api_message": "API call successful"
+  }
+}

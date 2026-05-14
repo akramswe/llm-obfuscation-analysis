@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-04-09T18-29-34",
+  "timestamp": "2026-04-09T18:29:37.546538",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "openrouter",
+    "requested_name": "qwen/qwen2.5-7b-instruct",
+    "actual_name": null,
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "direct",
+    "depth": 100,
+    "code_chars": 3149,
+    "estimated_prompt_tokens": 1016
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 4064
+  },
+  "response": {
+    "text": "",
+    "normalized_text": "",
+    "response_chars": 0,
+    "response_tokens_est": 0,
+    "latency_seconds": null
+  },
+  "evaluation": {
+    "expected_depth": "func19",
+    "predicted_last_func": null,
+    "success": false,
+    "result": "failure",
+    "success_reason": null,
+    "failure_type": "api_failure",
+    "failure_reason": "api_error",
+    "failure_explanation": "API failure occurred: api_error",
+    "detailed_output_reason": null,
+    "failure_analysis": {
+      "first_wrong_line": null,
+      "last_correct_line": 0,
+      "last_correct_call": null,
+      "failure_started_at": null,
+      "failure_reason": "api_error"
+    },
+    "first_wrong_line": null,
+    "last_correct_line": 0
+  },
+  "error": {
+    "api_reason": "api_error",
+    "api_message": "Error code: 400 - {'error': {'message': 'qwen/qwen2.5-7b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'user_3Bm9cn6MYbc3iNsSWRWTQdhYpB7'}"
+  }
+}

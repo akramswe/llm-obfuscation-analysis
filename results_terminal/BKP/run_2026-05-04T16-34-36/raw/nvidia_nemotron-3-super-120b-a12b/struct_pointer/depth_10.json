@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-05-04T16-34-36",
+  "timestamp": "2026-05-04T16:36:29.097602",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "nvidia_nim",
+    "requested_name": "nvidia/nemotron-3-super-120b-a12b",
+    "actual_name": "nvidia/nemotron-3-super-120b-a12b",
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "struct_pointer",
+    "chain_mode": "shuffled",
+    "depth": 10,
+    "code_chars": 972,
+    "estimated_prompt_tokens": 471
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 1885,
+    "max_tokens_requested": 1024
+  },
+  "response": {
+    "text": "func9 calls func8\nfunc8 calls func6\nfunc6 calls func5\nfunc5 calls func2\nfunc2 calls func1\nfunc1 calls func4\nfunc4 calls func7\nfunc7 calls func3\nfunc3 calls func10\nfunc10 calls END",
+    "normalized_text": "func9 calls func8\nfunc8 calls func6\nfunc6 calls func5\nfunc5 calls func2\nfunc2 calls func1\nfunc1 calls func4\nfunc4 calls func7\nfunc7 calls func3\nfunc3 calls func10\nfunc10 calls END",
+    "line_count": 10,
+    "ended_with_end": true,
+    "response_chars": 179,
+    "response_tokens_est": 44,
+    "finish_reason": "stop",
+    "latency_seconds": 9.555532790000143
+  },
+  "evaluation": {
+    "expected_depth": 10,
+    "expected_last_func": "func10",
+    "predicted_last_func": "func10",
+    "success": true,
+    "result": "success",
+    "success_reason": "exact_match",
+    "failure_type": null,
+    "failure_reason": null,
+    "failure_reason_readable": null,
+    "failure_explanation": null,
+    "detailed_output_reason": null,
+    "failure_analysis": {
+      "first_wrong_line": null,
+      "last_correct_line": 10,
+      "last_correct_call": "func10 calls END",
+      "failure_started_at": null,
+      "failure_reason": null
+    },
+    "first_wrong_line": null,
+    "last_correct_line": 10
+  },
+  "error": {
+    "api_reason": "none",
+    "api_message": "API call successful"
+  }
+}

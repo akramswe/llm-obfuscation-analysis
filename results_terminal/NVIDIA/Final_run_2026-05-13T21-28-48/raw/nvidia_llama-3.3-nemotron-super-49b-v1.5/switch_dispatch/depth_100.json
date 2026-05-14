@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-05-13T21-28-48",
+  "timestamp": "2026-05-14T01:25:10.758863",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "nvidia_nim",
+    "requested_name": "nvidia/llama-3.3-nemotron-super-49b-v1.5",
+    "actual_name": "nvidia/llama-3.3-nemotron-super-49b-v1.5",
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "switch_dispatch",
+    "chain_mode": "shuffled",
+    "depth": 100,
+    "code_chars": 8869,
+    "estimated_prompt_tokens": 2446
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 9784,
+    "max_tokens_requested": 4096
+  },
+  "response": {
+    "text": "func1 calls dispatch\ndispatch calls func77\nfunc77 calls dispatch\ndispatch calls func41\nfunc41 calls dispatch\ndispatch calls func68\nfunc68 calls dispatch\ndispatch calls func9\nfunc9 calls dispatch\ndispatch calls func51\nfunc51 calls dispatch\ndispatch calls func6\nfunc6 calls dispatch\ndispatch calls func85\nfunc85 calls dispatch\ndispatch calls func23\nfunc23 calls dispatch\ndispatch calls func32\nfunc32 calls dispatch\ndispatch calls func28\nfunc28 calls dispatch\ndispatch calls func72\nfunc72 calls dispatch\ndispatch calls func87\nfunc87 calls dispatch\ndispatch calls func49\nfunc49 calls dispatch\ndispatch calls func34\nfunc34 calls dispatch\ndispatch calls func96\nfunc96 calls dispatch\ndispatch calls func88\nfunc88 calls dispatch\ndispatch calls func94\nfunc94 calls dispatch\ndispatch calls func64\nfunc64 calls dispatch\ndispatch calls func100\nfunc100 calls dispatch\ndispatch calls func4\nfunc4 calls dispatch\ndispatch calls func3\nfunc3 calls dispatch\ndispatch calls func75\nfunc75 calls dispatch\ndispatch calls func46\nfunc46 calls dispatch\ndispatch calls func90\nfunc90 calls dispatch\ndispatch calls func45\nfunc45 calls dispatch\ndispatch calls func83\nfunc83 calls dispatch\ndispatch calls func71\nfunc71 calls dispatch\ndispatch calls func59\nfunc59 calls dispatch\ndispatch calls func36\nfunc36 calls dispatch\ndispatch calls func38\nfunc38 calls dispatch\ndispatch calls func33\nfunc33 calls dispatch\ndispatch calls func67\nfunc67 calls dispatch\ndispatch calls func13\nfunc13 calls dispatch\ndispatch calls func52\nfunc52 calls dispatch\ndispatch calls func81\nfunc81 calls dispatch\ndispatch calls func21\nfunc21 calls dispatch\ndispatch calls func55\nfunc55 calls dispatch\ndispatch calls func82\nfunc82 calls dispatch\ndispatch calls func69\nfunc69 calls dispatch\ndispatch calls func80\nfunc80 calls dispatch\ndispatch calls func78\nfunc78 calls dispatch\ndispatch calls func84\nfunc84 calls dispatch\ndispatch calls func50\nfunc50 calls dispatch\ndispatch calls func76\nfunc76 calls dispatch\ndispatch calls func18\nfunc18 calls dispatch\ndispatch calls func98\nfunc98 calls dispatch\ndispatch calls func56\nfunc56 calls dispatch\ndispatch calls func91\nfunc91 calls dispatch\ndispatch calls func29\nfunc29 calls dispatch\ndispatch calls func62\nfunc62 calls dispatch\ndispatch calls func44\nfunc44 calls dispatch\ndispatch calls func17\nfunc17 calls dispatch\ndispatch calls func86\nfunc86 calls dispatch\ndispatch calls func63\nfunc63 calls dispatch\ndispatch calls func42\nfunc42 calls dispatch\ndispatch calls func92\nfunc92 calls dispatch\ndispatch calls func61\nfunc61 calls dispatch\ndispatch calls func12\nfunc12 calls dispatch\ndispatch calls func30\nfunc30 calls dispatch\ndispatch calls func26\nfunc26 calls dispatch\ndispatch calls func57\nfunc57 calls dispatch\ndispatch calls func95\nfunc95 calls dispatch\ndispatch calls func35\nfunc35 calls dispatch\ndispatch calls func10\nfunc10 calls dispatch\ndispatch calls func73\nfunc73 calls dispatch\ndispatch calls func27\nfunc27 calls dispatch\ndispatch calls func97\nfunc97 calls dispatch\ndispatch calls func22\nfunc22 calls dispatch\ndispatch calls func11\nfunc11 calls dispatch\ndispatch calls func37\nfunc37 calls dispatch\ndispatch calls func58\nfunc58 calls dispatch\ndispatch calls func8\nfunc8 calls dispatch\ndispatch calls func16\nfunc16 calls dispatch\ndispatch calls func54\nfunc54 calls dispatch\ndispatch calls func15\nfunc15 calls dispatch\ndispatch calls func93\nfunc93 calls dispatch\ndispatch calls func19\nfunc19 calls dispatch\ndispatch calls func66\nfunc66 calls dispatch\ndispatch calls func40\nfunc40 calls dispatch\ndispatch calls func53\nfunc53 calls dispatch\ndispatch calls func31\nfunc31 calls dispatch\ndispatch calls func5\nfunc5 calls dispatch\ndispatch calls func43\nfunc43 calls dispatch\ndispatch calls func14\nfunc14 calls dispatch\ndispatch calls func39\nfunc39 calls dispatch\ndispatch calls func70\nfunc70 calls dispatch\ndispatch calls func99\nfunc99 calls dispatch\ndispatch calls func79\nfunc79 calls dispatch\ndispatch calls func65\nfunc65 calls dispatch\ndispatch calls func89\nfunc89 calls dispatch\ndispatch calls func48\nfunc48 calls dispatch\ndispatch calls func24\nfunc24 calls dispatch\ndispatch calls func20\nfunc20 calls dispatch\ndispatch calls func7\nfunc7 calls dispatch\ndispatch calls func25\nfunc25 calls dispatch\ndispatch calls func2\nfunc2 calls dispatch\ndispatch calls func47\nfunc47 calls dispatch\ndispatch calls func74\nfunc74 calls dispatch\ndispatch calls func60\nfunc60 calls END",
+    "normalized_text": "func1 calls dispatch\ndispatch calls func77\nfunc77 calls dispatch\ndispatch calls func41\nfunc41 calls dispatch\ndispatch calls func68\nfunc68 calls dispatch\ndispatch calls func9\nfunc9 calls dispatch\ndispatch calls func51\nfunc51 calls dispatch\ndispatch calls func6\nfunc6 calls dispatch\ndispatch calls func85\nfunc85 calls dispatch\ndispatch calls func23\nfunc23 calls dispatch\ndispatch calls func32\nfunc32 calls dispatch\ndispatch calls func28\nfunc28 calls dispatch\ndispatch calls func72\nfunc72 calls dispatch\ndispatch calls func87\nfunc87 calls dispatch\ndispatch calls func49\nfunc49 calls dispatch\ndispatch calls func34\nfunc34 calls dispatch\ndispatch calls func96\nfunc96 calls dispatch\ndispatch calls func88\nfunc88 calls dispatch\ndispatch calls func94\nfunc94 calls dispatch\ndispatch calls func64\nfunc64 calls dispatch\ndispatch calls func100\nfunc100 calls dispatch\ndispatch calls func4\nfunc4 calls dispatch\ndispatch calls func3\nfunc3 calls dispatch\ndispatch calls func75\nfunc75 calls dispatch\ndispatch calls func46\nfunc46 calls dispatch\ndispatch calls func90\nfunc90 calls dispatch\ndispatch calls func45\nfunc45 calls dispatch\ndispatch calls func83\nfunc83 calls dispatch\ndispatch calls func71\nfunc71 calls dispatch\ndispatch calls func59\nfunc59 calls dispatch\ndispatch calls func36\nfunc36 calls dispatch\ndispatch calls func38\nfunc38 calls dispatch\ndispatch calls func33\nfunc33 calls dispatch\ndispatch calls func67\nfunc67 calls dispatch\ndispatch calls func13\nfunc13 calls dispatch\ndispatch calls func52\nfunc52 calls dispatch\ndispatch calls func81\nfunc81 calls dispatch\ndispatch calls func21\nfunc21 calls dispatch\ndispatch calls func55\nfunc55 calls dispatch\ndispatch calls func82\nfunc82 calls dispatch\ndispatch calls func69\nfunc69 calls dispatch\ndispatch calls func80\nfunc80 calls dispatch\ndispatch calls func78\nfunc78 calls dispatch\ndispatch calls func84\nfunc84 calls dispatch\ndispatch calls func50\nfunc50 calls dispatch\ndispatch calls func76\nfunc76 calls dispatch\ndispatch calls func18\nfunc18 calls dispatch\ndispatch calls func98\nfunc98 calls dispatch\ndispatch calls func56\nfunc56 calls dispatch\ndispatch calls func91\nfunc91 calls dispatch\ndispatch calls func29\nfunc29 calls dispatch\ndispatch calls func62\nfunc62 calls dispatch\ndispatch calls func44\nfunc44 calls dispatch\ndispatch calls func17\nfunc17 calls dispatch\ndispatch calls func86\nfunc86 calls dispatch\ndispatch calls func63\nfunc63 calls dispatch\ndispatch calls func42\nfunc42 calls dispatch\ndispatch calls func92\nfunc92 calls dispatch\ndispatch calls func61\nfunc61 calls dispatch\ndispatch calls func12\nfunc12 calls dispatch\ndispatch calls func30\nfunc30 calls dispatch\ndispatch calls func26\nfunc26 calls dispatch\ndispatch calls func57\nfunc57 calls dispatch\ndispatch calls func95\nfunc95 calls dispatch\ndispatch calls func35\nfunc35 calls dispatch\ndispatch calls func10\nfunc10 calls dispatch\ndispatch calls func73\nfunc73 calls dispatch\ndispatch calls func27\nfunc27 calls dispatch\ndispatch calls func97\nfunc97 calls dispatch\ndispatch calls func22\nfunc22 calls dispatch\ndispatch calls func11\nfunc11 calls dispatch\ndispatch calls func37\nfunc37 calls dispatch\ndispatch calls func58\nfunc58 calls dispatch\ndispatch calls func8\nfunc8 calls dispatch\ndispatch calls func16\nfunc16 calls dispatch\ndispatch calls func54\nfunc54 calls dispatch\ndispatch calls func15\nfunc15 calls dispatch\ndispatch calls func93\nfunc93 calls dispatch\ndispatch calls func19\nfunc19 calls dispatch\ndispatch calls func66\nfunc66 calls dispatch\ndispatch calls func40\nfunc40 calls dispatch\ndispatch calls func53\nfunc53 calls dispatch\ndispatch calls func31\nfunc31 calls dispatch\ndispatch calls func5\nfunc5 calls dispatch\ndispatch calls func43\nfunc43 calls dispatch\ndispatch calls func14\nfunc14 calls dispatch\ndispatch calls func39\nfunc39 calls dispatch\ndispatch calls func70\nfunc70 calls dispatch\ndispatch calls func99\nfunc99 calls dispatch\ndispatch calls func79\nfunc79 calls dispatch\ndispatch calls func65\nfunc65 calls dispatch\ndispatch calls func89\nfunc89 calls dispatch\ndispatch calls func48\nfunc48 calls dispatch\ndispatch calls func24\nfunc24 calls dispatch\ndispatch calls func20\nfunc20 calls dispatch\ndispatch calls func7\nfunc7 calls dispatch\ndispatch calls func25\nfunc25 calls dispatch\ndispatch calls func2\nfunc2 calls dispatch\ndispatch calls func47\nfunc47 calls dispatch\ndispatch calls func74\nfunc74 calls dispatch\ndispatch calls func60\nfunc60 calls END",
+    "line_count": 199,
+    "ended_with_end": true,
+    "response_chars": 4357,
+    "response_tokens_est": 1089,
+    "finish_reason": "stop",
+    "latency_seconds": 31.951037770000767
+  },
+  "evaluation": {
+    "expected_depth": 100,
+    "expected_last_func": "func60",
+    "predicted_last_func": "func60",
+    "success": false,
+    "result": "failure",
+    "success_reason": null,
+    "failure_type": "output_failure",
+    "failure_reason": "malformed_output",
+    "failure_reason_readable": "Output format violation (non-call text or malformed lines)",
+    "failure_explanation": "Model produced an incorrect line starting at line 1",
+    "detailed_output_reason": "wrong_callee_line_1_expected_func77_got_dispatch",
+    "failure_analysis": {
+      "first_wrong_line": 1,
+      "last_correct_line": 0,
+      "last_correct_call": null,
+      "failure_started_at": "func1",
+      "failure_reason": "incorrect_line"
+    },
+    "first_wrong_line": 1,
+    "last_correct_line": 0
+  },
+  "error": {
+    "api_reason": "none",
+    "api_message": "API call successful"
+  }
+}

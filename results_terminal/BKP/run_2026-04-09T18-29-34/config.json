@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-04-09T18-29-34",
+  "experiment_name": "terminal_function_identification",
+  "models": [
+    "qwen/qwen2.5-7b-instruct",
+    "meta-llama/llama-3.1-8b-instruct"
+  ],
+  "note": "openrouter/free is a routing model; actual backend models may vary per request and are recorded in summary.json",
+  "construct_types": [
+    "direct"
+  ],
+  "depths_by_construct": {
+    "direct": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000
+    ]
+  },
+  "temperature": 0.0,
+  "delay_between_requests": 30,
+  "tpm_soft_limit": 12000,
+  "prompt_version": "v2_terminal_only"
+}

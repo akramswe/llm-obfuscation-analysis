@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "run_id": "2026-05-04T14-25-46",
+    "experiment": "terminal_function_identification",
+    "provider": "nvidia_nim",
+    "timestamp": "2026-05-04T14:26:26.518025"
+  },
+  "schema_hint": {
+    "overall": "Run-level metrics across all tested models and constructs.",
+    "models": "Per-model breakdown with concise sample-level outcomes.",
+    "samples": "Each sample is one (model, construct, depth) evaluation."
+  },
+  "overall": {
+    "total_tests": 1,
+    "total_successes": 0,
+    "total_failures": 1,
+    "success_rate": 0.0,
+    "construct_summary": {
+      "direct": {
+        "num_tests": 1,
+        "num_successes": 0,
+        "success_rate": 0.0
+      }
+    }
+  },
+  "models": {
+    "nvidia/nemotron-3-8b-instruct": {
+      "requested_model": "nvidia/nemotron-3-8b-instruct",
+      "actual_models_seen": [],
+      "num_tests": 1,
+      "num_successes": 0,
+      "success_rate": 0.0,
+      "samples": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "nvidia/nemotron-3-8b-instruct",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "api_error",
+          "api_message": "404 page not found",
+          "failure_type": "api_failure",
+          "failure_reason": "api_error",
+          "failure_reason_readable": "API error from provider",
+          "failure_explanation": "API failure occurred: api_error",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "api_error"
+          }
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "num_tests": 1,
+          "num_successes": 0,
+          "success_rate": 0.0,
+          "max_success_depth_tested": 0,
+          "first_failure_depth": 100,
+          "actual_models_seen": []
+        }
+      }
+    }
+  }
+}

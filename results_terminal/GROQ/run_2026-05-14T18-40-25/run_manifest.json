@@ -1,0 +1,11 @@
+{
+  "run_id": "2026-05-14T18-40-25",
+  "provider": "groq",
+  "paths": {
+    "config": "results_terminal/GROQ/run_2026-05-14T18-40-25/config.json",
+    "summary_default": "results_terminal/GROQ/run_2026-05-14T18-40-25/summaries/summary.json",
+    "summary_provider": "results_terminal/GROQ/run_2026-05-14T18-40-25/summaries/summary_groq.json",
+    "raw_dir": "results_terminal/GROQ/run_2026-05-14T18-40-25/raw",
+    "summaries_dir": "results_terminal/GROQ/run_2026-05-14T18-40-25/summaries"
+  }
+}

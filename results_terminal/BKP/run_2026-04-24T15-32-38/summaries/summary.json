@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "run_id": "2026-04-24T15-32-38",
+    "experiment": "terminal_function_identification",
+    "provider": "openrouter",
+    "timestamp": "2026-04-24T15:44:08.413463"
+  },
+  "overall": {
+    "total_tests": 3,
+    "total_successes": 3,
+    "total_failures": 0,
+    "success_rate": 1.0
+  },
+  "models": {
+    "tencent/hy3-preview:free": {
+      "requested_model": "tencent/hy3-preview:free",
+      "actual_models_seen": [
+        "tencent/hy3-preview-20260421:free"
+      ],
+      "total_tests": 3,
+      "total_successes": 3,
+      "success_rate": 1.0,
+      "test_points": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "tencent/hy3-preview:free",
+          "actual_model": "tencent/hy3-preview-20260421:free",
+          "result": "success",
+          "success_reason": "exact_match",
+          "failure_type": null,
+          "failure_reason": null,
+          "failure_explanation": null,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 100,
+            "last_correct_call": "func19 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 300,
+          "requested_model": "tencent/hy3-preview:free",
+          "actual_model": "tencent/hy3-preview-20260421:free",
+          "result": "success",
+          "success_reason": "exact_match",
+          "failure_type": null,
+          "failure_reason": null,
+          "failure_explanation": null,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 300,
+            "last_correct_call": "func183 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 1000,
+          "requested_model": "tencent/hy3-preview:free",
+          "actual_model": "tencent/hy3-preview-20260421:free",
+          "result": "success",
+          "success_reason": "exact_match",
+          "failure_type": null,
+          "failure_reason": null,
+          "failure_explanation": null,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 1000,
+            "last_correct_call": "func797 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "tested_depths": 3,
+          "successes": 3,
+          "success_rate": 1.0,
+          "max_success_depth": 1000,
+          "first_failure_depth": null,
+          "actual_models_seen": [
+            "tencent/hy3-preview-20260421:free"
+          ]
+        }
+      }
+    }
+  }
+}

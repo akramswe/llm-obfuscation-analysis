@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-05-04T16-34-36",
+  "experiment_name": "terminal_function_identification",
+  "models": [
+    "nvidia/nemotron-3-super-120b-a12b",
+    "nvidia/llama-3.3-nemotron-super-49b-v1.5",
+    "qwen/qwen3.5-122b-a10b"
+  ],
+  "note": "NVIDIA NIM endpoint is non-routing; actual model usually matches the requested model.",
+  "construct_types": [
+    "direct",
+    "function_pointer",
+    "pointer_array",
+    "struct_pointer",
+    "switch_dispatch"
+  ],
+  "depths_by_construct": {
+    "direct": [
+      10
+    ],
+    "function_pointer": [
+      10
+    ],
+    "pointer_array": [
+      10
+    ],
+    "struct_pointer": [
+      10
+    ],
+    "switch_dispatch": [
+      10
+    ]
+  },
+  "temperature": 0.0,
+  "delay_between_requests": 30,
+  "tpm_soft_limit": 12000,
+  "prompt_version": "v2_terminal_only"
+}
