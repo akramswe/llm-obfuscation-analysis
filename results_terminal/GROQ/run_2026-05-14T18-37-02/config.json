@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-05-14T18-37-02",
+  "experiment_name": "terminal_function_identification",
+  "models": [
+    "openai/gpt-oss-120b",
+    "llama-3.3-70b-versatile",
+    "qwen/qwen3-32b"
+  ],
+  "note": "Groq endpoint is non-routing; actual model usually matches requested model.",
+  "construct_types": [
+    "direct",
+    "function_pointer",
+    "pointer_array",
+    "struct_pointer",
+    "switch_dispatch"
+  ],
+  "depths_by_construct": {
+    "direct": [
+      5
+    ]
+  },
+  "temperature": 0.0,
+  "delay_between_requests": 30,
+  "tpm_soft_limit": 12000,
+  "prompt_version": "v2_terminal_only"
+}

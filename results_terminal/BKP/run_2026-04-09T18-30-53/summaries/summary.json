@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "run_id": "2026-04-09T18-30-53",
+    "experiment": "terminal_function_identification",
+    "provider": "openrouter",
+    "timestamp": "2026-04-09T18:35:22.075893"
+  },
+  "overall": {
+    "total_tests": 3,
+    "total_successes": 2,
+    "total_failures": 1,
+    "success_rate": 0.667
+  },
+  "models": {
+    "meta-llama/llama-3.1-8b-instruct": {
+      "requested_model": "meta-llama/llama-3.1-8b-instruct",
+      "actual_models_seen": [
+        "meta-llama/llama-3.1-8b-instruct"
+      ],
+      "total_tests": 3,
+      "total_successes": 2,
+      "success_rate": 0.667,
+      "test_points": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "actual_model": "meta-llama/llama-3.1-8b-instruct",
+          "result": "success",
+          "success_reason": "exact_match",
+          "failure_type": null,
+          "failure_reason": null,
+          "failure_explanation": null,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 100,
+            "last_correct_call": "func19 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 900,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "actual_model": "meta-llama/llama-3.1-8b-instruct",
+          "result": "success",
+          "success_reason": "exact_match",
+          "failure_type": null,
+          "failure_reason": null,
+          "failure_explanation": null,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 900,
+            "last_correct_call": "func640 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        },
+        {
+          "construct": "direct",
+          "depth": 1000,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "actual_model": "meta-llama/llama-3.1-8b-instruct",
+          "result": "failure",
+          "success_reason": null,
+          "failure_type": "output_failure",
+          "failure_reason": "underestimate",
+          "failure_explanation": "Model produced an incorrect line starting at line 1",
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": 1,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": "func655",
+            "failure_reason": "incorrect_line"
+          }
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "tested_depths": 3,
+          "successes": 2,
+          "success_rate": 0.667,
+          "max_success_depth": 900,
+          "first_failure_depth": 1000,
+          "actual_models_seen": [
+            "meta-llama/llama-3.1-8b-instruct"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -3,27 +3,110 @@ import json
 import time
 import re
 import random
+import shutil
 from datetime import datetime
 from typing import Optional, Tuple
 # from groq import Groq, RateLimitError, APIStatusError
-from openai import OpenAI, RateLimitError, APIStatusError
+from openai import OpenAI, RateLimitError, APIStatusError, APIConnectionError, APITimeoutError
 
 # ===================== CONFIG =====================
 
-MODELS = [
-    # "openai/gpt-oss-20b" for groq
-    # "openrouter/free"
-    # "openrouter/hunter-alpha"
-    # "xiaomi/mimo-v2-pro"
-    #  "openai/gpt-5.4"
-    # "nvidia/nemotron-3-super-120b-a12b:free"
-    # "meta-llama/llama-3.1-8b-instruct",
-    # "openai/gpt-4.1",
-    # "qwen/qwen2.5-7b-instruct",
-    # "meta-llama/llama-3.1-8b-instruct"
-    # "qwen/qwen3.6-plus"
-    "tencent/hy3-preview:free"
-]
+ACTIVE_PROVIDER = os.environ.get("LLM_PROVIDER", "").strip().lower() or None
+PROMPT_PROVIDER_AT_START = True
+
+MODELS_BY_PROVIDER = {
+    "nvidia": [
+        "nvidia/nemotron-3-super-120b-a12b",
+        # "nvidia/llama-3.3-nemotron-super-49b-v1.5",
+        # "qwen/qwen3.5-122b-a10b",
+    ],
+    "groq": [
+        "openai/gpt-oss-120b",
+        # "llama-3.3-70b-versatile",
+        # "qwen/qwen3-32b",
+    ],
+    "openrouter": [
+        "openrouter/free",
+    #     "nvidia/nemotron-3-super-120b-a12b:free",
+    #     "openai/gpt-oss-120b:free",
+    ],
+}
+
+def resolve_active_provider() -> str:
+    options = list(MODELS_BY_PROVIDER.keys())
+
+    env_provider = os.environ.get("LLM_PROVIDER", "").strip().lower()
+    if env_provider:
+        if env_provider not in MODELS_BY_PROVIDER:
+            raise RuntimeError(
+                f"Invalid LLM_PROVIDER='{env_provider}'. Valid options: {', '.join(options)}"
+            )
+        return env_provider
+
+    provider = (ACTIVE_PROVIDER or "").strip().lower()
+    if provider not in MODELS_BY_PROVIDER:
+        provider = "nvidia"
+
+    if not PROMPT_PROVIDER_AT_START:
+        return provider
+
+    terminal_width = shutil.get_terminal_size(fallback=(100, 24)).columns
+    width = max(60, min(terminal_width, 120))
+    print("\n" + "=" * width)
+    print("Call-Chain Experiment Launcher".center(width))
+    print("=" * width)
+    experiment_name = globals().get("EXPERIMENT_NAME", "terminal_function_identification")
+    constructs = globals().get(
+        "CONSTRUCT_TYPES",
+        ["direct", "function_pointer", "pointer_array", "struct_pointer", "switch_dispatch"],
+    )
+    chain_sizes = globals().get(
+        "CALL_CHAIN_SIZES_BY_CONSTRUCT",
+        {k: [100, 200, 400, 600, 800, 1000] for k in constructs},
+    )
+    active_constructs = [c for c in constructs if c in chain_sizes and chain_sizes.get(c)]
+    if not active_constructs:
+        active_constructs = list(chain_sizes.keys())
+    depth_values = sorted({d for c in active_constructs for d in chain_sizes.get(c, [])})
+    print(f"Experiment : {experiment_name}")
+    print(f"Constructs : {', '.join(active_constructs)}")
+    print("Depths     : " + ", ".join(str(d) for d in depth_values))
+    print("-" * width)
+    print("Select provider:".center(width))
+    for idx, name in enumerate(options, start=1):
+        print(f"{idx}. {name}".center(width))
+    exit_idx = len(options) + 1
+    print(f"{exit_idx}. exit".center(width))
+    default_idx = options.index(provider) + 1
+    while True:
+        choice = input(f"Enter choice [default {default_idx}, {exit_idx}=exit]: ").strip()
+        if not choice:
+            return provider
+
+        if choice.isdigit():
+            idx = int(choice) - 1
+            if idx == len(options):
+                raise SystemExit("User exited before starting experiment.")
+            if 0 <= idx < len(options):
+                return options[idx]
+            print(f"Invalid number '{choice}'. Please enter 1-{exit_idx}.")
+            continue
+
+        choice_lower = choice.lower()
+        if choice_lower in MODELS_BY_PROVIDER:
+            return choice_lower
+        if choice_lower in {"exit", "quit", "q"}:
+            raise SystemExit("User exited before starting experiment.")
+
+        print(
+            f"Invalid choice '{choice}'. Enter 1-{exit_idx}, "
+            f"a provider name ({', '.join(options)}), or 'exit'."
+        )
+
+
+ACTIVE_PROVIDER = resolve_active_provider()
+MODELS = MODELS_BY_PROVIDER[ACTIVE_PROVIDER]
+
 
 # MODELS = [
 #     "openai/gpt-oss-20b",
@@ -35,7 +118,10 @@ MODELS = [
 
 CONSTRUCT_TYPES = [
     "direct",
-    # "function_pointer"
+    "function_pointer",
+    "pointer_array",
+    "struct_pointer",
+    "switch_dispatch"
 ]
 
 # CONSTRUCT_TYPES = [
@@ -47,9 +133,7 @@ CONSTRUCT_TYPES = [
 # ]
 
 CALL_CHAIN_SIZES_BY_CONSTRUCT = {
-    "direct": [1000],
-    # "direct": [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
-    # "function_pointer": [100]
+    "direct": [5]
 }
 
 # CALL_CHAIN_SIZES_BY_CONSTRUCT = {
@@ -71,16 +155,23 @@ MAX_DISPLAY_CHARS = 160
 MAX_REQUEST_ATTEMPTS = 5
 REASONING_EFFORT = "none"
 EXCLUDE_REASONING_TOKENS = True
+DIRECT_CHAIN_MODE = "shuffled"  # "sequential" or "shuffled"
+RANDOMIZE_ALL_CONSTRUCTS = True
 PROMPT_VERSION = "v2_terminal_only"
 SCHEMA_VERSION = "1.0"
 EXPERIMENT_NAME = "terminal_function_identification"
-PROVIDER_NAME = "openrouter"
-MODEL_ROUTING_NOTE = "openrouter/free is a routing model; actual backend models may vary per request and are recorded in summary.json"
+PROVIDER_NAME = ACTIVE_PROVIDER
+MODEL_ROUTING_NOTE = {
+    "nvidia": "NVIDIA NIM endpoint is non-routing; actual model usually matches requested model.",
+    "groq": "Groq endpoint is non-routing; actual model usually matches requested model.",
+    "openrouter": "OpenRouter may route to provider backends; actual model string can differ.",
+}.get(ACTIVE_PROVIDER, "Provider routing behavior not specified.")
 FAILURE_REASON_LABELS = {
     "prompt_too_large": "Prompt exceeds provider/model limits",
     "daily_token_limit": "Provider daily token quota reached",
     "insufficient_credits": "Insufficient credits for this request",
     "rate_limit": "Rate-limited by provider",
+    "model_not_found": "Requested model is unavailable on this provider endpoint",
     "api_error": "API error from provider",
     "empty_response": "Model returned empty output",
     "malformed_output": "Output format violation (non-call text or malformed lines)",
@@ -89,33 +180,97 @@ FAILURE_REASON_LABELS = {
     "exact_match_failure": "Output mismatch despite similar structure",
 }
 
-# # Use environment variable only
-# GROQ_API_KEY = "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"
-# # GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
-# if not GROQ_API_KEY:
-#     raise RuntimeError("Please set GROQ_API_KEY as an environment variable.")
+def apply_provider_selection(provider: str) -> None:
+    global ACTIVE_PROVIDER, MODELS, PROVIDER_NAME, MODEL_ROUTING_NOTE, client
 
-OPENROUTER_API_KEY = "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"
+    ACTIVE_PROVIDER = provider
+    MODELS = MODELS_BY_PROVIDER[ACTIVE_PROVIDER]
+    PROVIDER_NAME = ACTIVE_PROVIDER
+    MODEL_ROUTING_NOTE = {
+        "nvidia": "NVIDIA NIM endpoint is non-routing; actual model usually matches requested model.",
+        "groq": "Groq endpoint is non-routing; actual model usually matches requested model.",
+        "openrouter": "OpenRouter may route to provider backends; actual model string can differ.",
+    }.get(ACTIVE_PROVIDER, "Provider routing behavior not specified.")
 
-# OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
-if not OPENROUTER_API_KEY:
-    raise RuntimeError("Please set OPENROUTER_API_KEY as an environment variable.")
+    if ACTIVE_PROVIDER == "groq":
+        HARDCODED_GROQ_API_KEY = "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"
+        GROQ_API_KEY = HARDCODED_GROQ_API_KEY or os.environ.get("GROQ_API_KEY")
+        if not GROQ_API_KEY:
+            raise RuntimeError(
+                "Set HARDCODED_GROQ_API_KEY in this file (temporary) or export GROQ_API_KEY."
+            )
+        client = OpenAI(
+            api_key=GROQ_API_KEY,
+            base_url="https://api.groq.com/openai/v1",
+        )
+        return
 
-client = OpenAI(
-    api_key=OPENROUTER_API_KEY,
-    base_url="https://openrouter.ai/api/v1",
-    default_headers={
-        # Optional headers. You can remove them if you want.
-        "X-OpenRouter-Title": "call-chain-experiment",
-    },
-)
+    if ACTIVE_PROVIDER == "nvidia":
+        HARDCODED_NVIDIA_API_KEY = "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"
+        NVIDIA_API_KEY = HARDCODED_NVIDIA_API_KEY or os.environ.get("NVIDIA_API_KEY")
+        if not NVIDIA_API_KEY:
+            raise RuntimeError(
+                "Set HARDCODED_NVIDIA_API_KEY in this file (temporary) or export NVIDIA_API_KEY."
+            )
+        client = OpenAI(
+            api_key=NVIDIA_API_KEY,
+            base_url="https://integrate.api.nvidia.com/v1",
+        )
+        return
+
+    if ACTIVE_PROVIDER == "openrouter":
+        HARDCODED_OPENROUTER_API_KEY = "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"
+        OPENROUTER_API_KEY = HARDCODED_OPENROUTER_API_KEY or os.environ.get("OPENROUTER_API_KEY")
+        if not OPENROUTER_API_KEY:
+            raise RuntimeError(
+                "Set HARDCODED_OPENROUTER_API_KEY in this file (temporary) or export OPENROUTER_API_KEY."
+            )
+        client = OpenAI(
+            api_key=OPENROUTER_API_KEY,
+            base_url="https://openrouter.ai/api/v1",
+            default_headers={"X-OpenRouter-Title": "call-chain-experiment"},
+        )
+        return
+
+    raise RuntimeError(f"Unsupported ACTIVE_PROVIDER: {ACTIVE_PROVIDER}")
+
+apply_provider_selection(ACTIVE_PROVIDER)
+
+# OpenRouter fallback config (disabled while running Groq):
+# HARDCODED_OPENROUTER_API_KEY = ""
+# OPENROUTER_API_KEY = HARDCODED_OPENROUTER_API_KEY or os.environ.get("OPENROUTER_API_KEY")
+# if not OPENROUTER_API_KEY:
+#     raise RuntimeError(
+#         "Set HARDCODED_OPENROUTER_API_KEY in this file (temporary) or export OPENROUTER_API_KEY."
+#     )
+# client = OpenAI(
+#     api_key=OPENROUTER_API_KEY,
+#     base_url="https://openrouter.ai/api/v1",
+#     default_headers={
+#         "X-OpenRouter-Title": "call-chain-experiment",
+#     },
+# )
+
+# NVIDIA fallback config (optional):
+# HARDCODED_NVIDIA_API_KEY = ""
+# NVIDIA_API_KEY = HARDCODED_NVIDIA_API_KEY or os.environ.get("NVIDIA_API_KEY")
+# if not NVIDIA_API_KEY:
+#     raise RuntimeError(
+#         "Set HARDCODED_NVIDIA_API_KEY in this file (temporary) or export NVIDIA_API_KEY."
+#     )
+# client = OpenAI(
+#     api_key=NVIDIA_API_KEY,
+#     base_url="https://integrate.api.nvidia.com/v1",
+# )
+
 
 # ===================== CODE GENERATORS =====================
 
 def generate_direct_call_chain(n: int):
-    rng = random.Random(n)
     order = list(range(1, n + 1))
-    rng.shuffle(order)
+    if DIRECT_CHAIN_MODE == "shuffled":
+        rng = random.Random(n)
+        rng.shuffle(order)
 
     code = "#include <stdio.h>\n\n"
 
@@ -131,99 +286,124 @@ def generate_direct_call_chain(n: int):
 
     return code, expected_lines
 
-def generate_function_pointer_chain(n: int) -> str:
+def build_expected_lines(order: list[int]) -> list[str]:
+    expected_lines = [f"func{order[i]} calls func{order[i+1]}" for i in range(len(order) - 1)]
+    expected_lines.append(f"func{order[-1]} calls END")
+    return expected_lines
+
+def build_order(n: int, seed_offset: int = 0, force_shuffle: bool = False) -> list[int]:
+    order = list(range(1, n + 1))
+    should_shuffle = force_shuffle or DIRECT_CHAIN_MODE == "shuffled" or RANDOMIZE_ALL_CONSTRUCTS
+    if should_shuffle:
+        rng = random.Random(n + seed_offset)
+        rng.shuffle(order)
+    return order
+
+def generate_function_pointer_chain(n: int):
+    order = build_order(n, seed_offset=101, force_shuffle=RANDOMIZE_ALL_CONSTRUCTS)
+    expected_lines = build_expected_lines(order)
+
     code = "#include <stdio.h>\n\n"
 
-    for i in range(1, n + 1):
+    for i in order:
         code += f"void func{i}(void);\n"
     code += "\n"
 
-    for i in range(1, n):
+    for i in order[:-1]:
         code += f"void (*fp{i})(void);\n"
     code += "\n"
 
-    for i in range(1, n):
-        code += f"void func{i}(void){{ fp{i}(); }}\n"
-    code += f"void func{n}(void){{ printf(\"End\\n\"); }}\n\n"
+    for i in range(n - 1):
+        code += f"void func{order[i]}(void){{ fp{order[i]}(); }}\n"
+    code += f"void func{order[-1]}(void){{ printf(\"End\\n\"); }}\n\n"
 
     code += "int main(void){\n"
-    for i in range(1, n):
-        code += f"    fp{i} = func{i+1};\n"
-    code += "    func1();\n"
+    for i in range(n - 1):
+        code += f"    fp{order[i]} = func{order[i+1]};\n"
+    code += f"    func{order[0]}();\n"
     code += "    return 0;\n"
     code += "}\n"
-    return code
+    return code, expected_lines
 
-def generate_pointer_array_chain(n: int) -> str:
+def generate_pointer_array_chain(n: int):
+    order = build_order(n, seed_offset=202, force_shuffle=RANDOMIZE_ALL_CONSTRUCTS)
+    expected_lines = build_expected_lines(order)
+
     code = "#include <stdio.h>\n\n"
     code += f"#define N {n}\n"
     code += "typedef void (*fp_t)(void);\n"
     code += "fp_t fp[N + 1];\n\n"
 
-    for i in range(1, n + 1):
+    for i in order:
         code += f"void func{i}(void);\n"
     code += "\n"
 
-    for i in range(1, n):
-        code += f"void func{i}(void){{ fp[{i}](); }}\n"
-    code += f"void func{n}(void){{ printf(\"End\\n\"); }}\n\n"
+    for i in range(n - 1):
+        code += f"void func{order[i]}(void){{ fp[{order[i]}](); }}\n"
+    code += f"void func{order[-1]}(void){{ printf(\"End\\n\"); }}\n\n"
 
     code += "int main(void){\n"
-    for i in range(1, n):
-        code += f"    fp[{i}] = func{i+1};\n"
-    code += f"    fp[{n}] = func{n};\n"
-    code += "    func1();\n"
+    for i in range(n - 1):
+        code += f"    fp[{order[i]}] = func{order[i+1]};\n"
+    code += f"    fp[{order[-1]}] = func{order[-1]};\n"
+    code += f"    func{order[0]}();\n"
     code += "    return 0;\n"
     code += "}\n"
-    return code
+    return code, expected_lines
 
-def generate_struct_pointer_chain(n: int) -> str:
+def generate_struct_pointer_chain(n: int):
+    order = build_order(n, seed_offset=303, force_shuffle=RANDOMIZE_ALL_CONSTRUCTS)
+    expected_lines = build_expected_lines(order)
+
     code = "#include <stdio.h>\n\n"
     code += "typedef void (*fp_t)(void);\n"
     code += "struct Node { fp_t next; };\n"
     code += f"struct Node nodes[{n + 1}];\n\n"
 
-    for i in range(1, n + 1):
+    for i in order:
         code += f"void func{i}(void);\n"
     code += "\n"
 
-    for i in range(1, n):
-        code += f"void func{i}(void){{ nodes[{i}].next(); }}\n"
-    code += f"void func{n}(void){{ printf(\"End\\n\"); }}\n\n"
+    for i in range(n - 1):
+        code += f"void func{order[i]}(void){{ nodes[{order[i]}].next(); }}\n"
+    code += f"void func{order[-1]}(void){{ printf(\"End\\n\"); }}\n\n"
 
     code += "int main(void){\n"
-    for i in range(1, n):
-        code += f"    nodes[{i}].next = func{i+1};\n"
-    code += f"    nodes[{n}].next = func{n};\n"
-    code += "    func1();\n"
+    for i in range(n - 1):
+        code += f"    nodes[{order[i]}].next = func{order[i+1]};\n"
+    code += f"    nodes[{order[-1]}].next = func{order[-1]};\n"
+    code += f"    func{order[0]}();\n"
     code += "    return 0;\n"
     code += "}\n"
-    return code
+    return code, expected_lines
 
-def generate_switch_dispatch_chain(n: int) -> str:
+def generate_switch_dispatch_chain(n: int):
+    order = build_order(n, seed_offset=404, force_shuffle=RANDOMIZE_ALL_CONSTRUCTS)
+    expected_lines = build_expected_lines(order)
+
     code = "#include <stdio.h>\n\n"
 
-    for i in range(1, n + 1):
+    for i in order:
         code += f"void func{i}(void);\n"
     code += "\n"
 
     code += "void dispatch(int id){\n"
     code += "    switch(id){\n"
-    for i in range(1, n):
-        code += f"        case {i}: func{i+1}(); break;\n"
+    for i in range(n - 1):
+        code += f"        case {order[i]}: func{order[i+1]}(); break;\n"
     code += "        default: break;\n"
     code += "    }\n"
     code += "}\n\n"
 
-    for i in range(1, n):
-        code += f"void func{i}(void){{ dispatch({i}); }}\n"
-    code += f"void func{n}(void){{ printf(\"End\\n\"); }}\n\n"
+    for i in range(n - 1):
+        code += f"void func{order[i]}(void){{ dispatch({order[i]}); }}\n"
+    code += f"void func{order[-1]}(void){{ printf(\"End\\n\"); }}\n\n"
 
     code += "int main(void){\n"
-    code += "    func1();\n"
+    code += f"    func{order[0]}();\n"
     code += "    return 0;\n"
     code += "}\n"
-    return code
+    return code, expected_lines
 
 def generate_code(n: int, construct: str):
     generators = {
@@ -235,16 +415,7 @@ def generate_code(n: int, construct: str):
     }
     if construct not in generators:
         raise ValueError(f"Unknown construct type: {construct}")
-    generated = generators[construct](n)
-
-    # direct returns (code, expected_lines); other constructs currently return code.
-    if isinstance(generated, tuple) and len(generated) == 2:
-        return generated
-
-    code = generated
-    expected_lines = [f"func{i} calls func{i+1}" for i in range(1, n)]
-    expected_lines.append(f"func{n} calls END")
-    return code, expected_lines
+    return generators[construct](n)
 
 # ===================== PROMPT =====================
 
@@ -335,6 +506,8 @@ def classify_failure(response: Optional[str], expected_lines: list[str], error: 
             return "insufficient_credits"
         if "rate_limit" in error_lower:
             return "rate_limit"
+        if "model_not_found" in error_lower:
+            return "model_not_found"
         return "api_error"
 
     if verify_response(response, expected_lines):
@@ -370,33 +543,78 @@ def verify_response(response: Optional[str], expected_lines: list[str]) -> bool:
     lines = [ln.strip() for ln in response.strip().splitlines() if ln.strip()]
     return lines == expected_lines
 
+def extract_call_lines(response: Optional[str]) -> list[str]:
+    if not response:
+        return []
+    lines = [ln.strip() for ln in response.strip().splitlines() if ln.strip()]
+    return [ln for ln in lines if re.fullmatch(r"func\d+\s+calls\s+(func\d+|END)", ln)]
+
 # ===================== API =====================
 
 def compute_max_tokens(depth: int) -> int:
     # Output is exactly `depth` lines in form "funcX calls funcY".
-    # Keep enough room for deep chains (e.g., depth=1000) while avoiding runaway costs.
-    return max(512, min(8000, depth * 8))
+    # Give deeper chains more headroom; 8k was too tight for depth=1000 in practice.
+    # return max(1024, min(16000, depth * 14))
+    return max(4096, min(32000, depth * 22))
 
-def call_with_retries(client,model: str,prompt: str,depth: int,retries: int = 5 ) -> Tuple[Optional[str], Optional[str], Optional[str], Optional[float], Optional[str]]:
+def needs_no_think_system_prompt(model: str) -> bool:
+    model_lower = (model or "").lower()
+    return "llama-3.3-nemotron-super-49b-v1.5" in model_lower
+
+def build_messages_for_model(model: str, prompt: str) -> list[dict]:
+    if needs_no_think_system_prompt(model):
+        return [
+            {"role": "system", "content": "/no_think"},
+            {"role": "user", "content": prompt},
+        ]
+    return [{"role": "user", "content": prompt}]
+
+def build_chat_request_kwargs(model: str, messages: list[dict], requested_max_tokens: int) -> dict:
+    kwargs = {
+        "model": model,
+        "messages": messages,
+        "temperature": TEMPERATURE,
+        "max_tokens": requested_max_tokens,
+    }
+    if PROVIDER_NAME != "groq":
+        kwargs["extra_body"] = {
+            "reasoning": {
+                "effort": REASONING_EFFORT,
+                "exclude": EXCLUDE_REASONING_TOKENS
+            }
+        }
+    return kwargs
+
+def call_with_retries(client,model: str,prompt: str,depth: int,retries: int = 5 ) -> Tuple[Optional[str], Optional[str], Optional[str], Optional[float], Optional[str], Optional[str], int]:
     last_err = None
+    requested_max_tokens = compute_max_tokens(depth)
 
     for attempt in range(retries):
         try:
+            messages = build_messages_for_model(model, prompt)
+            resp_fallback = None
+
             start = time.perf_counter()
-            resp = client.chat.completions.create(
-                model=model,
-                messages=[{"role": "user", "content": prompt}],
-                temperature=TEMPERATURE,
-                max_tokens=compute_max_tokens(depth),
-                extra_body={
-                    "reasoning": {
-                        "effort": REASONING_EFFORT,
-                        "exclude": EXCLUDE_REASONING_TOKENS
-                    }
-                },
-            )
+            req_kwargs = build_chat_request_kwargs(model, messages, requested_max_tokens)
+            resp = client.chat.completions.create(**req_kwargs)
             latency = time.perf_counter() - start
             text = resp.choices[0].message.content.strip() if resp.choices[0].message.content else ""
+            finish_reason = getattr(resp.choices[0], "finish_reason", None)
+
+            # Some models return empty when custom reasoning controls are passed.
+            # Retry same request once without extra_body before failing this attempt.
+            if not text:
+                start_fallback = time.perf_counter()
+                resp_fallback = client.chat.completions.create(
+                    model=model,
+                    messages=messages,
+                    temperature=TEMPERATURE,
+                    max_tokens=requested_max_tokens,
+                )
+                latency = time.perf_counter() - start_fallback
+                text = resp_fallback.choices[0].message.content.strip() if resp_fallback.choices[0].message.content else ""
+                finish_reason = getattr(resp_fallback.choices[0], "finish_reason", finish_reason)
+
             # 🚨 Reject empty or too short responses
             if not text:
                 print("⚠️ Empty response from API.")
@@ -408,7 +626,9 @@ def call_with_retries(client,model: str,prompt: str,depth: int,retries: int = 5 
                 raise Exception("Too short")
 
             actual_model = getattr(resp, "model", None)
-            return text, None, None, latency, actual_model
+            if not actual_model and resp_fallback is not None:
+                actual_model = getattr(resp_fallback, "model", None)
+            return text, None, None, latency, actual_model, finish_reason, requested_max_tokens
 
         except RateLimitError as e:
             msg = str(e)
@@ -419,10 +639,10 @@ def call_with_retries(client,model: str,prompt: str,depth: int,retries: int = 5 
             err_lower = msg.lower()
 
             if "tokens per day" in err_lower:
-                return None, "daily_token_limit", msg, None, None
+                return None, "daily_token_limit", msg, None, None, None, requested_max_tokens
 
             if "request too large" in err_lower or ("limit" in err_lower and "requested" in err_lower):
-                return None, "prompt_too_large", msg, None, None
+                return None, "prompt_too_large", msg, None, None, None, requested_max_tokens
 
             if attempt < retries - 1:
                 sleep_time = (2 ** attempt) * 10
@@ -431,23 +651,24 @@ def call_with_retries(client,model: str,prompt: str,depth: int,retries: int = 5 
                     print(f"DEBUG sleeping {sleep_time}s before retry...")
                 time.sleep(sleep_time)
             else:
-                return None, "rate_limit", msg, None, None
+                return None, "rate_limit", msg, None, None, None, requested_max_tokens
 
         except APIStatusError as e:
             msg = str(e)
+            status_code = getattr(e, "status_code", None)
             if SHOW_DEBUG_LOGS:
-                print(f"DEBUG APIStatusError attempt {attempt + 1}/{retries}: {msg}")
+                print(f"DEBUG APIStatusError attempt {attempt + 1}/{retries}: status={status_code}, {msg}")
 
             msg_lower = msg.lower()
 
             if "requires more credits" in msg_lower or "can only afford" in msg_lower:
-                return None, "insufficient_credits", msg, None, None
+                return None, "insufficient_credits", msg, None, None, None, requested_max_tokens
 
             if "tokens per day" in msg_lower:
-                return None, "daily_token_limit", msg, None, None
+                return None, "daily_token_limit", msg, None, None, None, requested_max_tokens
 
             if "request too large" in msg_lower or ("limit" in msg_lower and "requested" in msg_lower):
-                return None, "prompt_too_large", msg, None, None
+                return None, "prompt_too_large", msg, None, None, None, requested_max_tokens
 
             if "rate_limit_exceeded" in msg_lower or "rate limit" in msg_lower:
                 if attempt < retries - 1:
@@ -456,17 +677,40 @@ def call_with_retries(client,model: str,prompt: str,depth: int,retries: int = 5 
                         print(f"DEBUG sleeping {sleep_time}s before retry...")
                     time.sleep(sleep_time)
                     continue
-                return None, "rate_limit", msg, None, None
+                return None, "rate_limit", msg, None, None, None, requested_max_tokens
 
-            return None, "api_error", msg, None, None
+            if "404" in msg_lower or "not found" in msg_lower:
+                return None, "model_not_found", msg, None, None, None, requested_max_tokens
+
+            # Treat provider/server-side errors as transient.
+            if status_code is not None and status_code >= 500:
+                if attempt < retries - 1:
+                    sleep_time = (2 ** attempt) * 5
+                    if SHOW_DEBUG_LOGS:
+                        print(f"DEBUG sleeping {sleep_time}s before retry...")
+                    time.sleep(sleep_time)
+                    continue
+
+            return None, "api_error", msg, None, None, None, requested_max_tokens
+
+        except (APIConnectionError, APITimeoutError) as e:
+            msg = str(e)
+            last_err = msg
+            if SHOW_DEBUG_LOGS:
+                print(f"DEBUG ConnectionError attempt {attempt + 1}/{retries}: {msg}")
+            if attempt < retries - 1:
+                sleep_time = (2 ** attempt) * 5
+                time.sleep(sleep_time)
+                continue
+            return None, "api_error", msg, None, None, None, requested_max_tokens
 
         except Exception as e:
             msg = str(e)
             if SHOW_DEBUG_LOGS:
                 print(f"DEBUG UnexpectedError attempt {attempt + 1}/{retries}: {msg}")
-            return None, "api_error", msg, None, None
+            return None, "api_error", msg, None, None, None, requested_max_tokens
 
-    return None, "rate_limit" if last_err else "api_error", last_err, None, None
+    return None, "rate_limit" if last_err else "api_error", last_err, None, None, None, requested_max_tokens
 
 # ===================== UTIL =====================
 
@@ -497,6 +741,14 @@ def explain_retry_reason(err_type: Optional[str], err_msg: Optional[str]) -> str
         return format_failure_reason(err_type)
     return "the previous attempt returned empty/invalid output"
 
+def compact_error_details(err_msg: Optional[str], max_chars: int = 140) -> str:
+    if not err_msg:
+        return "No provider details returned."
+    msg = re.sub(r"\s+", " ", err_msg).strip()
+    if len(msg) <= max_chars:
+        return msg
+    return msg[: max_chars - 3] + "..."
+
 def print_sample_report(
     run_id: str,
     model: str,
@@ -505,6 +757,8 @@ def print_sample_report(
     est_prompt_tokens: int,
     err_type: Optional[str],
     actual_model: Optional[str],
+    finish_reason: Optional[str],
+    max_tokens_requested: int,
     latency: Optional[float],
     success: bool,
     last_call: Optional[str],
@@ -526,6 +780,8 @@ def print_sample_report(
     print(f"API status         : {'success' if err_type is None else err_type}")
     print(f"Requested model    : {model}")
     print(f"Actual model       : {actual_model}")
+    print(f"Finish reason      : {finish_reason}")
+    print(f"Max tokens req     : {max_tokens_requested}")
     print(f"Latency            : {latency:.2f}s" if latency is not None else "Latency            : n/a")
     print()
     print("Evaluation")
@@ -681,7 +937,8 @@ def explain_output_failure(response: Optional[str], expected_lines: list[str]) -
 
 def run_experiment():
     run_id = datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
-    run_root = os.path.join(BASE_RESULTS_DIR, f"run_{run_id}")
+    provider_dir = PROVIDER_NAME.upper()
+    run_root = os.path.join(BASE_RESULTS_DIR, provider_dir, f"run_{run_id}")
     raw_root = os.path.join(run_root, "raw")
     summaries_root = os.path.join(run_root, "summaries")
 
@@ -705,9 +962,17 @@ def run_experiment():
 
     # client = Groq(api_key=GROQ_API_KEY)
 
+    active_constructs = [c for c in CONSTRUCT_TYPES if c in CALL_CHAIN_SIZES_BY_CONSTRUCT]
+    skipped_constructs = [c for c in CONSTRUCT_TYPES if c not in CALL_CHAIN_SIZES_BY_CONSTRUCT]
+    if skipped_constructs:
+        print(
+            "Skipping constructs missing from CALL_CHAIN_SIZES_BY_CONSTRUCT: "
+            + ", ".join(skipped_constructs)
+        )
+
     flat_results = []
     summary = []
-    total_tasks = sum(len(CALL_CHAIN_SIZES_BY_CONSTRUCT[c]) for c in CONSTRUCT_TYPES) * len(MODELS)
+    total_tasks = sum(len(CALL_CHAIN_SIZES_BY_CONSTRUCT[c]) for c in active_constructs) * len(MODELS)
     current_task = 0
 
     stop_all = False
@@ -717,7 +982,7 @@ def run_experiment():
         model_dir = os.path.join(raw_root, model.replace("/", "_").replace(":", "_"))
         os.makedirs(model_dir, exist_ok=True)
 
-        for construct in CONSTRUCT_TYPES:
+        for construct in active_constructs:
             print(f"--- Construct: {construct} ---")
             construct_dir = os.path.join(model_dir, construct)
             os.makedirs(construct_dir, exist_ok=True)
@@ -727,7 +992,10 @@ def run_experiment():
             tested_depths = 0
             successes = 0
 
-            depths = CALL_CHAIN_SIZES_BY_CONSTRUCT[construct]
+            depths = CALL_CHAIN_SIZES_BY_CONSTRUCT.get(construct, [])
+            if not depths:
+                print(f"Skipping construct '{construct}' because no depths are configured.")
+                continue
 
             for depth in depths:
                 tested_depths += 1
@@ -748,6 +1016,8 @@ def run_experiment():
                 err_msg = None
                 latency = None
                 actual_model = None
+                finish_reason = None
+                max_tokens_requested = compute_max_tokens(depth)
 
                 if est_prompt_tokens > TPM_SOFT_LIMIT:
                     print(
@@ -761,10 +1031,41 @@ def run_experiment():
                         f"Attempt {attempt_idx}/{MAX_REQUEST_ATTEMPTS}: "
                         f"requesting call-chain output from model={model}, construct={construct}, depth={depth}"
                     )
-                    text, err_type, err_msg, latency, actual_model = call_with_retries(client, model, prompt, depth, retries=1)
+                    text, err_type, err_msg, latency, actual_model, finish_reason, max_tokens_requested = call_with_retries(client, model, prompt, depth, retries=1)
                     if text and text.strip():
+                        normalized_candidate = normalize_response(text)
+                        if verify_response(normalized_candidate, expected_lines):
+                            break
+
+                        call_lines_only = extract_call_lines(normalized_candidate)
+                        if len(call_lines_only) > len(expected_lines):
+                            # Some models append one or more extra valid call lines.
+                            # Keep strict correctness by checking only the required depth.
+                            call_lines_only = call_lines_only[:len(expected_lines)]
+                        if call_lines_only == expected_lines:
+                            # Ignore harmless extra commentary/non-call lines if chain itself is exact.
+                            text = "\n".join(call_lines_only)
+                            break
+
+                        if attempt_idx < MAX_REQUEST_ATTEMPTS:
+                            print(
+                                "Retrying because model output was incomplete or malformed "
+                                f"(got {len(call_lines_only)}/{len(expected_lines)} valid call lines)."
+                            )
+                            continue
                         break
+                    print(
+                        "Attempt failed: "
+                        f"{format_failure_reason(err_type)} | "
+                        f"details: {compact_error_details(err_msg)}"
+                    )
                     if err_type in {"insufficient_credits", "prompt_too_large", "daily_token_limit"}:
+                        print(
+                            "Stopping retries due to non-retriable error: "
+                            f"{format_failure_reason(err_type)}"
+                        )
+                        break
+                    if err_type in {"model_not_found"}:
                         print(
                             "Stopping retries due to non-retriable error: "
                             f"{format_failure_reason(err_type)}"
@@ -776,7 +1077,10 @@ def run_experiment():
                             f"Retrying ({attempt_idx + 1}/{MAX_REQUEST_ATTEMPTS}) because "
                             f"{reason_text}."
                         )
-                print("Response received.")
+                if text and text.strip():
+                    print("Response received.")
+                else:
+                    print("No valid response received after retries.")
 
                 if text is None:
                     text = ""
@@ -802,6 +1106,7 @@ def run_experiment():
                 if SHOW_DEBUG_LOGS:
                     print(f"DEBUG: est_prompt_tokens={est_prompt_tokens}, err_type={err_type}, err_msg={err_msg}")
                     print(f"DEBUG: requested_model={model}, actual_model={actual_model}")
+                    print(f"DEBUG: finish_reason={finish_reason}, max_tokens_requested={max_tokens_requested}")
                     print(f"DEBUG: raw_text={repr(text[:200])}")
                     print(f"DEBUG: normalized_text={repr(normalized_text[:200])}")
                     print(f"DEBUG: last_call={last_call}")
@@ -862,13 +1167,19 @@ def run_experiment():
                     },
                     "sample": {
                         "construct": construct,
+                        "chain_mode": (
+                            DIRECT_CHAIN_MODE
+                            if construct == "direct"
+                            else ("shuffled" if RANDOMIZE_ALL_CONSTRUCTS else "sequential")
+                        ),
                         "depth": depth,
                         "code_chars": len(code),
                         "estimated_prompt_tokens": est_prompt_tokens
                     },
                     "request": {
                         "prompt_version": PROMPT_VERSION,
-                        "prompt_chars": len(prompt)
+                        "prompt_chars": len(prompt),
+                        "max_tokens_requested": max_tokens_requested
                     },
                     "response": {
                         "text": text,
@@ -877,6 +1188,7 @@ def run_experiment():
                         "ended_with_end": ended_with_end,
                         "response_chars": len(text),
                         "response_tokens_est": approx_tokens(text) if text else 0,
+                        "finish_reason": finish_reason,
                         "latency_seconds": latency
                     },
                     "evaluation": {
@@ -912,6 +1224,8 @@ def run_experiment():
                     est_prompt_tokens=est_prompt_tokens,
                     err_type=err_type,
                     actual_model=actual_model,
+                    finish_reason=finish_reason,
+                    max_tokens_requested=max_tokens_requested,
                     latency=latency,
                     success=success,
                     last_call=last_call,
@@ -1087,10 +1401,44 @@ def run_experiment():
 
     clean_summary = build_clean_summary(run_id, summary, flat_results)
 
-    save_json(os.path.join(summaries_root, "summary.json"), clean_summary)
+    summary_default_path = os.path.join(summaries_root, "summary.json")
+    summary_provider_path = os.path.join(summaries_root, f"summary_{PROVIDER_NAME}.json")
+    config_path = os.path.join(run_root, "config.json")
+
+    save_json(summary_default_path, clean_summary)
+    save_json(summary_provider_path, clean_summary)
+
+    manifest_path = os.path.join(run_root, "run_manifest.json")
+    manifest = {
+        "run_id": run_id,
+        "provider": PROVIDER_NAME,
+        "paths": {
+            "config": config_path,
+            "summary_default": summary_default_path,
+            "summary_provider": summary_provider_path,
+            "raw_dir": raw_root,
+            "summaries_dir": summaries_root,
+        },
+    }
+    save_json(manifest_path, manifest)
 
     print("\nExperiment complete.")
     print(f"Results saved under: {run_root}")
+    print(f"Config file: {config_path}")
+    print(f"Summary file: {summary_provider_path}")
+    print(f"Manifest file: {manifest_path}")
+    return run_root
 
 if __name__ == "__main__":
-    run_experiment()
+    while True:
+        run_experiment()
+        next_action = input("\nExperiment finished. Do you want to continue or exit? [c/e]: ").strip().lower()
+        if next_action in {"e", "exit", "q", "quit"}:
+            print("Exiting.")
+            break
+        if next_action in {"c", "continue", ""}:
+            selected_provider = resolve_active_provider()
+            apply_provider_selection(selected_provider)
+            continue
+        print("Invalid choice. Exiting.")
+        break

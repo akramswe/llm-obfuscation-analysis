@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "run_id": "2026-05-14T18-44-27",
+    "experiment": "terminal_function_identification",
+    "provider": "groq",
+    "timestamp": "2026-05-14T18:44:56.455130"
+  },
+  "schema_hint": {
+    "overall": "Run-level metrics across all tested models and constructs.",
+    "models": "Per-model breakdown with concise sample-level outcomes.",
+    "samples": "Each sample is one (model, construct, depth) evaluation."
+  },
+  "overall": {
+    "total_tests": 1,
+    "total_successes": 1,
+    "total_failures": 0,
+    "success_rate": 1.0,
+    "construct_summary": {
+      "direct": {
+        "num_tests": 1,
+        "num_successes": 1,
+        "success_rate": 1.0
+      }
+    }
+  },
+  "models": {
+    "openai/gpt-oss-120b": {
+      "requested_model": "openai/gpt-oss-120b",
+      "actual_models_seen": [
+        "openai/gpt-oss-120b"
+      ],
+      "num_tests": 1,
+      "num_successes": 1,
+      "success_rate": 1.0,
+      "samples": [
+        {
+          "construct": "direct",
+          "depth": 5,
+          "requested_model": "openai/gpt-oss-120b",
+          "actual_model": "openai/gpt-oss-120b",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 5,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "num_tests": 1,
+          "num_successes": 1,
+          "success_rate": 1.0,
+          "max_success_depth_tested": 5,
+          "first_failure_depth": null,
+          "actual_models_seen": [
+            "openai/gpt-oss-120b"
+          ]
+        }
+      }
+    }
+  }
+}

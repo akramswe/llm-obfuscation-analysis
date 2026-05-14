@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "run_id": "2026-05-04T14-42-10",
+    "experiment": "terminal_function_identification",
+    "provider": "nvidia_nim",
+    "timestamp": "2026-05-04T14:48:56.228413"
+  },
+  "schema_hint": {
+    "overall": "Run-level metrics across all tested models and constructs.",
+    "models": "Per-model breakdown with concise sample-level outcomes.",
+    "samples": "Each sample is one (model, construct, depth) evaluation."
+  },
+  "overall": {
+    "total_tests": 2,
+    "total_successes": 2,
+    "total_failures": 0,
+    "success_rate": 1.0,
+    "construct_summary": {
+      "direct": {
+        "num_tests": 2,
+        "num_successes": 2,
+        "success_rate": 1.0
+      }
+    }
+  },
+  "models": {
+    "nvidia/nemotron-3-super-120b-a12b": {
+      "requested_model": "nvidia/nemotron-3-super-120b-a12b",
+      "actual_models_seen": [
+        "nvidia/nemotron-3-super-120b-a12b"
+      ],
+      "num_tests": 2,
+      "num_successes": 2,
+      "success_rate": 1.0,
+      "samples": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "nvidia/nemotron-3-super-120b-a12b",
+          "actual_model": "nvidia/nemotron-3-super-120b-a12b",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 100,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "direct",
+          "depth": 1000,
+          "requested_model": "nvidia/nemotron-3-super-120b-a12b",
+          "actual_model": "nvidia/nemotron-3-super-120b-a12b",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 1000,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "num_tests": 2,
+          "num_successes": 2,
+          "success_rate": 1.0,
+          "max_success_depth_tested": 1000,
+          "first_failure_depth": null,
+          "actual_models_seen": [
+            "nvidia/nemotron-3-super-120b-a12b"
+          ]
+        }
+      }
+    }
+  }
+}

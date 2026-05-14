@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-05-04T16-34-36",
+  "timestamp": "2026-05-04T16:42:03.019787",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "nvidia_nim",
+    "requested_name": "nvidia/llama-3.3-nemotron-super-49b-v1.5",
+    "actual_name": "nvidia/llama-3.3-nemotron-super-49b-v1.5",
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "switch_dispatch",
+    "chain_mode": "shuffled",
+    "depth": 10,
+    "code_chars": 946,
+    "estimated_prompt_tokens": 464
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 1859,
+    "max_tokens_requested": 1024
+  },
+  "response": {
+    "text": "func10 calls dispatch\ndispatch calls func8\nfunc8 calls dispatch\ndispatch calls func2\nfunc2 calls dispatch\ndispatch calls func1\nfunc1 calls dispatch\ndispatch calls func9\nfunc9 calls dispatch\ndispatch calls END",
+    "normalized_text": "func10 calls dispatch\ndispatch calls func8\nfunc8 calls dispatch\ndispatch calls func2\nfunc2 calls dispatch\ndispatch calls func1\nfunc1 calls dispatch\ndispatch calls func9\nfunc9 calls dispatch\ndispatch calls END",
+    "line_count": 10,
+    "ended_with_end": false,
+    "response_chars": 208,
+    "response_tokens_est": 52,
+    "finish_reason": "stop",
+    "latency_seconds": 3.5422551659994497
+  },
+  "evaluation": {
+    "expected_depth": 10,
+    "expected_last_func": "func7",
+    "predicted_last_func": "dispatch",
+    "success": false,
+    "result": "failure",
+    "success_reason": null,
+    "failure_type": "output_failure",
+    "failure_reason": "malformed_output",
+    "failure_reason_readable": "Output format violation (non-call text or malformed lines)",
+    "failure_explanation": "Model produced an incorrect line starting at line 1",
+    "detailed_output_reason": "wrong_callee_line_1_expected_func8_got_dispatch",
+    "failure_analysis": {
+      "first_wrong_line": 1,
+      "last_correct_line": 0,
+      "last_correct_call": null,
+      "failure_started_at": "func10",
+      "failure_reason": "incorrect_line"
+    },
+    "first_wrong_line": 1,
+    "last_correct_line": 0
+  },
+  "error": {
+    "api_reason": "none",
+    "api_message": "API call successful"
+  }
+}

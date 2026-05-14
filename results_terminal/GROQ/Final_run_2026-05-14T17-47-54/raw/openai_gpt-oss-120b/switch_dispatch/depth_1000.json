@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-05-14T17-47-54",
+  "timestamp": "2026-05-14T18:02:52.116646",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "groq",
+    "requested_name": "openai/gpt-oss-120b",
+    "actual_name": null,
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "switch_dispatch",
+    "chain_mode": "shuffled",
+    "depth": 1000,
+    "code_chars": 92572,
+    "estimated_prompt_tokens": 23372
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 93489,
+    "max_tokens_requested": 22000
+  },
+  "response": {
+    "text": "",
+    "normalized_text": "",
+    "line_count": 0,
+    "ended_with_end": false,
+    "response_chars": 0,
+    "response_tokens_est": 0,
+    "finish_reason": null,
+    "latency_seconds": null
+  },
+  "evaluation": {
+    "expected_depth": 1000,
+    "expected_last_func": "func799",
+    "predicted_last_func": null,
+    "success": false,
+    "result": "failure",
+    "success_reason": null,
+    "failure_type": "api_failure",
+    "failure_reason": "prompt_too_large",
+    "failure_reason_readable": "Prompt exceeds provider/model limits",
+    "failure_explanation": "API failure occurred: prompt_too_large",
+    "detailed_output_reason": null,
+    "failure_analysis": {
+      "first_wrong_line": null,
+      "last_correct_line": 0,
+      "last_correct_call": null,
+      "failure_started_at": null,
+      "failure_reason": "prompt_too_large"
+    },
+    "first_wrong_line": null,
+    "last_correct_line": 0
+  },
+  "error": {
+    "api_reason": "prompt_too_large",
+    "api_message": "Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_01kfexbkh0es1rdyk0z0z0k0xr` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 27424, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+  }
+}

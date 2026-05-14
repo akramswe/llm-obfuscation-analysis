@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "run_id": "2026-04-24T17-29-21",
+    "experiment": "terminal_function_identification",
+    "provider": "openrouter",
+    "timestamp": "2026-04-24T17:31:45.818922"
+  },
+  "schema_hint": {
+    "overall": "Run-level metrics across all tested models and constructs.",
+    "models": "Per-model breakdown with concise sample-level outcomes.",
+    "samples": "Each sample is one (model, construct, depth) evaluation."
+  },
+  "overall": {
+    "total_tests": 2,
+    "total_successes": 1,
+    "total_failures": 1,
+    "success_rate": 0.5,
+    "construct_summary": {
+      "direct": {
+        "num_tests": 1,
+        "num_successes": 1,
+        "success_rate": 1.0
+      },
+      "function_pointer": {
+        "num_tests": 1,
+        "num_successes": 0,
+        "success_rate": 0.0
+      }
+    }
+  },
+  "models": {
+    "qwen/qwen3.6-plus": {
+      "requested_model": "qwen/qwen3.6-plus",
+      "actual_models_seen": [
+        "qwen/qwen3.6-plus-04-02"
+      ],
+      "num_tests": 2,
+      "num_successes": 1,
+      "success_rate": 0.5,
+      "samples": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "qwen/qwen3.6-plus",
+          "actual_model": "qwen/qwen3.6-plus-04-02",
+          "is_exact_match": true,
+          "result": "success",
+          "line_count": 100,
+          "ended_with_end": true,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "success_reason": "exact_match"
+        },
+        {
+          "construct": "function_pointer",
+          "depth": 100,
+          "requested_model": "qwen/qwen3.6-plus",
+          "actual_model": null,
+          "is_exact_match": false,
+          "result": "failure",
+          "line_count": 0,
+          "ended_with_end": false,
+          "api_reason": "api_error",
+          "api_message": "Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4801 tokens, but can only afford 3618. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_3Bm9cn6MYbc3iNsSWRWTQdhYpB7'}",
+          "failure_type": "api_failure",
+          "failure_reason": "api_error",
+          "failure_explanation": "API failure occurred: api_error",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 0,
+            "last_correct_call": null,
+            "failure_started_at": null,
+            "failure_reason": "api_error"
+          }
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "num_tests": 1,
+          "num_successes": 1,
+          "success_rate": 1.0,
+          "max_success_depth_tested": 100,
+          "first_failure_depth": null,
+          "actual_models_seen": [
+            "qwen/qwen3.6-plus-04-02"
+          ]
+        },
+        "function_pointer": {
+          "num_tests": 1,
+          "num_successes": 0,
+          "success_rate": 0.0,
+          "max_success_depth_tested": 0,
+          "first_failure_depth": 100,
+          "actual_models_seen": []
+        }
+      }
+    }
+  }
+}

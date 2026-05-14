@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-04-24T17-38-20",
+  "timestamp": "2026-04-24T17:38:23.872585",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "openrouter",
+    "requested_name": "qwen/qwen3.6-plus",
+    "actual_name": null,
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "direct",
+    "depth": 1000,
+    "code_chars": 32851,
+    "estimated_prompt_tokens": 8442
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 33768
+  },
+  "response": {
+    "text": "",
+    "normalized_text": "",
+    "line_count": 0,
+    "ended_with_end": false,
+    "response_chars": 0,
+    "response_tokens_est": 0,
+    "latency_seconds": null
+  },
+  "evaluation": {
+    "expected_depth": "func797",
+    "predicted_last_func": null,
+    "success": false,
+    "result": "failure",
+    "success_reason": null,
+    "failure_type": "api_failure",
+    "failure_reason": "insufficient_credits",
+    "failure_explanation": "API failure occurred: insufficient_credits",
+    "detailed_output_reason": null,
+    "failure_analysis": {
+      "first_wrong_line": null,
+      "last_correct_line": 0,
+      "last_correct_call": null,
+      "failure_started_at": null,
+      "failure_reason": "insufficient_credits"
+    },
+    "first_wrong_line": null,
+    "last_correct_line": 0
+  },
+  "error": {
+    "api_reason": "insufficient_credits",
+    "api_message": "Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 2000 tokens, but can only afford 630. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_3Bm9cn6MYbc3iNsSWRWTQdhYpB7'}"
+  }
+}

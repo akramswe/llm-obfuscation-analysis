@@ -1,0 +1,11 @@
+{
+  "run_id": "2026-05-14T18-46-24",
+  "provider": "openrouter",
+  "paths": {
+    "config": "results_terminal/OPENROUTER/run_2026-05-14T18-46-24/config.json",
+    "summary_default": "results_terminal/OPENROUTER/run_2026-05-14T18-46-24/summaries/summary.json",
+    "summary_provider": "results_terminal/OPENROUTER/run_2026-05-14T18-46-24/summaries/summary_openrouter.json",
+    "raw_dir": "results_terminal/OPENROUTER/run_2026-05-14T18-46-24/raw",
+    "summaries_dir": "results_terminal/OPENROUTER/run_2026-05-14T18-46-24/summaries"
+  }
+}

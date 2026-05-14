@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-05-14T12-13-43",
+  "timestamp": "2026-05-14T13:58:06.040830",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "openrouter",
+    "requested_name": "openrouter/free",
+    "actual_name": null,
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "struct_pointer",
+    "chain_mode": "shuffled",
+    "depth": 400,
+    "code_chars": 36408,
+    "estimated_prompt_tokens": 9330
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 37323,
+    "max_tokens_requested": 8800
+  },
+  "response": {
+    "text": "",
+    "normalized_text": "",
+    "line_count": 0,
+    "ended_with_end": false,
+    "response_chars": 0,
+    "response_tokens_est": 0,
+    "finish_reason": null,
+    "latency_seconds": null
+  },
+  "evaluation": {
+    "expected_depth": 400,
+    "expected_last_func": "func26",
+    "predicted_last_func": null,
+    "success": false,
+    "result": "failure",
+    "success_reason": null,
+    "failure_type": "api_failure",
+    "failure_reason": "api_error",
+    "failure_reason_readable": "API error from provider",
+    "failure_explanation": "API failure occurred: api_error",
+    "detailed_output_reason": null,
+    "failure_analysis": {
+      "first_wrong_line": null,
+      "last_correct_line": 0,
+      "last_correct_call": null,
+      "failure_started_at": null,
+      "failure_reason": "api_error"
+    },
+    "first_wrong_line": null,
+    "last_correct_line": 0
+  },
+  "error": {
+    "api_reason": "api_error",
+    "api_message": "Error code: 400 - {'error': {'message': 'Reasoning is mandatory for this endpoint and cannot be disabled.', 'code': 400, 'metadata': {'provider_name': None}}, 'user_id': 'user_3B8wBvbAsmvkwYj6gdjt4QGg5rb'}"
+  }
+}

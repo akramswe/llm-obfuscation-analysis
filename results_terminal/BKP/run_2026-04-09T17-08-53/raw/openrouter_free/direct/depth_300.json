@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-04-09T17-08-53",
+  "timestamp": "2026-04-09T17:13:26.370122",
+  "experiment": {
+    "name": "terminal_function_identification",
+    "task": "Reconstruct the complete linear function call chain from main in generated C code",
+    "output_format": "funcX calls funcY per line"
+  },
+  "model": {
+    "provider": "openrouter",
+    "requested_name": "openrouter/free",
+    "actual_name": "liquid/lfm-2.5-1.2b-instruct-20260120:free",
+    "temperature": 0.0
+  },
+  "sample": {
+    "construct": "direct",
+    "depth": 300,
+    "code_chars": 9749,
+    "estimated_prompt_tokens": 2666
+  },
+  "request": {
+    "prompt_version": "v2_terminal_only",
+    "prompt_chars": 10664
+  },
+  "response": {
+    "text": "func207 calls func9\nfunc9 calls func282\nfunc282 calls func140\nfunc140 calls func30\nfunc30 calls func298\nfunc298 calls func299\nfunc299 calls func74\nfunc74 calls func226\nfunc226 calls func234\nfunc234 calls func287\nfunc287 calls func295\nfunc295 calls func57\nfunc57 calls func161\nfunc161 calls func254\nfunc254 calls func289\nfunc289 calls func290\nfunc290 calls func92\nfunc92 calls func135\nfunc135 calls func58\nfunc58 calls func42\nfunc42 calls func272\nfunc272 calls func29\nfunc29 calls func79\nfunc79 calls func20\nfunc20 calls func279\nfunc279 calls func195\nfunc195 calls func276\nfunc276 calls func244\nfunc244 calls func168\nfunc168 calls func52\nfunc52 calls func297\nfunc297 calls func300\nfunc300 calls func286\nfunc286 calls func125\nfunc125 calls func200\nfunc200 calls func130\nfunc130 calls func223\nfunc223 calls func283\nfunc283 calls func100\nfunc100 calls func160\nfunc160 calls func107\nfunc107 calls func270\nfunc270 calls func212\nfunc212 calls func22\nfunc22 calls func109\nfunc109 calls func171\nfunc171 calls func41\nfunc41 calls func245\nfunc245 calls func253\nfunc253 calls func81\nfunc81 calls func120\nfunc120 calls func4\nfunc4 calls func291\nfunc291 calls func190\nfunc190 calls func175\nfunc175 calls func21\nfunc21 calls func150\nfunc150 calls func73\nfunc73 calls func250\nfunc250 calls func185\nfunc185 calls func181\nfunc181 calls func77\nfunc77 calls func60\nfunc60 calls func179\nfunc179 calls func136\nfunc136 calls func201\nvoid func201 calls func121\nvoid func121 calls func35\nvoid35 calls func257\nvoid func257 calls func116\nvoid func116 calls func33\nvoid33 calls func113\nvoid113 calls func158\nvoid158 calls func17\nvoid17 calls func61\nvoid61 calls func150\nvoid150 calls func73\nvoid73 calls func250\nvoid250 calls func185\nvoid185 calls func181\nvoid181 calls func77\nvoid77 calls func60\nvoid60 calls func179\nvoid179 calls func136\nvoid136 calls func201\nvoid201 calls func66\nvoid66 calls func263\nvoid263 calls func165\nvoid165 calls func187\nvoid187 calls func235\nvoid235 calls func260\nvoid260 calls func214\nvoid214 calls func38\nvoid38 calls func159\nvoid159 calls func6\nvoid6 calls func27\nvoid27 calls func192\nvoid192 calls func137\nvoid137 calls func198\nvoid198 calls func197\nvoid197 calls func51\nvoid51 calls func231\nvoid231 calls func78\nvoid78 calls func108\nvoid108 calls func227\nvoid227 calls func70\nvoid70 calls func262\nvoid262 calls func296\nvoid296 calls func82\nvoid82 calls func24\nvoid24 calls func143\nvoid143 calls func2\nvoid2 calls func114\nvoid114 calls func48\nvoid48 calls func216\nvoid216 calls func182\nvoid182 calls func75\nvoid75 calls func5\nvoid5 calls func98\nvoid98 calls func132\nvoid132 calls func285\nvoid285 calls func123\nvoid123 calls func237\nvoid237 calls func174\nvoid174 calls func241\nvoid241 calls func205\nvoid205 calls func148\nvoid148 calls func222\nvoid222 calls func93\nvoid93 calls func142\nvoid44 calls func133\nvoid133 calls func91\nvoid91 calls func50\nvoid50 calls func46\nvoid46 calls func8\nvoid8 calls func11\nvoid11 calls func23\nvoid23 calls func204\nvoid204 calls func196\nvoid196 calls func39\nvoid39 calls func103\nvoid103 calls func164\nvoid164 calls func169\nvoid169 calls func151\nvoid151 calls func269\nvoid269 calls func95\nvoid95 calls func267\nvoid267 calls func229\nvoid229 calls func131\nvoid31 calls func96\nvoid96 calls func84\nvoid84 calls func134\nvoid134 calls func259\nvoid259 calls func277\nvoid277 calls func72\nvoid72 calls func211\nvoid211 calls func97\nvoid97 calls func210\nvoid210 calls func122\nvoid122 calls func203\nvoid203 calls func101\nvoid101 calls func139\nvoid139 calls func28\nvoid28 calls func228\nvoid228 calls func247\nvoid247 calls func281\nvoid281 calls func89\nvoid89 calls func18\nvoid18 calls func155\nvoid155 calls func193\nvoid193 calls func105\nvoid105 calls func45\nvoid45 calls func67\nvoid67 calls func14\nvoid14 calls func153\nvoid153 calls func54\nvoid54 calls func167\nvoid167 calls func111\nvoid111 calls func173\nvoid173 calls func69\nvoid69 calls func7\nvoid7 calls func255\nvoid255 calls func23\nvoid23 calls func204\nvoid204 calls func196\nvoid196 calls func39\nvoid39 calls func103\nvoid103 calls func164\nvoid164 calls func169\nvoid169 calls func151\nvoid151 calls func269\nvoid269 calls func95\nvoid95 calls func62\nvoid62 calls func110\nvoid110 calls func117\nvoid117 calls func84\nvoid84 calls func134\nvoid139 calls func28\nint main(void){ func207 calls func207(); }\n```",
+    "normalized_text": "func207 calls func9\nfunc9 calls func282\nfunc282 calls func140\nfunc140 calls func30\nfunc30 calls func298\nfunc298 calls func299\nfunc299 calls func74\nfunc74 calls func226\nfunc226 calls func234\nfunc234 calls func287\nfunc287 calls func295\nfunc295 calls func57\nfunc57 calls func161\nfunc161 calls func254\nfunc254 calls func289\nfunc289 calls func290\nfunc290 calls func92\nfunc92 calls func135\nfunc135 calls func58\nfunc58 calls func42\nfunc42 calls func272\nfunc272 calls func29\nfunc29 calls func79\nfunc79 calls func20\nfunc20 calls func279\nfunc279 calls func195\nfunc195 calls func276\nfunc276 calls func244\nfunc244 calls func168\nfunc168 calls func52\nfunc52 calls func297\nfunc297 calls func300\nfunc300 calls func286\nfunc286 calls func125\nfunc125 calls func200\nfunc200 calls func130\nfunc130 calls func223\nfunc223 calls func283\nfunc283 calls func100\nfunc100 calls func160\nfunc160 calls func107\nfunc107 calls func270\nfunc270 calls func212\nfunc212 calls func22\nfunc22 calls func109\nfunc109 calls func171\nfunc171 calls func41\nfunc41 calls func245\nfunc245 calls func253\nfunc253 calls func81\nfunc81 calls func120\nfunc120 calls func4\nfunc4 calls func291\nfunc291 calls func190\nfunc190 calls func175\nfunc175 calls func21\nfunc21 calls func150\nfunc150 calls func73\nfunc73 calls func250\nfunc250 calls func185\nfunc185 calls func181\nfunc181 calls func77\nfunc77 calls func60\nfunc60 calls func179\nfunc179 calls func136\nfunc136 calls func201\nvoid func201 calls func121\nvoid func121 calls func35\nvoid35 calls func257\nvoid func257 calls func116\nvoid func116 calls func33\nvoid33 calls func113\nvoid113 calls func158\nvoid158 calls func17\nvoid17 calls func61\nvoid61 calls func150\nvoid150 calls func73\nvoid73 calls func250\nvoid250 calls func185\nvoid185 calls func181\nvoid181 calls func77\nvoid77 calls func60\nvoid60 calls func179\nvoid179 calls func136\nvoid136 calls func201\nvoid201 calls func66\nvoid66 calls func263\nvoid263 calls func165\nvoid165 calls func187\nvoid187 calls func235\nvoid235 calls func260\nvoid260 calls func214\nvoid214 calls func38\nvoid38 calls func159\nvoid159 calls func6\nvoid6 calls func27\nvoid27 calls func192\nvoid192 calls func137\nvoid137 calls func198\nvoid198 calls func197\nvoid197 calls func51\nvoid51 calls func231\nvoid231 calls func78\nvoid78 calls func108\nvoid108 calls func227\nvoid227 calls func70\nvoid70 calls func262\nvoid262 calls func296\nvoid296 calls func82\nvoid82 calls func24\nvoid24 calls func143\nvoid143 calls func2\nvoid2 calls func114\nvoid114 calls func48\nvoid48 calls func216\nvoid216 calls func182\nvoid182 calls func75\nvoid75 calls func5\nvoid5 calls func98\nvoid98 calls func132\nvoid132 calls func285\nvoid285 calls func123\nvoid123 calls func237\nvoid237 calls func174\nvoid174 calls func241\nvoid241 calls func205\nvoid205 calls func148\nvoid148 calls func222\nvoid222 calls func93\nvoid93 calls func142\nvoid44 calls func133\nvoid133 calls func91\nvoid91 calls func50\nvoid50 calls func46\nvoid46 calls func8\nvoid8 calls func11\nvoid11 calls func23\nvoid23 calls func204\nvoid204 calls func196\nvoid196 calls func39\nvoid39 calls func103\nvoid103 calls func164\nvoid164 calls func169\nvoid169 calls func151\nvoid151 calls func269\nvoid269 calls func95\nvoid95 calls func267\nvoid267 calls func229\nvoid229 calls func131\nvoid31 calls func96\nvoid96 calls func84\nvoid84 calls func134\nvoid134 calls func259\nvoid259 calls func277\nvoid277 calls func72\nvoid72 calls func211\nvoid211 calls func97\nvoid97 calls func210\nvoid210 calls func122\nvoid122 calls func203\nvoid203 calls func101\nvoid101 calls func139\nvoid139 calls func28\nvoid28 calls func228\nvoid228 calls func247\nvoid247 calls func281\nvoid281 calls func89\nvoid89 calls func18\nvoid18 calls func155\nvoid155 calls func193\nvoid193 calls func105\nvoid105 calls func45\nvoid45 calls func67\nvoid67 calls func14\nvoid14 calls func153\nvoid153 calls func54\nvoid54 calls func167\nvoid167 calls func111\nvoid111 calls func173\nvoid173 calls func69\nvoid69 calls func7\nvoid7 calls func255\nvoid255 calls func23\nvoid23 calls func204\nvoid204 calls func196\nvoid196 calls func39\nvoid39 calls func103\nvoid103 calls func164\nvoid164 calls func169\nvoid169 calls func151\nvoid151 calls func269\nvoid269 calls func95\nvoid95 calls func62\nvoid62 calls func110\nvoid110 calls func117\nvoid117 calls func84\nvoid84 calls func134\nvoid139 calls func28\nint main(void){ func207 calls func207(); }\n```",
+    "response_chars": 4271,
+    "response_tokens_est": 1067,
+    "latency_seconds": 4.267382437999913
+  },
+  "evaluation": {
+    "expected_depth": "func183",
+    "predicted_last_func": null,
+    "success": false,
+    "result": "failure",
+    "success_reason": null,
+    "failure_type": "output_failure",
+    "failure_reason": "malformed_output",
+    "failure_explanation": "Model produced an incorrect line starting at line 67",
+    "detailed_output_reason": "wrong_caller_line_67",
+    "failure_analysis": {
+      "first_wrong_line": 67,
+      "last_correct_line": 66,
+      "last_correct_call": "func136 calls func201",
+      "failure_started_at": "func201",
+      "failure_reason": "incorrect_line"
+    },
+    "first_wrong_line": 67,
+    "last_correct_line": 66
+  },
+  "error": {
+    "api_reason": "none",
+    "api_message": "API call successful"
+  }
+}

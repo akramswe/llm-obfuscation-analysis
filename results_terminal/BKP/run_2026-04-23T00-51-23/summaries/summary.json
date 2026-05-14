@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "run_id": "2026-04-23T00-51-23",
+    "experiment": "terminal_function_identification",
+    "provider": "openrouter",
+    "timestamp": "2026-04-23T00:52:17.480093"
+  },
+  "overall": {
+    "total_tests": 1,
+    "total_successes": 1,
+    "total_failures": 0,
+    "success_rate": 1.0
+  },
+  "models": {
+    "openrouter/free": {
+      "requested_model": "openrouter/free",
+      "actual_models_seen": [
+        "openai/gpt-oss-20b:free"
+      ],
+      "total_tests": 1,
+      "total_successes": 1,
+      "success_rate": 1.0,
+      "test_points": [
+        {
+          "construct": "direct",
+          "depth": 100,
+          "requested_model": "openrouter/free",
+          "actual_model": "openai/gpt-oss-20b:free",
+          "result": "success",
+          "success_reason": "exact_match",
+          "failure_type": null,
+          "failure_reason": null,
+          "failure_explanation": null,
+          "api_reason": "none",
+          "api_message": "API call successful",
+          "failure_point": {
+            "first_wrong_line": null,
+            "last_correct_line": 100,
+            "last_correct_call": "func19 calls END",
+            "failure_started_at": null,
+            "failure_reason": null
+          }
+        }
+      ],
+      "constructs": {
+        "direct": {
+          "tested_depths": 1,
+          "successes": 1,
+          "success_rate": 1.0,
+          "max_success_depth": 100,
+          "first_failure_depth": null,
+          "actual_models_seen": [
+            "openai/gpt-oss-20b:free"
+          ]
+        }
+      }
+    }
+  }
+}
